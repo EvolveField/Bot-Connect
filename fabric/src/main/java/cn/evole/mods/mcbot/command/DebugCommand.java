@@ -1,6 +1,6 @@
 package cn.evole.mods.mcbot.command;
 
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,7 +16,7 @@ public class DebugCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.INSTANCE().getCommon().setDebug(isEnabled);
+        ConfigManager.instance().getCommon().setDebug(isEnabled);
         if (isEnabled) {
             //#if MC >= 12000
             //$$ context.getSource().sendSuccess(()->Component.literal("已开启开发者模式"), true);
@@ -34,7 +34,6 @@ public class DebugCommand {
             //$$ context.getSource().sendSuccess(Component.literal("已关闭开发者模式"), true);
             //#endif
         }
-        ModConfig.save();
         return 1;
     }
 }

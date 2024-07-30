@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.util.onebot;
 
 import cn.evole.mods.mcbot.Const;
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import lombok.val;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -73,7 +73,7 @@ public class CQUtils {
             val data = matcher.group(2);
             switch (type) {
                 case "image":
-                    if (ModConfig.INSTANCE().getCommon().isImageOn() && Const.isLoad("chatimage")) {
+                    if (ConfigManager.instance().getCommon().isImageOn() && Const.isLoad("chatimage")) {
                         val url = Arrays.stream(
                                         StringEscapeUtils
                                                 .escapeJava(data)//转义字符转义

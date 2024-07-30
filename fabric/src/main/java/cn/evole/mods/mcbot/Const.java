@@ -1,6 +1,6 @@
 package cn.evole.mods.mcbot;
 
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.core.event.IBotEvent;
 import cn.evole.mods.mcbot.core.event.ITickEvent;
 import cn.evole.mods.mcbot.util.onebot.MessageThread;
@@ -19,11 +19,9 @@ import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 //#endif
-
+import net.minecraft.network.chat.Component;
 //#if MC < 11900
 import net.minecraft.network.chat.TextComponent;
-//#else
-//$$ import net.minecraft.network.chat.Component;
 //#endif
 
 /**
@@ -49,13 +47,13 @@ public class Const {
     }
 
     public static void sendAllGroupMsg(String message){
-        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
+        for (long id : ConfigManager.instance().getCommon().getGroupIdList()){
             sendGroupMsg(id, message);
         }
     }
 
     public static void sendAllGroupMsg(Callable<String> message){
-        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
+        for (long id : ConfigManager.instance().getCommon().getGroupIdList()){
             sendGroupMsg(id, message);
         }
     }
@@ -66,7 +64,7 @@ public class Const {
      * @param player 玩家
      */
     public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player){
-        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
+        for (long id : ConfigManager.instance().getCommon().getGroupIdList()){
             messageThread.submit(id, message, false, player);
         }
     }
@@ -107,10 +105,9 @@ public class Const {
     public static void wsConnect(){
         McBot.onebot.close();//关闭线程
         McBot.onebot = null;//强制为null
-        McBot.onebot = OneBotClient.create(ModConfig.INSTANCE().getBotConfig().build()).open().registerEvents(new IBotEvent());//重新实例化
-        ModConfig.INSTANCE().getStatus().setREnable(true);
-        ModConfig.INSTANCE().getCommon().setEnable(true);
-        ModConfig.save();
+        McBot.onebot = OneBotClient.create(ConfigManager.instance().getBotConfig().build()).open().registerEvents(new IBotEvent());//重新实例化
+        ConfigManager.instance().getStatus().setREnable(true);
+        ConfigManager.instance().getCommon().setEnable(true);
         McBot.connected = true;
     }
 

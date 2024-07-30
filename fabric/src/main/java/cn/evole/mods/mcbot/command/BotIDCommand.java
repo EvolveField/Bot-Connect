@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.command;
 
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -14,7 +15,7 @@ public class BotIDCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         long id = context.getArgument("BotId", Long.class);
-        ModConfig.INSTANCE().getBotConfig().setBotId(id);
+        ConfigManager.instance().getBotConfig().setBotId(id);
         //#if MC >= 12000
         //$$ context.getSource().sendSuccess(()->Component.literal("已设置机器人QQ号为:" + id + "！"), true);
         //#elseif MC < 11900
@@ -22,7 +23,6 @@ public class BotIDCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal("已设置机器人QQ号为:" + id + "！"), true);
         //#endif
-        ModConfig.save();
         return 1;
     }
 

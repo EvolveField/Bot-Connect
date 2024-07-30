@@ -2,14 +2,13 @@ package cn.evole.mods.mcbot.command;
 
 
 import cn.evole.mods.mcbot.McBot;
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 //#if MC <11900
 import net.minecraft.network.chat.TextComponent;
-//#else
-//$$ import net.minecraft.network.chat.Component;
 //#endif
 
 public class DisconnectCommand {
@@ -35,9 +34,8 @@ public class DisconnectCommand {
                 //$$ context.getSource().sendSuccess(Component.literal("WebSocket目前未连接"), true);
                 //#endif
             }
-            ModConfig.INSTANCE().getCommon().setEnable(false);
+            ConfigManager.instance().getCommon().setEnable(false);
         }
-        ModConfig.save();
         return 1;
     }
 }

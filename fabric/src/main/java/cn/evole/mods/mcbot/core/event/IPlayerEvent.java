@@ -1,8 +1,8 @@
 package cn.evole.mods.mcbot.core.event;
 
 import cn.evole.mods.mcbot.Const;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.core.data.UserBindApi;
-import cn.evole.mods.mcbot.config.ModConfig;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import lombok.val;
 import net.minecraft.advancements.Advancement;
@@ -15,7 +15,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.network.chat.Component;
 //#if MC >= 12006
 //$$ import net.minecraft.core.component.DataComponents;
 //#endif
@@ -32,7 +31,7 @@ import net.minecraft.network.chat.TextComponent;
  */
 public class IPlayerEvent {
     public static void loggedIn(Level world, ServerPlayer player) {
-        if (ModConfig.INSTANCE().getCommon().isBindOn() && !UserBindApi.isIn(player.getGameProfile().getName())){
+        if (ConfigManager.instance().getCommon().isBindOn() && !UserBindApi.isIn(player.getGameProfile().getName())){
             //#if MC >= 11900
             //$$ val toSend = Component.literal("请先完成绑定(爱来自群服互联~)");
             //#else
@@ -42,22 +41,22 @@ public class IPlayerEvent {
             return;//防止冗余消息
         }
 
-        if (ModConfig.INSTANCE().getStatus().isSJoinEnable() && ModConfig.INSTANCE().getStatus().isSEnable()) {
+        if (ConfigManager.instance().getStatus().isSJoinEnable() && ConfigManager.instance().getStatus().isSEnable()) {
             val msg = player.getDisplayName().getString() + " 加入了服务器";
             send(msg);
         }
     }
     public static void loggedOut(Level world, ServerPlayer player) {
-        if (ModConfig.INSTANCE().getCommon().isBindOn() && !UserBindApi.isIn(player.getGameProfile().getName())){
+        if (ConfigManager.instance().getCommon().isBindOn() && !UserBindApi.isIn(player.getGameProfile().getName())){
             return;//防止冗余消息
         }
-        if (ModConfig.INSTANCE().getStatus().isSLeaveEnable() && ModConfig.INSTANCE().getStatus().isSEnable()) {
+        if (ConfigManager.instance().getStatus().isSLeaveEnable() && ConfigManager.instance().getStatus().isSEnable()) {
             val msg = player.getDisplayName().getString() + " 离开了服务器";
             send(msg);
         }
     }
     public static void death(DamageSource source, ServerPlayer player) {
-        if (player != null && ModConfig.INSTANCE().getStatus().isSDeathEnable() && ModConfig.INSTANCE().getStatus().isSEnable()) {
+        if (player != null && ConfigManager.instance().getStatus().isSDeathEnable() && ConfigManager.instance().getStatus().isSEnable()) {
             LivingEntity livingEntity2 = player.getKillCredit();
             String message = "";
 
@@ -98,7 +97,7 @@ public class IPlayerEvent {
         //$$ boolean displayExist = advancement.display().isPresent();
         //#endif
 
-        if (ModConfig.INSTANCE().getStatus().isSAdvanceEnable() && displayExist && ModConfig.INSTANCE().getStatus().isSEnable()) {
+        if (ConfigManager.instance().getStatus().isSAdvanceEnable() && displayExist && ConfigManager.instance().getStatus().isSEnable()) {
             //#if MC <= 12001
             DisplayInfo display = advancement.getDisplay();
             //#else

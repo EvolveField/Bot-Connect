@@ -3,8 +3,8 @@ package cn.evole.mods.mcbot.core.event;
 import cn.evole.mods.mcbot.Const;
 import cn.evole.mods.mcbot.McBot;
 import cn.evole.mods.mcbot.cmds.CmdApi;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.core.data.ChatRecordApi;
-import cn.evole.mods.mcbot.config.ModConfig;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.annotations.SubscribeEvent;
 import cn.evole.onebot.client.interfaces.Listener;
@@ -15,9 +15,8 @@ import cn.evole.onebot.sdk.event.notice.group.GroupDecreaseNoticeEvent;
 import cn.evole.onebot.sdk.event.notice.group.GroupIncreaseNoticeEvent;
 import cn.evole.onebot.sdk.util.MsgUtils;
 import lombok.val;
-import net.minecraft.network.chat.Component;
 //#if MC <11900
-import net.minecraft.network.chat.TextComponent;
+
 //#endif
 
 
@@ -30,16 +29,16 @@ import net.minecraft.network.chat.TextComponent;
 public class IBotEvent implements Listener {
     @SubscribeEvent
     public void onGroup(GroupMessageEvent event){
-            if (ModConfig.INSTANCE().getCommon().getGroupIdList().contains(event.getGroupId())//判断是否是配置中的群
-                    && ModConfig.INSTANCE().getStatus().isREnable()//总接受开关
-                    && event.getUserId() != ModConfig.INSTANCE().getBotConfig().getBotId()//过滤机器人
+            if (ConfigManager.instance().getCommon().getGroupIdList().contains(event.getGroupId())//判断是否是配置中的群
+                    && ConfigManager.instance().getStatus().isREnable()//总接受开关
+                    && event.getUserId() != ConfigManager.instance().getBotConfig().getBotId()//过滤机器人
             ){
                 String send = CQUtils.replace(event, 3000);//暂时匹配仅符合字符串聊天内容与图片
-                if (!send.startsWith(ModConfig.INSTANCE().getCmd().getCmdStart())//过滤命令前缀
+                if (!send.startsWith(ConfigManager.instance().getCmd().getCmdStart())//过滤命令前缀
                 ) {
-                    if (ModConfig.INSTANCE().getStatus().isRChatEnable())/*接受聊天开关*/ onGroupMessage(event, send);
+                    if (ConfigManager.instance().getStatus().isRChatEnable())/*接受聊天开关*/ onGroupMessage(event, send);
                 }
-                else if (ModConfig.INSTANCE().getStatus().isRCmdEnable()//接受命令开关
+                else if (ConfigManager.instance().getStatus().isRCmdEnable()//接受命令开关
                 ){
                     onGroupCmd(event, send);
                 }
@@ -48,21 +47,21 @@ public class IBotEvent implements Listener {
 
 
     private void onGroupMessage(GroupMessageEvent event, String send) {
-            if (ModConfig.INSTANCE().getCmd().isQqChatPrefixOn()) {
+            if (ConfigManager.instance().getCmd().isQqChatPrefixOn()) {
                 val split = send.split(" ");
-                if (ModConfig.INSTANCE().getCmd().getQqChatPrefix().equals(split[0])) //指定前缀发送
+                if (ConfigManager.instance().getCmd().getQqChatPrefix().equals(split[0])) //指定前缀发送
                     send = split[1];
                 else return;
             }
             val nick = event.getSender().getNickname();
-            String groupNick = ModConfig.INSTANCE().getCmd().isGroupNickOn() // 是否使用群昵称
+            String groupNick = ConfigManager.instance().getCmd().isGroupNickOn() // 是否使用群昵称
                     ? nick == null ? event.getSender().getCard() : nick // 防止api返回为空
                     : event.getSender().getNickname();
 
-            String finalMsg = ModConfig.INSTANCE().getCmd().isGamePrefixOn()
-                    ? ModConfig.INSTANCE().getCmd().isIdGamePrefixOn()
-                    ? String.format("§b[§l%s§r(§5%s§b)]§a<%s>§f %s", ModConfig.INSTANCE().getCmd().getQqGamePrefix(), event.getGroupId(), groupNick, send)
-                    : String.format("§b[§l%s§b]§a<%s>§f %s", ModConfig.INSTANCE().getCmd().getQqGamePrefix(), groupNick, send)
+            String finalMsg = ConfigManager.instance().getCmd().isGamePrefixOn()
+                    ? ConfigManager.instance().getCmd().isIdGamePrefixOn()
+                    ? String.format("§b[§l%s§r(§5%s§b)]§a<%s>§f %s", ConfigManager.instance().getCmd().getQqGamePrefix(), event.getGroupId(), groupNick, send)
+                    : String.format("§b[§l%s§b]§a<%s>§f %s", ConfigManager.instance().getCmd().getQqGamePrefix(), groupNick, send)
                     : String.format("§a<%s>§f %s", groupNick, send);
 
             ChatRecordApi.add(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
@@ -89,20 +88,20 @@ public class IBotEvent implements Listener {
 
     @SubscribeEvent
     public void onGroupMemberJoin(GroupIncreaseNoticeEvent event) {
-        if (ModConfig.INSTANCE().getCommon().getGroupIdList().contains(event.getGroupId())
-                && ModConfig.INSTANCE().getStatus().isSEnable()
-                && ModConfig.INSTANCE().getStatus().isSQqWelcomeEnable()) {
-            val msg = MsgUtils.builder().at(event.getUserId()).text(ModConfig.INSTANCE().getCmd().getWelcomeNotice()).build();
+        if (ConfigManager.instance().getCommon().getGroupIdList().contains(event.getGroupId())
+                && ConfigManager.instance().getStatus().isSEnable()
+                && ConfigManager.instance().getStatus().isSQqWelcomeEnable()) {
+            val msg = MsgUtils.builder().at(event.getUserId()).text(ConfigManager.instance().getCmd().getWelcomeNotice()).build();
             Const.sendGroupMsg(event.getGroupId(), msg);
         }
     }
 
     @SubscribeEvent
     public void onGroupMemberQuit(GroupDecreaseNoticeEvent event) {
-        if (ModConfig.INSTANCE().getCommon().getGroupIdList().contains(event.getGroupId())
-                && ModConfig.INSTANCE().getStatus().isSEnable()
-                && ModConfig.INSTANCE().getStatus().isSQqLeaveEnable()) {
-            val msg = MsgUtils.builder().at(event.getUserId()).text(ModConfig.INSTANCE().getCmd().getLeaveNotice()).build();
+        if (ConfigManager.instance().getCommon().getGroupIdList().contains(event.getGroupId())
+                && ConfigManager.instance().getStatus().isSEnable()
+                && ConfigManager.instance().getStatus().isSQqLeaveEnable()) {
+            val msg = MsgUtils.builder().at(event.getUserId()).text(ConfigManager.instance().getCmd().getLeaveNotice()).build();
             Const.sendGroupMsg(event.getGroupId(), msg);
         }
     }
@@ -110,7 +109,7 @@ public class IBotEvent implements Listener {
     @SubscribeEvent
     public void onLifeCycle(LifecycleMetaEvent event) {
         if (!event.getSubType().equals("connect")) return;
-        if (!ModConfig.INSTANCE().getCommon().getGroupIdList().isEmpty()
+        if (!ConfigManager.instance().getCommon().getGroupIdList().isEmpty()
         ) {
             val msg = MsgUtils.builder().text("▌ 群服互联已连接 ┈━═☆").build();
             Const.sendAllGroupMsg(msg);

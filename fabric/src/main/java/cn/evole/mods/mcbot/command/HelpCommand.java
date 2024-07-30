@@ -1,7 +1,6 @@
 package cn.evole.mods.mcbot.command;
 
 
-import cn.evole.mods.mcbot.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
@@ -64,7 +63,6 @@ public class HelpCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal(toSend).append(urlC).append(endC), true);
         //#endif
-        ModConfig.save();
         return 1;
     }
 }

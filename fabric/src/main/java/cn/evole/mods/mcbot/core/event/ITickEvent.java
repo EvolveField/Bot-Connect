@@ -1,10 +1,10 @@
 package cn.evole.mods.mcbot.core.event;
 
+import cn.evole.mods.mcbot.config.ConfigManager;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;
 import java.util.LinkedList;
 import java.util.Queue;
-import cn.evole.mods.mcbot.config.ModConfig;
 //#if MC <= 11802
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.Util;
@@ -27,7 +27,7 @@ public class ITickEvent {
 
     public static void register(MinecraftServer server) {
         MutableComponent toSend = SEND_QUEUE.poll();
-        if (ModConfig.INSTANCE() != null
+        if (ConfigManager.instance() != null
                 && server != null
                 && server.isDedicatedServer()
                 && toSend != null

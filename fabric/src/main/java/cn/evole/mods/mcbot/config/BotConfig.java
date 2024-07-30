@@ -26,11 +26,11 @@ public class BotConfig{
     @Comment("机器人qq")
     private long botId = 0L;//机器人qq
     @Comment("自动重连")
-    private boolean reconnect = true;
+    private boolean reconnect = false;
     @Comment("自动重连次数")
-    private int maxReconnectAttempts = 5;
+    private int maxReconnectAttempts = 3;
     @Comment("超时宽容度（毫秒）")
-    private long timeoutCompensation = 5000;
+    private long timeoutCompensation = 1000;
 
     public cn.evole.onebot.client.core.BotConfig build(){
         return new cn.evole.onebot.client.core.BotConfig(url, token, botId, true, mirai, reconnect, maxReconnectAttempts, "string");

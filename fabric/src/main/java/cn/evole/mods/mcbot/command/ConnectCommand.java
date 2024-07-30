@@ -3,18 +3,16 @@ package cn.evole.mods.mcbot.command;
 
 import cn.evole.mods.mcbot.Const;
 import cn.evole.mods.mcbot.McBot;
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import java.util.regex.Pattern;
-
+import net.minecraft.network.chat.Component;
 //#if MC <11900
 import net.minecraft.network.chat.TextComponent;
-//#else
-//$$ import net.minecraft.network.chat.Component;
 //#endif
 
 public class ConnectCommand {
@@ -25,8 +23,7 @@ public class ConnectCommand {
         val parameter = context.getArgument("parameter", String.class);
 
         if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()) {
-            ModConfig.INSTANCE().getBotConfig().setUrl(String.format("ws://%s", parameter));
-            ModConfig.save();
+            ConfigManager.instance().getBotConfig().setUrl(String.format("ws://%s", parameter));
             doConnect(context);
             return 1;
         } else {

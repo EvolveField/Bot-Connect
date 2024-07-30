@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot;
 
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.core.event.*;
 import cn.evole.mods.mcbot.core.data.UserBindApi;
 import cn.evole.mods.mcbot.core.data.ChatRecordApi;
@@ -17,6 +18,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
+
+import java.io.IOException;
 import java.nio.file.Path;
 //#if MC >= 11900
 //$$ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -26,7 +29,9 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
 //兼容vanish
 import cn.evole.mods.mcbot.init.compat.vanish.VanishCompat;
+import org.spongepowered.configurate.reference.WatchServiceListener;
 
+import static cn.evole.mods.mcbot.Const.LOGGER;
 
 
 public class McBot implements ModInitializer {
@@ -37,13 +42,12 @@ public class McBot implements ModInitializer {
     public static Path CONFIG_FILE;
     public static Path LIB_FOLDER;
 
-    public static McBot INSTANCE = new McBot();
-
     public static OneBotClient onebot;
 
     public static boolean connected = false;
     public static KeepAlive keepAlive;
-
+    public static ConfigManager configManager;
+    public static WatchServiceListener listener;
     @Override
     public void onInitialize() {
         init();
@@ -77,6 +81,12 @@ public class McBot implements ModInitializer {
         FileUtil.checkFolder(LIB_FOLDER);
         CONFIG_FILE = CONFIG_FOLDER.resolve("config.hocon");
         LibUtils.create(LIB_FOLDER, "libs.txt").download();//下载依赖
+        try {
+            listener = WatchServiceListener.create();
+            configManager = new ConfigManager(CONFIG_FILE, listener);
+        } catch (Exception e) {
+            LOGGER.error("配置加载错误...");
+        }
         I18n.init();//初始化国际化
         UserBindApi.load(CONFIG_FOLDER);//群服绑定
         ChatRecordApi.load(CONFIG_FOLDER);//消息记录
@@ -87,13 +97,8 @@ public class McBot implements ModInitializer {
     }
 
     public void onServerStarted(MinecraftServer server) {
-        try {
-            ModConfig.load();
-        } catch (Exception e) {
-            Const.LOGGER.error("配置加载错误...");
-        }
-        if (ModConfig.INSTANCE().getCommon().isAutoOpen()) {
-            onebot = OneBotClient.create(ModConfig.INSTANCE().getBotConfig().build()).open().registerEvents(new IBotEvent());
+        if (ConfigManager.instance().getCommon().isAutoOpen()) {
+            onebot = OneBotClient.create(ConfigManager.instance().getBotConfig().build()).open().registerEvents(new IBotEvent());
             connected = true;
         }
         CustomCmdHandler.INSTANCE.load();//自定义命令加载
@@ -103,7 +108,7 @@ public class McBot implements ModInitializer {
 
     public void onServerStopping(MinecraftServer server) {
         Const.isShutdown = true;
-        Const.LOGGER.info("▌ §c正在关闭群服互联");
+        LOGGER.info("▌ §c正在关闭群服互联");
         UserBindApi.save(CONFIG_FOLDER);
         ChatRecordApi.save(CONFIG_FOLDER);
         CustomCmdHandler.INSTANCE.clear();//自定义命令持久层清空
@@ -113,6 +118,12 @@ public class McBot implements ModInitializer {
         Const.shutdown();
         CQUtils.shutdown();
         if (onebot != null) onebot.close();
+        configManager.close();
+        try {
+            listener.close();
+        } catch (IOException e) {
+            LOGGER.error("无法关闭监听配置文件进程，请手动关闭");
+        }
     }
 
 }

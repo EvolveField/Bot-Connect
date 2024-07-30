@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.util.locale;
 
 import cn.evole.mods.mcbot.Const;
-import cn.evole.mods.mcbot.config.ModConfig;
+import cn.evole.mods.mcbot.config.ConfigManager;
 import cn.evole.mods.mcbot.util.MCVerUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,11 +28,11 @@ public class I18n {
         val version = MCVerUtil.getMcVersion().replace(".", "_");
 
         Optional<Path> optional = FabricLoader.getInstance().getModContainer("mcbot_" + version).orElseThrow(null)
-                .findPath("/lang/" + ModConfig.INSTANCE().getCommon().getLanguageSelect() + ".json");
+                .findPath("/lang/" + ConfigManager.instance().getCommon().getLanguageSelect() + ".json");
 
         if (!optional.isPresent()) {
             Const.LOGGER.warn("-----------------------------------------");
-            Const.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.INSTANCE().getCommon().getLanguageSelect() + "\" and uses \"en_us\" by default!");
+            Const.LOGGER.warn("McBot cannot find translations for \"" + ConfigManager.instance().getCommon().getLanguageSelect() + "\" and uses \"en_us\" by default!");
             Const.LOGGER.warn("");
             Const.LOGGER.warn("You are welcome to contribute translations!");
             Const.LOGGER.warn("Contributing: https://github.com/cnlimiter/McBot#Contributing");
