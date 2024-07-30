@@ -1,10 +1,9 @@
 package cn.evole.mods.mcbot.config;
 
-import cn.evole.config.toml.AutoLoadTomlConfig;
-import cn.evole.config.toml.annotation.TableField;
 import lombok.Getter;
 import lombok.Setter;
-import org.tomlj.TomlTable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
 
 /**
  * Name: McBot-fabric / StatusConfig
@@ -15,39 +14,31 @@ import org.tomlj.TomlTable;
 
 @Getter
 @Setter
-public class StatusConfig extends AutoLoadTomlConfig {
+@ConfigSerializable
+public class StatusConfig{
     //接收来自q群的消息开关
-    @TableField(rightComment = "全局接收")
+    @Comment("全局接收")
     private boolean rEnable = true;
-    @TableField(rightComment = "命令接收")
+    @Comment("命令接收")
     private boolean rCmdEnable = true;
-    @TableField(rightComment = "消息接收")
+    @Comment("消息接收")
     private boolean rChatEnable = true;
 
     //发往q群消息的开关
-    @TableField(rightComment = "发送消息")
+    @Comment("发送消息")
     private boolean sEnable = true;
-    @TableField(rightComment = "发送欢迎玩家入群消息")
+    @Comment("发送欢迎玩家入群消息")
     private boolean sQqWelcomeEnable = true;
-    @TableField(rightComment = "发送玩家退群消息")
+    @Comment("发送玩家退群消息")
     private boolean sQqLeaveEnable = true;
-    @TableField(rightComment = "发送加入服务器消息")
+    @Comment("发送加入服务器消息")
     private boolean sJoinEnable = true;
-    @TableField(rightComment = "发送离开服务器消息")
+    @Comment("发送离开服务器消息")
     private boolean sLeaveEnable = true;
-    @TableField(rightComment = "发送玩家死亡消息")
+    @Comment("发送玩家死亡消息")
     private boolean sDeathEnable = true;
-    @TableField(rightComment = "发送服务器聊天")
+    @Comment("发送服务器聊天")
     private boolean sChatEnable = true;
-    @TableField(rightComment = "发送成就消息")
+    @Comment("发送成就消息")
     private boolean sAdvanceEnable = true;
-
-    public StatusConfig(){
-        super(null);
-    }
-
-    public StatusConfig(TomlTable source) {
-        super(source);
-        this.load(StatusConfig.class);
-    }
 }

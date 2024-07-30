@@ -27,7 +27,7 @@ public class ITickEvent {
 
     public static void register(MinecraftServer server) {
         MutableComponent toSend = SEND_QUEUE.poll();
-        if (ModConfig.INSTANCE != null
+        if (ModConfig.INSTANCE() != null
                 && server != null
                 && server.isDedicatedServer()
                 && toSend != null

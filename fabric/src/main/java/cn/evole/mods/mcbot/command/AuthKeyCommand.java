@@ -14,7 +14,7 @@ public class AuthKeyCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("AuthKey", String.class);
-        ModConfig.INSTANCE.getBotConfig().setToken(id);
+        ModConfig.INSTANCE().getBotConfig().setToken(id);
         //#if MC >= 12000
         //$$ context.getSource().sendSuccess(()->Component.literal("已设置框架的AuthKey为:" + id), true);
         //#elseif MC < 11900
@@ -22,7 +22,7 @@ public class AuthKeyCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal("已设置Mirai框架的VerifyKey为:" + id), true);
         //#endif
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 

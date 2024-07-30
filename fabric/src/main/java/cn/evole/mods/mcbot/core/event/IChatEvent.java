@@ -19,18 +19,18 @@ public class IChatEvent {
         if (VanishAPI.isVanished(player)) return;
 
         val split = message.split(" ");
-        if (ModConfig.INSTANCE != null
-                && ModConfig.INSTANCE.getStatus().isSChatEnable()
-                && ModConfig.INSTANCE.getStatus().isSEnable()
+        if (ModConfig.INSTANCE() != null
+                && ModConfig.INSTANCE().getStatus().isSChatEnable()
+                && ModConfig.INSTANCE().getStatus().isSEnable()
                 && !message.contains("CICode")
                 && !player.getCommandSenderWorld().isClientSide
         ) {
-            String msg = String.format(ModConfig.INSTANCE.getCmd().isMcPrefixOn()
-                            ? "[" + ModConfig.INSTANCE.getCmd().getMcPrefix() + "]<%s> %s"
+            String msg = String.format(ModConfig.INSTANCE().getCmd().isMcPrefixOn()
+                            ? "[" + ModConfig.INSTANCE().getCmd().getMcPrefix() + "]<%s> %s"
                             : "<%s> %s",
                     player.getDisplayName().getString(),
-                    ModConfig.INSTANCE.getCmd().isMcChatPrefixOn()
-                            && ModConfig.INSTANCE.getCmd().getMcChatPrefix().equals(split[0]) ? split[1] : message);
+                    ModConfig.INSTANCE().getCmd().isMcChatPrefixOn()
+                            && ModConfig.INSTANCE().getCmd().getMcChatPrefix().equals(split[0]) ? split[1] : message);
 
             Const.sendAllGroupMsg(() -> MsgUtils.builder().text(CQUtils.replace(msg)).build(), player);
 

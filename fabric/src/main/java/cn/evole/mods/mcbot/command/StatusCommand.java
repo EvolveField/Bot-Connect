@@ -14,26 +14,26 @@ import net.minecraft.network.chat.TextComponent;
 public class StatusCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        boolean clientEnabled =  ModConfig.INSTANCE.getCommon().isEnable();
+        boolean clientEnabled =  ModConfig.INSTANCE().getCommon().isEnable();
 
-        boolean receiveEnabled =  ModConfig.INSTANCE.getStatus().isREnable();
-        boolean rChatEnabled =  ModConfig.INSTANCE.getStatus().isRChatEnable();
-        boolean rCmdEnabled =  ModConfig.INSTANCE.getStatus().isRCmdEnable();
+        boolean receiveEnabled =  ModConfig.INSTANCE().getStatus().isREnable();
+        boolean rChatEnabled =  ModConfig.INSTANCE().getStatus().isRChatEnable();
+        boolean rCmdEnabled =  ModConfig.INSTANCE().getStatus().isRCmdEnable();
 
-        boolean sendEnabled =  ModConfig.INSTANCE.getStatus().isSEnable();
-        boolean sJoinEnabled =  ModConfig.INSTANCE.getStatus().isSJoinEnable();
-        boolean sLeaveEnabled =  ModConfig.INSTANCE.getStatus().isSLeaveEnable();
-        boolean sDeathEnabled =  ModConfig.INSTANCE.getStatus().isSDeathEnable();
-        boolean sAchievementsEnabled =  ModConfig.INSTANCE.getStatus().isSAdvanceEnable();
-        boolean sQqWelcomeEnabled =  ModConfig.INSTANCE.getStatus().isSQqWelcomeEnable();
-        boolean sQqLeaveEnabled =  ModConfig.INSTANCE.getStatus().isSQqLeaveEnable();
+        boolean sendEnabled =  ModConfig.INSTANCE().getStatus().isSEnable();
+        boolean sJoinEnabled =  ModConfig.INSTANCE().getStatus().isSJoinEnable();
+        boolean sLeaveEnabled =  ModConfig.INSTANCE().getStatus().isSLeaveEnable();
+        boolean sDeathEnabled =  ModConfig.INSTANCE().getStatus().isSDeathEnable();
+        boolean sAchievementsEnabled =  ModConfig.INSTANCE().getStatus().isSAdvanceEnable();
+        boolean sQqWelcomeEnabled =  ModConfig.INSTANCE().getStatus().isSQqWelcomeEnable();
+        boolean sQqLeaveEnabled =  ModConfig.INSTANCE().getStatus().isSQqLeaveEnable();
 
-        val groupId =  ModConfig.INSTANCE.getCommon().getGroupIdList().toString();
-        boolean debuggable =  ModConfig.INSTANCE.getCommon().isDebug();
+        val groupId =  ModConfig.INSTANCE().getCommon().getGroupIdList().toString();
+        boolean debuggable =  ModConfig.INSTANCE().getCommon().isDebug();
         boolean connected = McBot.onebot.getWs().isOpen();
         boolean white = McBot.SERVER.getPlayerList().isUsingWhitelist();
-        String host =  ModConfig.INSTANCE.getBotConfig().getUrl();
-        long QQid =  ModConfig.INSTANCE.getBotConfig().getBotId();
+        String host =  ModConfig.INSTANCE().getBotConfig().getUrl();
+        long QQid =  ModConfig.INSTANCE().getBotConfig().getBotId();
         String toSend =
                 "\n姬妻人服务状态:\n"
                         + "姬妻人QQId:" + QQid + " \n"
@@ -62,7 +62,7 @@ public class StatusCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal(toSend), true);
         //#endif
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 }

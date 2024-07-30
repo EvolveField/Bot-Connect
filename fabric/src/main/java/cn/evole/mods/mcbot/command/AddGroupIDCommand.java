@@ -15,7 +15,7 @@ public class AddGroupIDCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("GroupId", Long.class);
-        if (ModConfig.INSTANCE.getCommon().getGroupIdList().contains(id)) {
+        if (ModConfig.INSTANCE().getCommon().getGroupIdList().contains(id)) {
             //#if MC >= 12000
             //$$ context.getSource().sendSuccess(()->Component.literal("QQ群号:" + id + "已经出现了！"), true);
             //#elseif MC < 11900
@@ -24,7 +24,7 @@ public class AddGroupIDCommand {
             //$$ context.getSource().sendSuccess(Component.literal("QQ群号:" + id + "已经出现了！"), true);
             //#endif
         } else {
-            ModConfig.INSTANCE.getCommon().addGroupId(id);
+            ModConfig.INSTANCE().getCommon().addGroupId(id);
             //#if MC >= 12000
             //$$ context.getSource().sendSuccess(()->Component.literal("已成功添加QQ群号:" + id + "！"), true);
             //#elseif MC < 11900
@@ -33,7 +33,7 @@ public class AddGroupIDCommand {
             //$$ context.getSource().sendSuccess(Component.literal("已成功添加QQ群号:" + id + "！"), true);
             //#endif
         }
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 

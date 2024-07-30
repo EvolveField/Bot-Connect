@@ -25,8 +25,8 @@ public class ConnectCommand {
         val parameter = context.getArgument("parameter", String.class);
 
         if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()) {
-            ModConfig.INSTANCE.getBotConfig().setUrl(String.format("ws://%s", parameter));
-            ModConfig.INSTANCE.save();
+            ModConfig.INSTANCE().getBotConfig().setUrl(String.format("ws://%s", parameter));
+            ModConfig.save();
             doConnect(context);
             return 1;
         } else {

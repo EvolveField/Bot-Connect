@@ -28,11 +28,11 @@ public class I18n {
         val version = MCVerUtil.getMcVersion().replace(".", "_");
 
         Optional<Path> optional = FabricLoader.getInstance().getModContainer("mcbot_" + version).orElseThrow(null)
-                .findPath("/lang/" + ModConfig.INSTANCE.getCommon().getLanguageSelect() + ".json");
+                .findPath("/lang/" + ModConfig.INSTANCE().getCommon().getLanguageSelect() + ".json");
 
         if (!optional.isPresent()) {
             Const.LOGGER.warn("-----------------------------------------");
-            Const.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.INSTANCE.getCommon().getLanguageSelect() + "\" and uses \"en_us\" by default!");
+            Const.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.INSTANCE().getCommon().getLanguageSelect() + "\" and uses \"en_us\" by default!");
             Const.LOGGER.warn("");
             Const.LOGGER.warn("You are welcome to contribute translations!");
             Const.LOGGER.warn("Contributing: https://github.com/cnlimiter/McBot#Contributing");

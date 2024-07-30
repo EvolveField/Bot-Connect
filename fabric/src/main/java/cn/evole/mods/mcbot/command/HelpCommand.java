@@ -24,13 +24,12 @@ public class HelpCommand {
                         + "2.请使用/mcbot addGroup <GroupId> 添加互通的群\n"
                         + "3.请使用/mcbot setBot <BotId> 设置机器人的qq号\n"
                         + "4.如果打开了鉴权验证，请输入/mcbot setAuthKey <AuthKey> 设置\n"
-                        + "5.准备工作完成，请使用/mcbot connect <cqhttp/mirai> <host:port> 与框架对接\n"
+                        + "5.准备工作完成，请使用/mcbot connect <host:port> 与框架对接\n"
                         + "*************************************\n"
-                        + "在框架默认配置下，请使用/mcbot connect <cqhttp/mirai>\n"
-                        + "如果使用的cqhttp，配置完cqhttp后，本模组会自动连接\n"
+                        + "在框架默认配置下，请使用/mcbot connect\n"
                         + "*************************************\n"
                         + "全部命令：\n"
-                        + "/mcbot connect <cqhttp/mirai> <host:port>\n"
+                        + "/mcbot connect <host:port>\n"
                         + "/mcbot addGroup <GroupId>       添加群\n"
                         + "/mcbot delGroup <GroupId>    删除群\n"
                         + "/mcbot addChannel <ChannelId>       添加群\n"
@@ -65,7 +64,7 @@ public class HelpCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal(toSend).append(urlC).append(endC), true);
         //#endif
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 }

@@ -73,7 +73,7 @@ public class CQUtils {
             val data = matcher.group(2);
             switch (type) {
                 case "image":
-                    if (ModConfig.INSTANCE.getCommon().isImageOn() && Const.isLoad("chatimage")) {
+                    if (ModConfig.INSTANCE().getCommon().isImageOn() && Const.isLoad("chatimage")) {
                         val url = Arrays.stream(
                                         StringEscapeUtils
                                                 .escapeJava(data)//转义字符转义

@@ -24,7 +24,7 @@ public class ListCustomCommand {
         //#else
         //$$ context.getSource().sendSuccess(Component.literal(out.toString()), true);
         //#endif
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 }

@@ -49,13 +49,13 @@ public class Const {
     }
 
     public static void sendAllGroupMsg(String message){
-        for (long id : ModConfig.INSTANCE.getCommon().getGroupIdList()){
+        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
             sendGroupMsg(id, message);
         }
     }
 
     public static void sendAllGroupMsg(Callable<String> message){
-        for (long id : ModConfig.INSTANCE.getCommon().getGroupIdList()){
+        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
             sendGroupMsg(id, message);
         }
     }
@@ -66,7 +66,7 @@ public class Const {
      * @param player 玩家
      */
     public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player){
-        for (long id : ModConfig.INSTANCE.getCommon().getGroupIdList()){
+        for (long id : ModConfig.INSTANCE().getCommon().getGroupIdList()){
             messageThread.submit(id, message, false, player);
         }
     }
@@ -107,10 +107,10 @@ public class Const {
     public static void wsConnect(){
         McBot.onebot.close();//关闭线程
         McBot.onebot = null;//强制为null
-        McBot.onebot = OneBotClient.create(ModConfig.INSTANCE.getBotConfig().build()).open().registerEvents(new IBotEvent());//重新实例化
-        ModConfig.INSTANCE.getStatus().setREnable(true);
-        ModConfig.INSTANCE.getCommon().setEnable(true);
-        ModConfig.INSTANCE.save();
+        McBot.onebot = OneBotClient.create(ModConfig.INSTANCE().getBotConfig().build()).open().registerEvents(new IBotEvent());//重新实例化
+        ModConfig.INSTANCE().getStatus().setREnable(true);
+        ModConfig.INSTANCE().getCommon().setEnable(true);
+        ModConfig.save();
         McBot.connected = true;
     }
 

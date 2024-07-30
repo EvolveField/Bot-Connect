@@ -1,13 +1,15 @@
 package cn.evole.mods.mcbot.config;
 
-import cn.evole.config.toml.AutoReloadToml;
-import cn.evole.config.toml.TomlUtil;
-import cn.evole.config.toml.annotation.Reload;
-import cn.evole.config.toml.annotation.TableField;
-import cn.evole.mods.mcbot.McBot;
 import lombok.Getter;
 import lombok.Setter;
-import org.tomlj.TomlTable;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+
+import static cn.evole.mods.mcbot.Const.LOGGER;
+import static cn.evole.mods.mcbot.McBot.CONFIG_FILE;
 
 /**
  * Description:
@@ -18,31 +20,47 @@ import org.tomlj.TomlTable;
 
 @Getter
 @Setter
-public class ModConfig extends AutoReloadToml {
-    @Reload(autoReload = true)
-    public static ModConfig INSTANCE = TomlUtil.readConfig(McBot.CONFIG_FILE, ModConfig.class, true);
-
-    @TableField(value = "common", topComment = "通用")
+@ConfigSerializable
+public class ModConfig{
+    private static ModConfig modConfig = new ModConfig();
+    private static CommentedConfigurationNode rootNode;
+    public static HoconConfigurationLoader loader = HoconConfigurationLoader.builder().path(CONFIG_FILE).build();
+    public static ModConfig INSTANCE(){
+        return modConfig;
+    }
+    
+    @Comment("通用")
     private CommonConfig common = new CommonConfig();
-    @TableField(value = "status", topComment = "状态")
+    @Comment("状态")
     private StatusConfig status = new StatusConfig();
-    @TableField(value = "cmd", topComment = "命令")
+    @Comment("命令")
     private CmdConfig cmd = new CmdConfig();
-    @TableField(value = "bot_config", topComment = "机器人")
+    @Comment("机器人")
     private BotConfig botConfig = new BotConfig();
 
 
-    public ModConfig() {
-        super(null, McBot.CONFIG_FILE);
+    public static void load() throws Exception {
+        LOGGER.info("加载配置文件...");
+        rootNode = loader.load();
+        if (!CONFIG_FILE.toFile().exists()) {
+            LOGGER.info("没有找到配置文件，重新生成!");
+            rootNode.set(ModConfig.class, new ModConfig());
+            loader.save(rootNode);
+        }
+        modConfig = rootNode.get(ModConfig.class, new ModConfig());
     }
 
-    public ModConfig(TomlTable source) {
-        super(source, McBot.CONFIG_FILE);
-        this.load(ModConfig.class);
+    public static void save(){
+        try {
+            loader.save(rootNode);
+        } catch (ConfigurateException e) {
+            LOGGER.error("配置保存错误...");
+        }
     }
 
-    public void save(){
-        TomlUtil.writeConfig(McBot.CONFIG_FILE,INSTANCE);
+    public static void reload() throws Exception {
+        loader.save(rootNode);
+        modConfig = rootNode.get(ModConfig.class, new ModConfig());
     }
 
 }

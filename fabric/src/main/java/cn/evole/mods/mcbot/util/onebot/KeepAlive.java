@@ -32,14 +32,14 @@ public class KeepAlive {
 
     public void register() {
         while (true) {
-            val limit = ModConfig.INSTANCE.getBotConfig().getMaxReconnectAttempts();
-            if (McBot.connected && ModConfig.INSTANCE.getBotConfig().isReconnect() && limit >= 1) {
+            val limit = ModConfig.INSTANCE().getBotConfig().getMaxReconnectAttempts();
+            if (McBot.connected && ModConfig.INSTANCE().getBotConfig().isReconnect() && limit >= 1) {
                 if (McBot.onebot.getWs().isClosed()) {  // 当你写完复杂的机制后突然发现有现成的api时 be like
                     reconnect(limit);
                 }
             }
             try {
-                Thread.sleep(ModConfig.INSTANCE.getBotConfig().getTimeoutCompensation());
+                Thread.sleep(ModConfig.INSTANCE().getBotConfig().getTimeoutCompensation());
             } catch (InterruptedException ignored) {
                 return;
             }
@@ -52,7 +52,7 @@ public class KeepAlive {
             Const.LOGGER.info("正在尝试重连...第{}次", hasReconnect + 1);
             Const.wsConnect();
             try {
-                Thread.sleep(ModConfig.INSTANCE.getBotConfig().getTimeoutCompensation());
+                Thread.sleep(ModConfig.INSTANCE().getBotConfig().getTimeoutCompensation());
             } catch (InterruptedException ignored) {
                 return;
             }

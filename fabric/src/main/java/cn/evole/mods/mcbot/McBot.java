@@ -75,7 +75,7 @@ public class McBot implements ModInitializer {
         FileUtil.checkFolder(CONFIG_FOLDER);
         LIB_FOLDER = CONFIG_FOLDER.resolve("libs");
         FileUtil.checkFolder(LIB_FOLDER);
-        CONFIG_FILE = CONFIG_FOLDER.resolve("config.toml");
+        CONFIG_FILE = CONFIG_FOLDER.resolve("config.hocon");
         LibUtils.create(LIB_FOLDER, "libs.txt").download();//下载依赖
         I18n.init();//初始化国际化
         UserBindApi.load(CONFIG_FOLDER);//群服绑定
@@ -87,9 +87,13 @@ public class McBot implements ModInitializer {
     }
 
     public void onServerStarted(MinecraftServer server) {
-        ModConfig.INSTANCE.save();
-        if (ModConfig.INSTANCE.getCommon().isAutoOpen()) {
-            onebot = OneBotClient.create(ModConfig.INSTANCE.getBotConfig().build()).open().registerEvents(new IBotEvent());
+        try {
+            ModConfig.load();
+        } catch (Exception e) {
+            Const.LOGGER.error("配置加载错误...");
+        }
+        if (ModConfig.INSTANCE().getCommon().isAutoOpen()) {
+            onebot = OneBotClient.create(ModConfig.INSTANCE().getBotConfig().build()).open().registerEvents(new IBotEvent());
             connected = true;
         }
         CustomCmdHandler.INSTANCE.load();//自定义命令加载

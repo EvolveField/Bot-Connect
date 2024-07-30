@@ -16,7 +16,7 @@ public class DebugCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.INSTANCE.getCommon().setDebug(isEnabled);
+        ModConfig.INSTANCE().getCommon().setDebug(isEnabled);
         if (isEnabled) {
             //#if MC >= 12000
             //$$ context.getSource().sendSuccess(()->Component.literal("已开启开发者模式"), true);
@@ -34,7 +34,7 @@ public class DebugCommand {
             //$$ context.getSource().sendSuccess(Component.literal("已关闭开发者模式"), true);
             //#endif
         }
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 }

@@ -14,8 +14,8 @@ public class DelGroupIDCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("GroupID", Long.class);
-        if (ModConfig.INSTANCE.getCommon().getGroupIdList().contains(id)) {
-            ModConfig.INSTANCE.getCommon().removeGroupId(id);
+        if (ModConfig.INSTANCE().getCommon().getGroupIdList().contains(id)) {
+            ModConfig.INSTANCE().getCommon().removeGroupId(id);
         } else {
             //#if MC >= 12000
             //$$ context.getSource().sendSuccess(()->Component.literal("QQ群号:" + id + "并未出现！"), true);
@@ -25,7 +25,7 @@ public class DelGroupIDCommand {
             //$$ context.getSource().sendSuccess(Component.literal("QQ群号:" + id + "并未出现！"), true);
             //#endif
         }
-        ModConfig.INSTANCE.save();
+        ModConfig.save();
         return 1;
     }
 
