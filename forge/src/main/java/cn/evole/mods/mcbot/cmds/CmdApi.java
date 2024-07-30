@@ -39,16 +39,16 @@ public class CmdApi {
             // 如果指令包含list,则强行以非管理员身份执行
             CustomCmdHandler.INSTANCE.getCustomCmds().stream()
                     .filter(customCmd -> customCmd.getRequirePermission() < 1 && performedCommand.equals(customCmd.getCmdAlies()))
-                    .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand), false, customCmd.isVanishSupport()));
+                    .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand, event), false, customCmd.isVanishSupport()));
         }else{
             if (BotUtils.groupAdminParse(event)) {
                 CustomCmdHandler.INSTANCE.getCustomCmds().stream()
                         .filter(customCmd -> performedCommand.equals(customCmd.getCmdAlies()))
-                        .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand), true, customCmd.isVanishSupport()));//admin
+                        .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand, event), true, customCmd.isVanishSupport()));//admin
             } else
                 CustomCmdHandler.INSTANCE.getCustomCmds().stream()
                         .filter(customCmd -> customCmd.getRequirePermission() < 1 && performedCommand.equals(customCmd.getCmdAlies()))
-                        .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand), false, customCmd.isVanishSupport()));
+                        .forEach(customCmd -> GroupCmd(event.getGroupId(), BotUtils.varParse(customCmd, originCommand, event), false, customCmd.isVanishSupport()));
         }
 
     }

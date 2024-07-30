@@ -26,7 +26,7 @@ public class BotUtils {
         AtomicBoolean match = new AtomicBoolean(false);
         CustomCmdHandler.INSTANCE.getCustomCmds().forEach(
                 cmd -> {
-                    if (cmd.getCmdContent().contains("%")) {//是否变量模板
+                    if (cmd.getCmdContent().contains("%") | cmd.getCmdContent().contains("#")) {//是否变量模板
                         if (msg.contains(cmd.getCmdAlies()))//去除命令符号
                             match.set(true);
                     }
@@ -43,11 +43,12 @@ public class BotUtils {
      * @param cmd       q群指令
      * @return 处理完的指令
      */
-    public static String varParse(CustomCmd customCmd, String cmd) {
+    public static String varParse(CustomCmd customCmd, String cmd, GroupMessageEvent event) {
         String returnCmd = "";
         if (isVar(cmd)) {//存在变量
             val replaceContent = customCmd.getCmdContent().split("%")[0].trim();
             returnCmd = cmd.replace(customCmd.getCmdAlies(), replaceContent);//返回q群指令
+            returnCmd = returnCmd.replace("#", event.getSender().getUserId());
         } else returnCmd = customCmd.getCmdContent();//返回普通自定义命令指令
         return returnCmd;
     }
