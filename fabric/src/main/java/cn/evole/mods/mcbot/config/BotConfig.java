@@ -33,7 +33,7 @@ public class BotConfig{
     private long timeoutCompensation = 1000;
 
     public cn.evole.onebot.client.core.BotConfig build(){
-        return new cn.evole.onebot.client.core.BotConfig(url, token, botId, true, mirai, reconnect, maxReconnectAttempts, "string");
+        return new cn.evole.onebot.client.core.BotConfig(url, token, botId, mirai, reconnect, maxReconnectAttempts);
     }
 
 }

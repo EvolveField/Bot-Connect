@@ -25,6 +25,12 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id  ==  "com.github.replaymod.preprocessor" )
+                useModule("com.github.replaymod:preprocessor:${requested.version}")
+        }
+    }
 }
 
 def versions = Arrays.asList(
