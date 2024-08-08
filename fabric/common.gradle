@@ -13,7 +13,7 @@ repositories {
     maven { url =  "https://api.modrinth.com/maven" }
     mavenCentral()
 }
-jar.dependsOn generateRuntimeDownloadResourceForRuntimeDownload
+//jar.dependsOn generateRuntimeDownloadResourceForRuntimeDownload
 
 dependencies {
     minecraft ("com.mojang:minecraft:${minecraft_version}")
