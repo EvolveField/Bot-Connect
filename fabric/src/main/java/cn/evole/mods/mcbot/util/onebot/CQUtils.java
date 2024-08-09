@@ -75,8 +75,8 @@ public class CQUtils {
                 case "image":
                     if (ConfigManager.instance().getCommon().isImageOn() && Const.isLoad("chatimage")) {
                         val url = Arrays.stream(
-                                        StringEscapeUtils
-                                                .escapeJava(data)//转义字符转义
+                                        data
+                                                .replaceAll("&amp;", "&")//转义字符转义
                                                 .split(",")//具体数据分割
                                 )
                                 .filter(it -> it.startsWith("url"))//非空判断

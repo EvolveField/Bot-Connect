@@ -1,5 +1,5 @@
 ===ALGORITHM SHA-256
-cn.evole.onebot:OneBot-Client:0.4.0 3990bb0791cff13a2329aac6aae8aa18df77d7dac9d673a1961fb6750a4d545e
+cn.evole.onebot:OneBot-Client:0.4.1 287f3caf2ba08ab93c26ffbaa23be61f38fe873e3f4c953e50e1d57000b5fffe
 org.spongepowered:configurate-hocon:4.1.2 c24410d1c4bf678a1e96c5e9b47cece307b37170d231a41e4a1787c42c93505f
 com.typesafe:config:1.4.1 4c0aa7e223c75c8840c41fc183d4cd3118140a1ee503e3e08ce66ed2794c948f
 org.spongepowered:configurate-core:4.1.2 bd6a7bae8b01ccccc24119f6db32f5b1bf7ca33de6586f6d9b8ecd26afe146ac

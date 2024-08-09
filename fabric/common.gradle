@@ -13,6 +13,7 @@ repositories {
     maven { url =  "https://api.modrinth.com/maven" }
     mavenCentral()
 }
+
 //jar.dependsOn generateRuntimeDownloadResourceForRuntimeDownload
 
 dependencies {
