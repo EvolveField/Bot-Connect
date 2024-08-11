@@ -30,8 +30,8 @@ _✨ 基于 [OneBot](https://github.com/howmanybots/onebot/blob/master/README.md
 
 # 长期支持版本
 
-> Forge-all   
-> Fabric-all
+> Forge 1.16.5/1.18.2/1.19.2/1.20.1/1.21  
+> Fabric 1.16.5/1.18.2/1.19.2/1.20.1/1.21
 
 # 快速开始
 
@@ -101,17 +101,16 @@ public class WebSocketServerTest {
 # 支持
 
 McBot 以 [OneBot-v11](https://github.com/howmanybots/onebot/tree/master/v11/specs)
-标准协议进行开发，兼容所有支持正向WebSocket的OneBot协议客户端
-
-| 项目地址 | 平台                                            | 核心作者 | 备注 |
-| --- |-----------------------------------------------| --- | --- |
-| [koishijs/koishi](https://github.com/koishijs/koishi) | [koishi](https://koishi.js.org/)              | shigma |  |
-| [onebot-walle/walle-q](https://github.com/onebot-walle/walle-q) |                                               | abrahum |  |
-| [Yiwen-Chan/OneBot-YaYa](https://github.com/Yiwen-Chan/OneBot-YaYa) | [先驱](https://www.xianqubot.com/)              | kanri |  |
-| [richardchien/coolq-http-api](https://github.com/richardchien/coolq-http-api) | CKYU                                          | richardchien | 可在 Mirai 平台使用 [mirai-native](https://github.com/iTXTech/mirai-native) 加载 |
-| [Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp) | [MiraiGo](https://github.com/Mrs4s/MiraiGo)   | Mrs4s |  |
-| [yyuueexxiinngg/OneBot-Mirai](https://github.com/yyuueexxiinngg/onebot-kotlin) | [Mirai](https://github.com/mamoe/mirai)       | yyuueexxiinngg |  |
-| [takayama-lily/onebot](https://github.com/takayama-lily/onebot) | [OICQ](https://github.com/takayama-lily/oicq) | takayama |  |
+标准协议进行开发，兼容所有支持正向WebSocket的OneBot协议端
+| 项目地址                                                                              | 核心作者           | 备注                                                                    |
+|-----------------------------------------------------------------------------------|----------------|-----------------------------------------------------------------------|
+| [Overflow](https://github.com/MrXiaoM/Overflow)                                   | MrXiaoM        | 实现 mirai 的无缝迁移                                                        |
+| [Lagrange.Core](https://github.com/LagrangeDev/Lagrange.Core)                     | NepPure        | C#实现 By Konata.Core                                                   |
+| [OpenShamrock](https://github.com/whitechi73/OpenShamrock)                        | whitechi73     | Xposed框架hook实现                                                        |
+| [Gensokyo](https://github.com/Hoshinonyaruko/Gensokyo)                            | Hoshinonyaruko | 基于官方api 轻量 原生跨平台                                                      |
+| [LLOnebot](https://github.com/LLOneBot/LLOneBot)                                  | linyuchen      | 使用[LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteLoaderQQNT)  |
+| [NapCatQQ](https://github.com/NapNeko/NapCatQQ)                                   | MliKiowa | 基于NTQQ的无头Bot框架  |
+| [OneBot-Mirai](https://github.com/cnlimiter/onebot-mirai)                                   | cnlimiter | Mirai的onebot协议实现  |
 
 # Credits
 

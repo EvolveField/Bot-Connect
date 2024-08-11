@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.config;
+package cn.evole.mods.mcbot.common.config;
 
 import lombok.Getter;
 import lombok.Setter;

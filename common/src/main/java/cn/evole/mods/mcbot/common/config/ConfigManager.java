@@ -1,9 +1,8 @@
-package cn.evole.mods.mcbot.config;
+package cn.evole.mods.mcbot.common.config;
 
 import cn.evole.mods.mcbot.Constants;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.reference.ConfigurationReference;
 import org.spongepowered.configurate.reference.ValueReference;
@@ -38,7 +37,6 @@ public class ConfigManager {
     public void subscribe(Consumer<ModConfig> subscriber) {
         base.updates().subscribe(n -> subscriber.accept(config()));
     }
-
     public void close() throws ConfigurateException {
         base.close();
     }

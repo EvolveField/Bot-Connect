@@ -6,6 +6,6 @@ public class McBotFabric implements ModInitializer {
     
     @Override
     public void onInitialize() {
-        CommonClass.init();
+        McBot.init();
     }
 }

@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.data;
+package cn.evole.mods.mcbot.core.data;
 
 import com.github.houbb.csv.annotation.Csv;
 import lombok.AllArgsConstructor;
