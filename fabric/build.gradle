@@ -1,25 +1,101 @@
 plugins {
-    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
-    id "com.replaymod.preprocess" version "SNAPSHOT"
-    id 'dev.vankka.dependencydownload.plugin' version '1.3.1' apply false
-
+    id 'java'
+    id 'idea'
+    id 'maven-publish'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
+}
+base {
+    archivesName = "${mod_name}-fabric-${minecraft_version}"
+}
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    compileOnly project(":common")
 }
 
-preprocess {
-    def mc11605 = createNode("1.16.5", 1_16_05, "yarn")
-    def mc11802 = createNode("1.18.2", 1_18_02, "yarn")
-    def mc11902 = createNode("1.19.2", 1_19_02, "yarn")
-    def mc11903 = createNode("1.19.3", 1_19_03, "yarn")
-    def mc11904 = createNode("1.19.4", 1_19_04, "yarn")
-    def mc12001 = createNode("1.20.1", 1_20_01, "yarn")
-    def mc12004 = createNode("1.20.4", 1_20_04, "yarn")
-    def mc12100 = createNode("1.21.0", 1_21_00, "yarn")
+loom {
+    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
+}
 
-    mc11605.link(mc11802, null)
-    mc11802.link(mc11902, null)
-    mc11902.link(mc11903, null)
-    mc11903.link(mc11904, null)
-    mc11904.link(mc12001, null)
-    mc12001.link(mc12004, null)
-    mc12004.link(mc12100, null)
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
+}
+tasks.withType(Javadoc).configureEach {
+    source(project(":common").sourceSets.main.allJava)
+}
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            version = "${minecraft_version}-${version}"
+            artifactId = "lighteco-fabric"
+            groupId = "committee.nova.mods"
+
+
+            pom {
+                name = 'lighteco'
+                licenses {
+                    license {
+                        name = 'AGPL V3'
+                        url = 'https://www.gnu.org/licenses/agpl-3.0.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'mikhailtapio'
+                        name = 'MikhailTapio'
+                    }
+                    developer {
+                        id = 'cnlimiter'
+                        name = '演变'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        if (System.getenv('MAVEN_USERNAME') != null && System.getenv('MAVEN_PASSWORD') != null) {
+            maven {
+                name 'S3'
+                url = 'https://maven.nova-committee.cn/s3'
+
+                credentials {
+                    username System.getenv('MAVEN_USERNAME')
+                    password System.getenv('MAVEN_PASSWORD')
+                }
+            }
+        }
+    }
 }

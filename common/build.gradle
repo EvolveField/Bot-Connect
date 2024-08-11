@@ -1,0 +1,39 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'maven-publish'
+    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
+}
+base {
+    archivesName = "${mod_name}-common-${minecraft_version}"
+}
+minecraft {
+    version(minecraft_version)
+    if(file("src/main/resources/${mod_id}.accesswidener").exists()){
+        accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
+    }
+}
+
+dependencies {
+    compileOnly ("org.spongepowered:mixin:0.8.5")
+    compileOnly ("org.projectlombok:lombok:1.18.30")
+    annotationProcessor ("org.projectlombok:lombok:1.18.30")
+    implementation ("cn.evole.onebot:OneBot-Client:${onebot_client_version}"){transitive = false}
+    implementation ("org.spongepowered:configurate-hocon:${hocon_version}")
+    implementation("com.github.houbb:csv:0.2.0")
+    implementation ("com.google.code.findbugs:jsr305:3.0.1")
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId base.archivesName.get()
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}

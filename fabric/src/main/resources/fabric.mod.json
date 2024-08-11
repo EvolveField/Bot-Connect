@@ -1,31 +1,32 @@
 {
-  "schemaVersion": 1,
-  "id": "mcbot_${mc_version}",
-  "version": "${version}",
-  "name": "McBot",
-  "description": "Adds chat linking between QQ and Minecraft and QQ commands to request server data.",
-  "authors": [
-    "cnlimiter"
-  ],
-  "contact": {
-    "issues": "https://github.com/cnlimiter/McBot/issues",
-    "sources": "https://github.com/cnlimiter/McBot"
-  },
-  "license": "AGPL-3.0",
-  "icon": "assets/mcbot/icon.png",
-  "environment": "server",
-  "entrypoints": {
-    "main": [
-      "cn.evole.mods.mcbot.McBot"
-    ]
-  },
-  "mixins": [
-    "mcbot.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.14.0",
-    "fabric": "*",
-    "minecraft": "${minecraft_dependency}",
-    "java": ">=8"
-  }
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "sources": "https://github.com/Nova-Committee/McBot"
+    },
+    "license": "${license}",
+    "icon": "${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "cn.evole.mods.mcbot.LightEcoFabric"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=17"
+    }
 }
+  
