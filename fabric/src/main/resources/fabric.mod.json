@@ -15,7 +15,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "cn.evole.mods.mcbot.LightEcoFabric"
+          "cn.evole.mods.mcbot.McBotFabric"
         ]
     },
     "mixins": [
