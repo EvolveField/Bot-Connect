@@ -14,10 +14,14 @@ public class ConnectApi {
     public static void wsConnect(){
         Constants.onebot.close();//关闭线程
         Constants.onebot = null;//强制为null
-        Constants.onebot = OneBotClient.create(Constants.configManager.config().getBotConfig().build()).open().registerEvents(new IBotEvent());//重新实例化
+        Constants.onebot = OneBotClient
+                .create(Constants.configManager.config().getBotConfig().build())
+                .open()
+                .registerEvents(new IBotEvent());//重新实例化
         Constants.configManager.config().getStatus().setREnable(true);
         Constants.configManager.config().getCommon().setEnable(true);
         Constants.connected = true;
     }
+
 
 }

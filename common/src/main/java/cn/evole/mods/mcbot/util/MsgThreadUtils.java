@@ -60,7 +60,7 @@ public class MsgThreadUtils {
         msgExecutor.submit(callable);
     }
 
-    public void stop() {
+    public static void shutdown() {
         msgExecutor.shutdownNow();
     }
     

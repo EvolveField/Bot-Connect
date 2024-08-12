@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 public class ReloadConfigCmd {
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         try {
-            Constants.configManager..reload();
+            //Constants.configManager..reload();
             if (Constants.configManager.config() == null) {
                 context.getSource().sendSuccess(() -> Component.literal("重载配置失败"), true);
             }

@@ -3,7 +3,19 @@ package cn.evole.mods.mcbot.platform;
 import cn.evole.mods.mcbot.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
+import java.nio.file.Path;
+
 public class FabricPlatformHelper implements IPlatformHelper {
+
+    @Override
+    public Path getGamePath() {
+        return FabricLoader.getInstance().getGameDir();
+    }
+
+    @Override
+    public Path getConfigPath() {
+        return FabricLoader.getInstance().getConfigDir();
+    }
 
     @Override
     public String getPlatformName() {
@@ -18,7 +30,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean isDevelopmentEnvironment() {
-
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 }

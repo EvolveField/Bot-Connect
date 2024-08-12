@@ -3,6 +3,7 @@ package cn.evole.mods.mcbot.core.event;
 import cn.evole.mods.mcbot.Const;
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.McBot;
+import cn.evole.mods.mcbot.api.bot.BotApi;
 import cn.evole.mods.mcbot.cmds.CmdApi;
 import cn.evole.mods.mcbot.core.data.ChatRecordApi;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
@@ -66,7 +67,7 @@ public class IBotEvent implements Listener {
 
             ChatRecordApi.add(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
 
-            Const.sendAllPlayerMsg(finalMsg);
+            BotApi.sendAllPlayerMsg(finalMsg);
     }
 
 
@@ -80,7 +81,7 @@ public class IBotEvent implements Listener {
                 && Constants.configManager.config().getStatus().isSEnable()
                 && Constants.configManager.config().getStatus().isSQqWelcomeEnable()) {
             val msg = MsgUtils.builder().at(event.getUserId()).text(Constants.configManager.config().getCmd().getWelcomeNotice()).build();
-            Const.sendGroupMsg(event.getGroupId(), msg);
+            BotApi.sendGroupMsg(event.getGroupId(), msg);
         }
     }
 
@@ -90,7 +91,7 @@ public class IBotEvent implements Listener {
                 && Constants.configManager.config().getStatus().isSEnable()
                 && Constants.configManager.config().getStatus().isSQqLeaveEnable()) {
             val msg = MsgUtils.builder().at(event.getUserId()).text(Constants.configManager.config().getCmd().getLeaveNotice()).build();
-            Const.sendGroupMsg(event.getGroupId(), msg);
+            BotApi.sendGroupMsg(event.getGroupId(), msg);
         }
     }
 
@@ -100,7 +101,7 @@ public class IBotEvent implements Listener {
         if (!Constants.configManager.config().getCommon().getGroupIdList().isEmpty()
         ) {
             val msg = MsgUtils.builder().text("▌ 群服互联已连接 ┈━═☆").build();
-            Const.sendAllGroupMsg(msg);
+            BotApi.sendAllGroupMsg(msg);
         }
     }
 

@@ -18,6 +18,7 @@ public class Constants {
 	public static final String MOD_NAME = "McBot";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 	public static final ExecutorService msgExecutor = Executors.newCachedThreadPool();
+	public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();  // 创建CQ码处理线程池;
 	public static boolean isShutdown = false;
 	public static boolean connected = false;
 

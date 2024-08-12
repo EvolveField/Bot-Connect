@@ -1,17 +1,20 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "committee.nova.mods.lighteco.mixin",
+    "package": "cn.evole.mods.mcbot.mixin",
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
+        "PlayerAdvancementsMixin",
+        "ServerGamePktImplMixin",
+        "ServerPlayerMixin"
     ],
     "client": [
     ],
     "server": [
     ],
     "injectors": {
-      "defaultRequire": 1
+        "defaultRequire": 1
     }
   }
   
