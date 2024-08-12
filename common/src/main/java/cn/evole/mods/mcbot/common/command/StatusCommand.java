@@ -2,36 +2,36 @@ package cn.evole.mods.mcbot.common.command;
 
 
 import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 
-//#endif
 public class StatusCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        boolean clientEnabled = Constants.configManager.config().getCommon().isEnable();
+        boolean clientEnabled = ModConfig.get().getCommon().isEnable();
 
-        boolean receiveEnabled = Constants.configManager.config().getStatus().isREnable();
-        boolean rChatEnabled = Constants.configManager.config().getStatus().isRChatEnable();
-        boolean rCmdEnabled = Constants.configManager.config().getStatus().isRCmdEnable();
+        boolean receiveEnabled = ModConfig.get().getStatus().isREnable();
+        boolean rChatEnabled = ModConfig.get().getStatus().isRChatEnable();
+        boolean rCmdEnabled = ModConfig.get().getStatus().isRCmdEnable();
 
-        boolean sendEnabled = Constants.configManager.config().getStatus().isSEnable();
-        boolean sJoinEnabled = Constants.configManager.config().getStatus().isSJoinEnable();
-        boolean sLeaveEnabled = Constants.configManager.config().getStatus().isSLeaveEnable();
-        boolean sDeathEnabled = Constants.configManager.config().getStatus().isSDeathEnable();
-        boolean sAchievementsEnabled = Constants.configManager.config().getStatus().isSAdvanceEnable();
-        boolean sQqWelcomeEnabled = Constants.configManager.config().getStatus().isSQqWelcomeEnable();
-        boolean sQqLeaveEnabled = Constants.configManager.config().getStatus().isSQqLeaveEnable();
+        boolean sendEnabled = ModConfig.get().getStatus().isSEnable();
+        boolean sJoinEnabled = ModConfig.get().getStatus().isSJoinEnable();
+        boolean sLeaveEnabled = ModConfig.get().getStatus().isSLeaveEnable();
+        boolean sDeathEnabled = ModConfig.get().getStatus().isSDeathEnable();
+        boolean sAchievementsEnabled = ModConfig.get().getStatus().isSAdvanceEnable();
+        boolean sQqWelcomeEnabled = ModConfig.get().getStatus().isSQqWelcomeEnable();
+        boolean sQqLeaveEnabled = ModConfig.get().getStatus().isSQqLeaveEnable();
 
-        val groupId = Constants.configManager.config().getCommon().getGroupIdList().toString();
-        boolean debuggable = Constants.configManager.config().getCommon().isDebug();
+        val groupId = ModConfig.get().getCommon().getGroupIdList().toString();
+        boolean debuggable = ModConfig.get().getCommon().isDebug();
         boolean connected = Constants.onebot.getWs().isOpen();
         boolean white = Constants.SERVER.getPlayerList().isUsingWhitelist();
-        String host = Constants.configManager.config().getBotConfig().getUrl();
-        long QQid = Constants.configManager.config().getBotConfig().getBotId();
+        String host = ModConfig.get().getBotConfig().getUrl();
+        long QQid = ModConfig.get().getBotConfig().getBotId();
         String toSend =
                 "\n姬妻人服务状态:\n"
                         + "姬妻人QQId:" + QQid + " \n"

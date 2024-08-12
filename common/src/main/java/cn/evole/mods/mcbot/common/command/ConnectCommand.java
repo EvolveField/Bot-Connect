@@ -3,6 +3,7 @@ package cn.evole.mods.mcbot.common.command;
 
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.connect.ConnectApi;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
@@ -21,7 +22,7 @@ public class ConnectCommand {
         val parameter = context.getArgument("parameter", String.class);
 
         if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()) {
-            Constants.configManager.config().getBotConfig().setUrl(String.format("ws://%s", parameter));
+            ModConfig.get().getBotConfig().setUrl(String.format("ws://%s", parameter));
             doConnect(context);
             return 1;
         } else {

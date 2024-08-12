@@ -2,6 +2,7 @@ package cn.evole.mods.mcbot.common.command;
 
 
 import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -19,7 +20,7 @@ public class DisconnectCommand {
             } else {
                 context.getSource().sendSuccess(() -> Component.literal("WebSocket目前未连接"), true);
             }
-            Constants.configManager.config().getCommon().setEnable(false);
+            ModConfig.get().getCommon().setEnable(false);
         }
         return 1;
     }

@@ -15,7 +15,7 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
-public class StatusConfig{
+public class StatusConfig {
     //接收来自q群的消息开关
     @Comment("全局接收")
     private boolean rEnable = true;

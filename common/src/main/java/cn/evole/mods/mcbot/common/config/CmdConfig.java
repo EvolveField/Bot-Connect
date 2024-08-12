@@ -15,7 +15,7 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
-public class CmdConfig{
+public class CmdConfig {
     @Comment("自定义q群加入事件消息")
     private String welcomeNotice = "欢迎加群~";//自定义q群加入事件消息
     @Comment("自定义q群离开消息")
@@ -39,7 +39,6 @@ public class CmdConfig{
     private boolean mcPrefixOn = true;//是否开启来自游戏的消息显示到群中的前缀
     @Comment("来自游戏的消息显示到群中的前缀")
     private String mcPrefix = "MC";//来自游戏的消息显示到群中的前缀
-
 
 
     @Comment("是否开启游戏中自定义关键词")

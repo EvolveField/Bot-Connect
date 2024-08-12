@@ -12,6 +12,11 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    compileOnly ("org.projectlombok:lombok:1.18.30")
+    annotationProcessor ("org.projectlombok:lombok:1.18.30")
+    implementation ("cn.evole.onebot:OneBot-Client:${onebot_client_version}"){transitive = false}
+    implementation ("org.spongepowered:configurate-yaml:${yaml_version}")
+    implementation("com.github.houbb:csv:0.2.0")
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     compileOnly project(":common")
 }

@@ -1,17 +1,21 @@
 package cn.evole.mods.mcbot.util.onebot;
 
-import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static cn.evole.mods.mcbot.Constants.*;
+import static cn.evole.mods.mcbot.Constants.LOGGER;
+import static cn.evole.mods.mcbot.Constants.cqExecutor;
 
 /**
  * Project: Bot-Connect-fabric-1.18
@@ -73,7 +77,7 @@ public class CQUtils {
             val data = matcher.group(2);
             switch (type) {
                 case "image":
-                    if (Constants.configManager.config().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {
+                    if (ModConfig.get().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {
                         val url = Arrays.stream(
                                         data
                                                 .replaceAll("&amp;", "&")//转义字符转义
@@ -96,7 +100,7 @@ public class CQUtils {
                     if (id.length == 2) {
                         if (id[0].equals("qq"))
                             try {
-                                matcher.appendReplacement(message, String.format("[@%s]", BotUtils.getNickname(Long.parseLong(id[1]))));
+                                //matcher.appendReplacement(message, String.format("[@%s]", BotUtils.getNickname(Long.parseLong(id[1]))));
                                 break;
                             } catch (NumberFormatException ignored) {
                             }

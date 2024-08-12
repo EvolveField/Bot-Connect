@@ -1,6 +1,5 @@
 package cn.evole.mods.mcbot.common.command;
 
-import cn.evole.mods.mcbot.Constants;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,9 +15,9 @@ public class ReloadConfigCmd {
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         try {
             //Constants.configManager..reload();
-            if (Constants.configManager.config() == null) {
-                context.getSource().sendSuccess(() -> Component.literal("重载配置失败"), true);
-            }
+//            if (Constants.configManager.config() == null) {
+//                context.getSource().sendSuccess(() -> Component.literal("重载配置失败"), true);
+//            }
             context.getSource().sendSuccess(() -> Component.literal("重载配置成功"), true);
         } catch (Exception e) {
             context.getSource().sendSuccess(() -> Component.literal("重载配置失败"), true);

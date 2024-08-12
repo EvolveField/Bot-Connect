@@ -1,6 +1,6 @@
 package cn.evole.mods.mcbot.api.bot;
 
-import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.core.event.ITickEvent;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
 import cn.evole.onebot.sdk.action.ActionPath;
@@ -18,33 +18,34 @@ import java.util.concurrent.Callable;
  * @Description:
  */
 public class BotApi {
-    public static void sendGroupMsg(long id, String message){
+    public static void sendGroupMsg(long id, String message) {
         MsgThreadUtils.INSTANCE.submit(id, message, false);
     }
 
-    public static void sendGroupMsg(long id, Callable<String> message){
+    public static void sendGroupMsg(long id, Callable<String> message) {
         MsgThreadUtils.INSTANCE.submit(id, message, false);
     }
 
-    public static void sendAllGroupMsg(String message){
-        for (long id : Constants.configManager.config().getCommon().getGroupIdList()){
+    public static void sendAllGroupMsg(String message) {
+        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
             sendGroupMsg(id, message);
         }
     }
 
-    public static void sendAllGroupMsg(Callable<String> message){
-        for (long id : Constants.configManager.config().getCommon().getGroupIdList()){
+    public static void sendAllGroupMsg(Callable<String> message) {
+        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
             sendGroupMsg(id, message);
         }
     }
 
     /**
      * 玩家在游戏里发送消息
+     *
      * @param message 消息
-     * @param player 玩家
+     * @param player  玩家
      */
-    public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player){
-        for (long id : Constants.configManager.config().getCommon().getGroupIdList()){
+    public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player) {
+        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
             MsgThreadUtils.INSTANCE.submit(id, message, false, player);
         }
     }
@@ -52,17 +53,18 @@ public class BotApi {
     /**
      * 向游戏中的所有人发送消息
      */
-    public static void sendAllPlayerMsg(String message){
+    public static void sendAllPlayerMsg(String message) {
         val toSend = Component.literal(message);
         ITickEvent.sendQueue().add(toSend);
     }
 
     /**
      * 自定义请求 (不应清理)
+     *
      * @param action 请求类型
      * @param params 参数
      */
-    public static void customRequest(ActionPath action, JsonObject params){
+    public static void customRequest(ActionPath action, JsonObject params) {
         MsgThreadUtils.INSTANCE.submit(action, params);
     }
 

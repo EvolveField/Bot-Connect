@@ -15,7 +15,7 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
-public class BotConfig{
+public class BotConfig {
     @Comment("跨服支持")
     private String tag = "主服";
     @Comment("地址（支持域名和ipv6）")
@@ -33,7 +33,7 @@ public class BotConfig{
     @Comment("超时宽容度（毫秒）")
     private long timeoutCompensation = 1000;
 
-    public cn.evole.onebot.client.core.BotConfig build(){
+    public cn.evole.onebot.client.core.BotConfig build() {
         return new cn.evole.onebot.client.core.BotConfig(url, token, botId, mirai, reconnect, maxReconnectAttempts);
     }
 

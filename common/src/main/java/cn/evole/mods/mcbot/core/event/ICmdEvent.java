@@ -24,15 +24,15 @@ public class ICmdEvent {
         return RequiredArgumentBuilder.argument(arg, type);
     }
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("mcbot")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.literal("connect")
                                 .executes(ConnectCommand::commonExecute)
-                                    .then(Commands.argument("parameter", StringArgumentType.greedyString())
-                                            .executes(ConnectCommand::execute)
-                                    )
+                                .then(Commands.argument("parameter", StringArgumentType.greedyString())
+                                        .executes(ConnectCommand::execute)
+                                )
                         )
                         .then(Commands.literal("customs").executes(ListCustomCommand::execute))
                         .then(Commands.literal("reload").executes(ReloadConfigCmd::execute))

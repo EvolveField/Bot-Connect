@@ -17,12 +17,13 @@ import java.util.List;
 @Getter
 @Setter
 @ConfigSerializable
-public class CommonConfig{
+public class CommonConfig {
 
     @Comment("开启q群功能")
     private boolean groupOn = true;
     @Comment("支持多个q群")
-    private List<Long> groupIdList = new ArrayList<Long>(){};//支持多个q群
+    private List<Long> groupIdList = new ArrayList<Long>() {
+    };//支持多个q群
     @Comment("是否启用")
     private boolean enable = true;//是否启用
     @Comment("是否开发模式，将显示事件信息操作")
@@ -35,7 +36,6 @@ public class CommonConfig{
     private boolean imageOn = true;//是否开启聊天栏图片功能
     @Comment("是否开启绑定校验")
     private boolean bindOn = false;//是否开启绑定校验
-
     public void removeGroupId(long id) {
         groupIdList.remove(id);
     }

@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.common.config;
 
+import cn.evole.mods.mcbot.api.config.ConfigManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -15,7 +16,7 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
-public class ModConfig{
+public class ModConfig {
     @Comment("通用")
     private CommonConfig common = new CommonConfig();
     @Comment("状态")
@@ -24,4 +25,8 @@ public class ModConfig{
     private CmdConfig cmd = new CmdConfig();
     @Comment("机器人")
     private BotConfig botConfig = new BotConfig();
+
+    public static ModConfig get() {
+        return ConfigManager.getInstance().getConfig(ModConfig.class);
+    }
 }
