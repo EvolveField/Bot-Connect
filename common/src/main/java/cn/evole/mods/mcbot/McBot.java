@@ -2,8 +2,11 @@ package cn.evole.mods.mcbot;
 
 
 import cn.evole.mods.mcbot.api.config.ConfigManager;
+import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.common.config.*;
 import cn.evole.mods.mcbot.core.event.IBotEvent;
+import cn.evole.mods.mcbot.core.event.IChatEvent;
+import cn.evole.mods.mcbot.core.event.IPlayerEvent;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.OneBotClient;
@@ -21,6 +24,11 @@ public class McBot {
         } catch (Exception e) {
             LOGGER.error("配置加载错误...");
         }
+
+        ServerGameEvents.PLAYER_LOGGED_IN.register((server, player) -> IPlayerEvent.loggedIn(player.level(), player));
+        ServerGameEvents.PLAYER_LOGGED_OUT.register((server, player) -> IPlayerEvent.loggedOut(player.level(), player));
+        ServerGameEvents.PLAYER_ADVANCEMENT.register(IPlayerEvent::advancement);
+        ServerGameEvents.PLAYER_DEATH.register(IPlayerEvent::death);
     }
 
 
@@ -52,6 +60,7 @@ public class McBot {
     public static void onServerStopped(MinecraftServer server) {
         CQUtils.shutdown();
         MsgThreadUtils.shutdown();
+        ConfigManager.getInstance().saveAllConfig();
         if (onebot != null) onebot.close();
     }
 }

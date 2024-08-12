@@ -39,6 +39,17 @@ public class ConfigManager implements AutoCloseable {
         }
     }
 
+    public void saveAllConfig() {
+        configs.forEach((aClass, configHandler) -> {
+            try {
+                    configHandler.saveToFile();
+                } catch (ConfigurateException e) {
+                    e.printStackTrace();
+                }
+            });
+
+    }
+
     public void saveConfig(final Class<?> config) {
         try {
             configs.get(config).saveToFile();

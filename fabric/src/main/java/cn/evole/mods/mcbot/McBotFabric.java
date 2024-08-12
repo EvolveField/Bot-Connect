@@ -2,9 +2,11 @@ package cn.evole.mods.mcbot;
 
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.core.event.ICmdEvent;
+import cn.evole.mods.mcbot.core.event.ITickEvent;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 public class McBotFabric implements ModInitializer {
@@ -20,5 +22,7 @@ public class McBotFabric implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(McBot::onServerStarted);
         ServerLifecycleEvents.SERVER_STOPPING.register(McBot::onServerStopping);
         ServerLifecycleEvents.SERVER_STOPPED.register(McBot::onServerStopped);
+
+        ServerTickEvents.END_SERVER_TICK.register(ITickEvent::register);
     }
 }

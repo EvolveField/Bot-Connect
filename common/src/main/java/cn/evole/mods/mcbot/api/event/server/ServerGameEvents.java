@@ -17,6 +17,12 @@ import net.minecraft.world.level.block.state.BlockState;
  * Version: 1.0
  */
 public final class ServerGameEvents {
+    public static final ToggleableEvent<PlayerTick> SERVER_TICK = ToggleableEvent.create(PlayerTick.class, callbacks -> (world, player) -> {
+        for (PlayerTick callback : callbacks) {
+            callback.onTick(world, player);
+        }
+    });
+
     public static final ToggleableEvent<PlayerTick> PLAYER_TICK = ToggleableEvent.create(PlayerTick.class, callbacks -> (world, player) -> {
         for (PlayerTick callback : callbacks) {
             callback.onTick(world, player);

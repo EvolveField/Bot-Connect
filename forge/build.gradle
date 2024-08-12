@@ -14,6 +14,18 @@ mixin {
     config("${mod_id}.forge.mixins.json")
 }
 
+configurations {
+    library
+    implementation.extendsFrom library
+}
+
+
+minecraft.runs.all {
+    lazyToken('minecraft_classpath') {
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+    }
+}
+
 minecraft {
     mappings channel: 'official', version: minecraft_version
 
@@ -79,9 +91,9 @@ dependencies {
     compileOnly project(":common")
     compileOnly ("org.projectlombok:lombok:1.18.30")
     annotationProcessor ("org.projectlombok:lombok:1.18.30")
-    implementation ("cn.evole.onebot:OneBot-Client:${onebot_client_version}"){transitive = false}
-    implementation ("org.spongepowered:configurate-yaml:${yaml_version}")
-    implementation("com.github.houbb:csv:0.2.0")
+    library ("cn.evole.onebot:OneBot-Client:${onebot_client_version}"){transitive = false}
+    library ("org.spongepowered:configurate-yaml:${yaml_version}")
+    library("com.github.houbb:csv:0.2.0")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }
 
