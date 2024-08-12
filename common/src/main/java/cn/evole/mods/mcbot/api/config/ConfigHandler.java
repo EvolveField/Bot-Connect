@@ -3,6 +3,8 @@ package cn.evole.mods.mcbot.api.config;
 import cn.evole.mods.mcbot.Constants;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.objectmapping.ObjectMapper;
+import org.spongepowered.configurate.objectmapping.meta.NodeResolver;
 import org.spongepowered.configurate.reference.ConfigurationReference;
 import org.spongepowered.configurate.reference.ValueReference;
 import org.spongepowered.configurate.reference.WatchServiceListener;
@@ -35,6 +37,7 @@ public final class ConfigHandler<T> implements AutoCloseable {
             this.base = this.listener.listenToConfiguration(file ->
                             YamlConfigurationLoader.builder()
                                     .defaultOptions(opts -> opts
+                                            .serializers(build -> build.registerAnnotatedObjects(ObjectMapper.factory()))
                                             .shouldCopyDefaults(true)
                                     )
                                     .nodeStyle(NodeStyle.BLOCK)
