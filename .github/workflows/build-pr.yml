@@ -1,0 +1,49 @@
+name: 'Build PR'
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - ready_for_review
+      - reopened
+
+  push:
+    branches:
+      - '*/**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 'Build PR'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        loader: [ 'Forge', 'Fabric' ]
+
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 100
+          fetch-tags: true
+
+      - name: 'Set up JDK 17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 'Build ${{ matrix.loader }} with Gradle'
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :${{ matrix.loader }}:build
+          cache-read-only: false
+
+      - name: 'Upload ${{ matrix.loader }} artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: 'Artifacts-${{ matrix.loader }}'
+          path: ${{ matrix.loader }}/build/libs/*.jar

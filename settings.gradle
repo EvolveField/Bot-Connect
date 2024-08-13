@@ -17,7 +17,8 @@ pluginManagement {
             name = 'Forge'
             url = 'https://maven.minecraftforge.net/'
         }
-        maven { url = 'https://maven.nova-committee.cn/releases' }
+        maven { url 'https://maven.nova-committee.cn/releases' }
+        maven { url 'https://maven.parchmentmc.org/' }
     }
 }
 
@@ -25,9 +26,9 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
-// This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
 rootProject.name = 'McBot'
-include("common")
-include("fabric")
-include("forge")
-//include("neoforge")
+include (
+        "Common",
+        "Fabric",
+        "Forge"
+)
