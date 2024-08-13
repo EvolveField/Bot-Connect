@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     name: 'Build'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         loader: [ 'Forge', 'Fabric' ]
@@ -52,7 +52,7 @@ jobs:
 
   publish:
     name: 'Publish'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     needs: [build]
 
@@ -82,7 +82,7 @@ jobs:
 
   release:
     name: 'Create release'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     needs: [build, publish]
 
