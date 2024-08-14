@@ -3,6 +3,7 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
     id 'fabric-loom' version '1.7.+'
+    id 'com.github.johnrengelman.shadow'
 }
 
 base {
@@ -10,6 +11,13 @@ base {
 }
 
 println "Fabric API: $fabric_version, Loader: $fabric_loader_version"
+
+configurations {
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
 
 loom {
     runs {
@@ -53,16 +61,37 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabric_version"
 
-    implementation include("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
-    implementation include("org.spongepowered:configurate-yaml:$yaml_version")
-    implementation include("com.github.houbb:csv:0.2.0")
+    implementation shadowBundle("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
+    implementation shadowBundle("org.spongepowered:configurate-yaml:$yaml_version"){transitive = true}
+    implementation shadowBundle("com.github.houbb:csv:0.2.0")
+    implementation ("org.yaml:snakeyaml:1.28")
 
     compileOnly "org.projectlombok:lombok:$lombok_version"
     annotationProcessor "org.projectlombok:lombok:$lombok_version"
 }
 
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier.set("")
+
+    relocate 'org.yaml', 'cn.evole.dependencies.yaml'
+    relocate 'org.spongepowered', 'cn.evole.dependencies.spongepowered'
+    relocate 'io.leangen', 'cn.evole.dependencies.leagen'
+    relocate 'org.checkerframework', 'cn.evole.dependencies.checkerframework'
+    relocate 'com.google.errorprone', 'cn.evole.dependencies.errorprone'
+    relocate 'org.apiguardian', 'cn.evole.dependencies.apiguardian'
+    relocate 'com.github.houbb', 'cn.evole.dependencies.houbb'
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+}
+
 sourcesJar {
-    from project(':Common').sourceSets.main.allSource
+    def commonSources = project(":Common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
 }
 
 artifacts {

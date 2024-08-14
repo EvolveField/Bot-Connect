@@ -5,6 +5,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '6.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'com.github.johnrengelman.shadow'
 }
 
 base {
@@ -89,7 +90,12 @@ dependencies {
 
     library ("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
     library ("org.spongepowered:configurate-yaml:$yaml_version")
-    library("com.github.houbb:csv:0.2.0")
+    library ("com.github.houbb:csv:0.2.0")
+    jarJar("cn.evole.onebot:OneBot-Client:[$onebot_client_version,)"){transitive = false}
+    jarJar("org.spongepowered:configurate-yaml:[$yaml_version,)")
+    jarJar("com.github.houbb:csv:[0.2.0,)")
+
+    implementation ("org.yaml:snakeyaml:1.28")
 
     compileOnly "org.projectlombok:lombok:$lombok_version"
     annotationProcessor "org.projectlombok:lombok:$lombok_version"

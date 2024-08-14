@@ -16,8 +16,8 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Setter
 @ConfigSerializable
 public class BotConfig {
-    @Comment("跨服支持")
-    private String tag = "主服";
+    @Comment("跨服支持,权限支持")
+    private String tag = "main";
     @Comment("地址（支持域名和ipv6）")
     private String url = "ws://127.0.0.1:8080";
     @Comment("鉴权")

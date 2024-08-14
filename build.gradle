@@ -4,6 +4,7 @@ plugins {
     id 'com.modrinth.minotaur' version '2.+' apply false
     id 'io.freefair.lombok' version '8.+' apply false
     id 'net.neoforged.gradleutils' version '3.+'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
 }
 
 gradleutils.version {
@@ -63,7 +64,7 @@ subprojects {
         from project(':Common').sourceSets.main.resources
 
         var replaceProperties = [
-                'mod_version'                  : version,
+                'mod_version'                  : mod_version,
                 "minecraft_version"            : minecraft_version,
                 "forge_version"                : forge_version,
                 "forge_loader_version_range"   : forge_loader_version_range,
