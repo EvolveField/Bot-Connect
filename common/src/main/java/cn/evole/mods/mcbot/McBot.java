@@ -58,9 +58,9 @@ public class McBot {
     }
 
     public static void onServerStopped(MinecraftServer server) {
+        ConfigManager.getInstance().saveAllConfig();
         CQUtils.shutdown();
         MsgThreadUtils.shutdown();
-        ConfigManager.getInstance().saveAllConfig();
         if (onebot != null) onebot.close();
     }
 }

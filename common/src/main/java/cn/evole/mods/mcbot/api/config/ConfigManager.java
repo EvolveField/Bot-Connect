@@ -4,6 +4,7 @@ import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.mods.mcbot.util.FileUtils;
 import lombok.Getter;
+import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.configurate.ConfigurateException;
 
 import java.nio.file.Path;

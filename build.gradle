@@ -1,67 +1,65 @@
 plugins {
-    id 'org.spongepowered.gradle.vanilla' version '0.2.+' apply false
-    id 'net.darkhax.curseforgegradle' version '1.+' apply false
-    id 'com.modrinth.minotaur' version '2.+' apply false
-    id 'io.freefair.lombok' version '8.+' apply false
-    id 'net.neoforged.gradleutils' version '3.+'
+    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'io.freefair.lombok' version '8.+' apply false
 }
 
-gradleutils.version {
-    tags {
-        if (mod_version_label != 'release')
-            label = mod_version_label
-
-        appendCommitOffset = false
-    }
+architectury {
+    minecraft = project.minecraft_version
 }
 
-println "$mod_name, Version: ${gradleutils.version.toString()}"
-println "Minecraft: $minecraft_version, Mappings: $mappings_channel-$mappings_version"
+allprojects {
+    group = rootProject.maven_group
+    version = "${rootProject.mod_version}+${rootProject.minecraft_version}"
+}
 
 subprojects {
-    apply plugin: 'java'
-
-    if (name != 'Common') {
-        apply plugin: 'net.darkhax.curseforgegradle'
-        apply plugin: 'com.modrinth.minotaur'
-
-        evaluationDependsOn(':Common')
-    }
-
-    apply plugin: 'io.freefair.lombok'
-
-    apply plugin: 'idea'
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'
 
-    java {
-        toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    base {
+        archivesName = "$rootProject.mod_name"
+    }
 
+    repositories {
+        mavenCentral() {
+            content {
+                includeGroup 'org.projectlombok'
+            }
+        }
+        maven { url 'https://maven.nova-committee.cn/releases' }
+        maven { url 'https://maven.minecraftforge.net/' }
+        maven { url 'https://maven.parchmentmc.org' }
+    }
+
+    dependencies {
+        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-$minecraft_version:$mappings_version@zip")
+        }
+        compileOnly ("org.projectlombok:lombok:$lombok_version")
+        annotationProcessor ("org.projectlombok:lombok:$lombok_version")
+        implementation ("org.yaml:snakeyaml:1.28")
+    }
+
+    java {
+        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+        // if it is present.
+        // If you remove this line, sources will not be generated.
         withSourcesJar()
 
-        sourceCompatibility = JavaVersion."VERSION_$java_version"
-        targetCompatibility = JavaVersion."VERSION_$java_version"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
-    idea {
-        module {
-            downloadSources = true
-            downloadJavadoc = true
-        }
-    }
-
-
-    version = gradleutils.version.toString()
-    group = project.group
 
     tasks.withType(JavaCompile).configureEach {
-        source project(':Common').sourceSets.main.allSource
-
-        options.encoding = 'UTF-8'
+        it.options.release = 17
     }
 
     tasks.withType(ProcessResources).configureEach {
-        from project(':Common').sourceSets.main.resources
 
         var replaceProperties = [
                 'mod_version'                  : mod_version,
@@ -70,7 +68,7 @@ subprojects {
                 "forge_loader_version_range"   : forge_loader_version_range,
                 "forge_version_range"          : forge_version_range,
                 "minecraft_version_range"      : minecraft_version_range,
-                "fabric_version"               : fabric_version,
+                "fabric_api_version"           : fabric_api_version,
                 "fabric_loader_version"        : fabric_loader_version,
                 "mod_name"                     : mod_name,
                 "mod_author"                   : mod_author,
@@ -101,9 +99,4 @@ subprojects {
             ])
         }
     }
-}
-
-tasks.register('publishMod') {
-    dependsOn(':Forge:publishCurseForge').finalizedBy(':Fabric:publishCurseForge')
-    dependsOn(':Forge:modrinth').finalizedBy(':Fabric:modrinth')
 }

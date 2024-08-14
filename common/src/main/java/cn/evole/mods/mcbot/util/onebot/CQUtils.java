@@ -4,6 +4,7 @@ import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import lombok.val;
+import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

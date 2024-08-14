@@ -1,0 +1,82 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
+println "Forge: $forge_version"
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+loom {
+    forge {
+        mixinConfig  "${mod_id}.mixins.json"
+    }
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:$rootProject.minecraft_version-$rootProject.forge_version"
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    shadowBundle(project(path: ':common', configuration: 'transformProductionForge')) { transitive false }
+
+    forgeRuntimeLibrary(implementation(shadowBundle("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}))
+    forgeRuntimeLibrary(implementation(shadowBundle("org.spongepowered:configurate-yaml:$yaml_version")))
+    forgeRuntimeLibrary(implementation(shadowBundle("com.github.houbb:csv:0.2.0")))
+
+    compileOnly ("org.projectlombok:lombok:$lombok_version")
+    annotationProcessor ("org.projectlombok:lombok:$lombok_version")
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier.set("dev-shadow")
+
+    relocate 'org.yaml', 'cn.evole.dependencies.yaml'
+    relocate 'org.spongepowered', 'cn.evole.dependencies.spongepowered'
+    relocate 'io.leangen', 'cn.evole.dependencies.leagen'
+    relocate 'org.checkerframework', 'cn.evole.dependencies.checkerframework'
+    relocate 'com.google.errorprone', 'cn.evole.dependencies.errorprone'
+    relocate 'org.apiguardian', 'cn.evole.dependencies.apiguardian'
+    relocate 'com.github.houbb', 'cn.evole.dependencies.houbb'
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier.set("minecraftforge")
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+

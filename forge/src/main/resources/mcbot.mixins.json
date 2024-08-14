@@ -2,12 +2,8 @@
     "required": true,
     "minVersion": "0.8",
     "package": "cn.evole.mods.mcbot.mixin",
-    "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "PlayerAdvancementsMixin",
-        "ServerGamePktImplMixin",
-        "ServerPlayerMixin"
     ],
     "client": [
     ],
@@ -16,5 +12,4 @@
     "injectors": {
         "defaultRequire": 1
     }
-  }
-  
+}
