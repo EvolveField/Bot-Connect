@@ -1,8 +1,7 @@
 plugins {
-    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
+    id 'dev.architectury.loom' version '1.6-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
-    id 'io.freefair.lombok' version '8.+' apply false
 }
 
 architectury {
@@ -11,7 +10,7 @@ architectury {
 
 allprojects {
     group = rootProject.maven_group
-    version = "${rootProject.mod_version}+${rootProject.minecraft_version}"
+    version = "${rootProject.minecraft_version}+${rootProject.mod_version}"
 }
 
 subprojects {
@@ -40,9 +39,8 @@ subprojects {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-$minecraft_version:$mappings_version@zip")
         }
-        compileOnly ("org.projectlombok:lombok:$lombok_version")
-        annotationProcessor ("org.projectlombok:lombok:$lombok_version")
         implementation ("org.yaml:snakeyaml:1.28")
+
     }
 
     java {

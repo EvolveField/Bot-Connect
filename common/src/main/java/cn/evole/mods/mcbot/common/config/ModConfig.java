@@ -29,4 +29,8 @@ public class ModConfig {
     public static ModConfig get() {
         return ConfigManager.getInstance().getConfig(ModConfig.class);
     }
+    public static void save() {
+        ConfigManager.getInstance().saveConfig(ModConfig.class);
+    }
+
 }

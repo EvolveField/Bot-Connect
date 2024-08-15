@@ -15,8 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public class IChatEvent {
     public static void register(ServerPlayer player, String message) {
-        //if (VanishAPI.isVanished(player)) return;
-
         val split = message.split(" ");
         if (
                 ModConfig.get().getStatus().isSChatEnable()

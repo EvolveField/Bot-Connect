@@ -9,9 +9,7 @@ dependencies {
 
     implementation ("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
     implementation ("org.spongepowered:configurate-yaml:$yaml_version")
-    implementation ("org.yaml:snakeyaml:1.28")
     implementation("com.github.houbb:csv:0.2.0")
-
     compileOnly ("org.projectlombok:lombok:$lombok_version")
     annotationProcessor ("org.projectlombok:lombok:$lombok_version")
 }

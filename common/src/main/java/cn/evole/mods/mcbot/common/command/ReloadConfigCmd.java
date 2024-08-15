@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.common.command;
 
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -22,6 +23,7 @@ public class ReloadConfigCmd {
         } catch (Exception e) {
             context.getSource().sendSuccess(() -> Component.literal("重载配置失败"), true);
         }
+        ModConfig.save();
         return 1;
     }
 }

@@ -6,7 +6,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-//#endif
 
 public class AddGroupIDCommand {
 
@@ -20,6 +19,7 @@ public class AddGroupIDCommand {
             ModConfig.get().getCommon().addGroupId(id);
             context.getSource().sendSuccess(() -> Component.literal("已成功添加QQ群号:" + id + "！"), true);
         }
+        ModConfig.save();
         return 1;
     }
 

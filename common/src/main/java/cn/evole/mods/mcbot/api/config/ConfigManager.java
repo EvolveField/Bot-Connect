@@ -41,13 +41,13 @@ public class ConfigManager implements AutoCloseable {
     }
 
     public void saveAllConfig() {
-        configs.forEach((aClass, configHandler) -> {
+        configs.forEach((aClass, config) -> {
             try {
-                    configHandler.saveToFile();
-                } catch (ConfigurateException e) {
-                    e.printStackTrace();
-                }
-            });
+                config.saveToFile();
+            } catch (ConfigurateException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 

@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.mixin;
+package cn.evole.mods.mcbot.fabric.mixin;
 
 import cn.evole.mods.mcbot.api.event.mod.McBotEvents;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @CreateTime: 2024/8/12 13:51
  * @Description:
  */
-@Mixin(value = ServerGamePacketListenerImpl.class, priority = 1001)
+@Mixin(ServerGamePacketListenerImpl.class)
 public abstract class ServerGamePktImplMixin {
 
     @Shadow

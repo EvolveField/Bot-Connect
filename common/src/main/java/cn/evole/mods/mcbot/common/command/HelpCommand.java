@@ -48,8 +48,6 @@ public class HelpCommand {
         val end = "提交问题";
         val urlC = Component.literal(url).setStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Nova-Committee/Bot-Connect/issues/new")));
         val endC = Component.literal(end);
-
-
         context.getSource().sendSuccess(() -> Component.literal(toSend).append(urlC).append(endC), true);
         return 1;
     }

@@ -8,6 +8,7 @@ import cn.evole.mods.mcbot.core.event.IBotEvent;
 import cn.evole.mods.mcbot.core.event.IChatEvent;
 import cn.evole.mods.mcbot.core.event.IPlayerEvent;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
+import cn.evole.mods.mcbot.util.locale.I18n;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.OneBotClient;
 import net.minecraft.server.MinecraftServer;
@@ -29,11 +30,13 @@ public class McBot {
         ServerGameEvents.PLAYER_LOGGED_OUT.register((server, player) -> IPlayerEvent.loggedOut(player.level(), player));
         ServerGameEvents.PLAYER_ADVANCEMENT.register(IPlayerEvent::advancement);
         ServerGameEvents.PLAYER_DEATH.register(IPlayerEvent::death);
+        ServerGameEvents.SERVER_CHAT.register(IChatEvent::register);
     }
 
 
     public static void onServerStarting(MinecraftServer server) {
         SERVER = server;//获取服务器实例
+        I18n.init();
     }
 
     public static void onServerStarted(MinecraftServer server) {

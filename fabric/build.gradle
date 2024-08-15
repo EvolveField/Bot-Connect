@@ -26,28 +26,24 @@ configurations {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
-    modApi "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version+$rootProject.minecraft_version"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version+$rootProject.minecraft_version"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle(project(path: ':common', configuration: 'transformProductionFabric')) { transitive false }
+    shadowBundle(project(path: ':common', configuration: 'transformProductionFabric'))
 
     implementation shadowBundle("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
     implementation shadowBundle("org.spongepowered:configurate-yaml:$yaml_version")
     implementation shadowBundle("com.github.houbb:csv:0.2.0")
 
-    annotationProcessor ("net.fabricmc:sponge-mixin:0.13.3+mixin.0.8.5")
-
-    compileOnly ("org.projectlombok:lombok:$lombok_version")
-    annotationProcessor ("org.projectlombok:lombok:$lombok_version")
 }
 
 
 shadowJar {
     configurations = [project.configurations.shadowBundle]
-    archiveClassifier.set("dev-shadow")
+    archiveClassifier = "dev-shadow"
 
     relocate 'org.yaml', 'cn.evole.dependencies.yaml'
-    relocate 'org.spongepowered', 'cn.evole.dependencies.spongepowered'
+    relocate 'org.spongepowered.configurate', 'cn.evole.dependencies.spongepowered.configurate'
     relocate 'io.leangen', 'cn.evole.dependencies.leagen'
     relocate 'org.checkerframework', 'cn.evole.dependencies.checkerframework'
     relocate 'com.google.errorprone', 'cn.evole.dependencies.errorprone'
@@ -57,22 +53,5 @@ shadowJar {
 
 remapJar {
     input.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set("fabric")
-}
-
-jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
+    archiveClassifier = "fabric"
 }

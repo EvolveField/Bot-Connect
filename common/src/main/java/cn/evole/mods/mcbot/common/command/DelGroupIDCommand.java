@@ -7,7 +7,6 @@ import lombok.val;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 
-//#endif
 public class DelGroupIDCommand {
 
 
@@ -18,6 +17,7 @@ public class DelGroupIDCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("QQ群号:" + id + "并未出现！"), true);
         }
+        ModConfig.save();
         return 1;
     }
 

@@ -7,7 +7,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-//#endif
 
 public class DisconnectCommand {
 
@@ -21,6 +20,7 @@ public class DisconnectCommand {
                 context.getSource().sendSuccess(() -> Component.literal("WebSocket目前未连接"), true);
             }
             ModConfig.get().getCommon().setEnable(false);
+            ModConfig.save();
         }
         return 1;
     }

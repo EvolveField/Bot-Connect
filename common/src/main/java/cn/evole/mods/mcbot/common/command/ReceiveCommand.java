@@ -16,6 +16,7 @@ public class ReceiveCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("全局接收群消息开关已被设置为关闭"), true);
         }
+        ModConfig.save();
         return 1;
     }
 
@@ -28,6 +29,7 @@ public class ReceiveCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("接收群内聊天消息开关已被设置为关闭"), true);
         }
+        ModConfig.save();
         return 1;
 
     }
@@ -41,6 +43,7 @@ public class ReceiveCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("接收群内命令消息开关已被设置为关闭"), true);
         }
+        ModConfig.save();
         return 1;
     }
 }

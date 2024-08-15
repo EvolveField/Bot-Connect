@@ -5,7 +5,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-//#endif
 
 public class ReConnectCommand {
 
@@ -17,6 +16,7 @@ public class ReConnectCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("已关闭自动重连"), true);
         }
+        ModConfig.save();
         return 1;
     }
 }

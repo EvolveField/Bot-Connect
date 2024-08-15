@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.mixin;
+package cn.evole.mods.mcbot.fabric.mixin;
 
 /**
  * @Project: McBot
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = PlayerAdvancements.class, priority = 1001)
+@Mixin(PlayerAdvancements.class)
 public abstract class PlayerAdvancementsMixin {
     @Shadow
     private ServerPlayer player;

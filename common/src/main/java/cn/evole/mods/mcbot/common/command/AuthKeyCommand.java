@@ -14,6 +14,7 @@ public class AuthKeyCommand {
         val id = context.getArgument("AuthKey", String.class);
         ModConfig.get().getBotConfig().setToken(id);
         context.getSource().sendSuccess(() -> Component.literal("已设置框架的AuthKey为:" + id), true);
+        ModConfig.save();
         return 1;
     }
 

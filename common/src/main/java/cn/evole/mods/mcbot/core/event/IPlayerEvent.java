@@ -2,6 +2,7 @@ package cn.evole.mods.mcbot.core.event;
 
 import cn.evole.mods.mcbot.api.bot.BotApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
+import cn.evole.mods.mcbot.util.locale.I18n;
 import lombok.val;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
@@ -31,7 +32,7 @@ public class IPlayerEvent {
         }
 
         if (ModConfig.get().getStatus().isSJoinEnable()
-            //&& McBot.configManager.config().getStatus().isSEnable()
+            && ModConfig.get().getStatus().isSEnable()
         ) {
             val msg = player.getDisplayName().getString() + " 加入了服务器";
             BotApi.sendAllGroupMsg(msg);
@@ -45,7 +46,7 @@ public class IPlayerEvent {
             return;//防止冗余消息
         }
         if (ModConfig.get().getStatus().isSLeaveEnable()
-            //&& McBot.configManager.config().getStatus().isSEnable()
+            && ModConfig.get().getStatus().isSEnable()
         ) {
             val msg = player.getDisplayName().getString() + " 离开了服务器";
             BotApi.sendAllGroupMsg(msg);
@@ -61,7 +62,7 @@ public class IPlayerEvent {
 
             if (source.getEntity() == null && source.getDirectEntity() == null) {
                 String string2 = string + ".player";
-                //message = livingEntity2 != null ? I18n.get(string2, player.getDisplayName().getString(), livingEntity2.getDisplayName().getString()) : I18n.get(string, player.getDisplayName().getString());
+                message = livingEntity2 != null ? I18n.get(string2, player.getDisplayName().getString(), livingEntity2.getDisplayName().getString()) : I18n.get(string, player.getDisplayName().getString());
             } else {//支持物品造成的死亡信息
                 assert source.getDirectEntity() != null;
                 Component component = source.getEntity() == null ? source.getDirectEntity().getDisplayName() : source.getEntity().getDisplayName();
@@ -72,7 +73,7 @@ public class IPlayerEvent {
                 } else {
                     itemStack = ItemStack.EMPTY;
                 }
-                //message = !itemStack.isEmpty() && itemStack.hasCustomHoverName() ? I18n.get(string + ".item", player.getDisplayName().getString(), component.getString(), itemStack.getDisplayName().getString()) : I18n.get(string,player.getDisplayName().getString(), component.getString());
+                message = !itemStack.isEmpty() && itemStack.hasCustomHoverName() ? I18n.get(string + ".item", player.getDisplayName().getString(), component.getString(), itemStack.getDisplayName().getString()) : I18n.get(string,player.getDisplayName().getString(), component.getString());
             }
             val msg = String.format(message, player.getDisplayName().getString());
             BotApi.sendAllGroupMsg(msg);
@@ -84,9 +85,9 @@ public class IPlayerEvent {
 
         if (ModConfig.get().getStatus().isSAdvanceEnable() && displayExist && ModConfig.get().getStatus().isSEnable()) {
             DisplayInfo display = advancement.getDisplay();
-            //String message = I18n.get("mcbot.chat.type.advancement." + display.getType().getSerializedName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
-            //val msg = String.format(message, player.getDisplayName().getString());
-            //BotApi.sendAllGroupMsg(msg);
+            String message = I18n.get("mcbot.chat.type.advancement." + display.getFrame().getName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
+            val msg = String.format(message, player.getDisplayName().getString());
+            BotApi.sendAllGroupMsg(msg);
         }
     }
 

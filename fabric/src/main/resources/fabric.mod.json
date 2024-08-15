@@ -15,17 +15,15 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-          "cn.evole.mods.mcbot.McBotFabric"
+            "cn.evole.mods.mcbot.fabric.McBotFabric"
         ]
     },
     "mixins": [
         "${mod_id}.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
-        "minecraft": "${minecraft_version}",
-        "java": ">=17"
+        "minecraft": "${minecraft_version}"
     }
 }
   

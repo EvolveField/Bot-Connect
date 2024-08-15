@@ -41,6 +41,7 @@ public class ConnectCommand {
         if (!Constants.onebot.getWs().isOpen()) {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "尝试链接框架"), true);
             ConnectApi.wsConnect();
+            ModConfig.save();
         } else {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "已存在WS连接"), true);
         }

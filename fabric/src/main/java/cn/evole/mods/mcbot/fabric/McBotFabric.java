@@ -1,5 +1,6 @@
-package cn.evole.mods.mcbot;
+package cn.evole.mods.mcbot.fabric;
 
+import cn.evole.mods.mcbot.McBot;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.core.event.ICmdEvent;
 import cn.evole.mods.mcbot.core.event.ITickEvent;

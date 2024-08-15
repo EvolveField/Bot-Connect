@@ -5,7 +5,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-//#endif
 
 /**
  * @author cnlimiter
@@ -21,6 +20,7 @@ public class DebugCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("已关闭开发者模式"), true);
         }
+        ModConfig.save();
         return 1;
     }
 }
