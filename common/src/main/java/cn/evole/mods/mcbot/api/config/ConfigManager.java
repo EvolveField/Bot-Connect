@@ -24,8 +24,8 @@ public class ConfigManager implements AutoCloseable {
     private final Path dir;
     private final Map<Class<?>, ConfigHandler<?>> configs = new ConcurrentHashMap<>();
 
-    public ConfigManager() {
-        this.dir = FileUtils.checkFolder(Services.PLATFORM.getGamePath().resolve("mcbot"));
+    public ConfigManager(Path dir) {
+        this.dir = dir;
         instance = this;
     }
 

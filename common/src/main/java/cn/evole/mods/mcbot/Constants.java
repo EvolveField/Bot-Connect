@@ -1,6 +1,10 @@
 package cn.evole.mods.mcbot;
 
+import cn.evole.mods.mcbot.platform.Services;
+import cn.evole.mods.mcbot.util.FileUtils;
 import cn.evole.onebot.client.OneBotClient;
+import cn.evole.onebot.sdk.util.GsonUtils;
+import com.google.gson.Gson;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +20,13 @@ public class Constants {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final ExecutorService msgExecutor = Executors.newCachedThreadPool();
     public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();  // 创建CQ码处理线程池;
+    public static final ExecutorService cmdExecutor = Executors.newSingleThreadExecutor();
+    public static final Gson GSON = GsonUtils.getNullGson();
+    public static final Path CONFIG_FOLDER = FileUtils.checkFolder(Services.PLATFORM.getGamePath().resolve("mcbot"));;
+
     public static boolean isShutdown = false;
     public static boolean connected = false;
 
-    public static Path CONFIG_FILE;
-    public static Path CONFIG_FOLDER;
     public static OneBotClient onebot;
     public static MinecraftServer SERVER = null;
 }

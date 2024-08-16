@@ -4,6 +4,7 @@ package cn.evole.mods.mcbot;
 import cn.evole.mods.mcbot.api.config.ConfigManager;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.common.config.*;
+import cn.evole.mods.mcbot.core.cmd.CmdHandler;
 import cn.evole.mods.mcbot.core.event.IBotEvent;
 import cn.evole.mods.mcbot.core.event.IChatEvent;
 import cn.evole.mods.mcbot.core.event.IPlayerEvent;
@@ -18,7 +19,7 @@ import static cn.evole.mods.mcbot.Constants.*;
 public class McBot {
 
     public static void init() {
-        try (final ConfigManager manager = new ConfigManager()) {
+        try (final ConfigManager manager = new ConfigManager(CONFIG_FOLDER)) {
             manager.initConfigs(
                     ModConfig.class
             );
@@ -47,7 +48,9 @@ public class McBot {
                     .registerEvents(new IBotEvent());
             connected = true;
         }
-        //CustomCmdHandler.INSTANCE.load();//自定义命令加载
+        //自定义命令加载
+        cmdExecutor.submit(CmdHandler::load);
+
         //keepAlive = new KeepAlive();
         //Const.messageThread.register(keepAlive::register);
     }
@@ -55,15 +58,16 @@ public class McBot {
     public static void onServerStopping(MinecraftServer server) {
         isShutdown = true;
         LOGGER.info("▌ §c正在关闭群服互联");
+        cmdExecutor.submit(CmdHandler::clear);//自定义命令持久层清空
         //UserBindApi.save(CONFIG_FOLDER);
         //ChatRecordApi.save(CONFIG_FOLDER);
-        //CustomCmdHandler.INSTANCE.clear();//自定义命令持久层清空
     }
 
     public static void onServerStopped(MinecraftServer server) {
         ConfigManager.getInstance().saveAllConfig();
         CQUtils.shutdown();
         MsgThreadUtils.shutdown();
+        cmdExecutor.shutdownNow();
         if (onebot != null) onebot.close();
     }
 }

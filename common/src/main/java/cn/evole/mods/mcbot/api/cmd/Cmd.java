@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.api.cmd;
 
+import com.google.gson.annotations.Expose;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,8 +13,11 @@ import java.util.List;
  */
 @Getter
 public class Cmd {
-    private String cmd;
-    private List<String> alies;
-    private List<String> allow_members;
-    private String permission;
+    @Expose private String id;
+    @Expose private String cmd;
+    @Expose private List<String> alies;
+    @Expose private List<String> allow_members;
+    @Expose private String permission;
+    @Expose private List<String> after_cmds;
+    @Expose private boolean enable;
 }
