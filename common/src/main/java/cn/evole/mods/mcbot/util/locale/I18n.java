@@ -2,9 +2,9 @@ package cn.evole.mods.mcbot.util.locale;
 
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.common.config.ModConfig;
+import cn.evole.mods.mcbot.platform.Services;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.locale.Language;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -30,8 +30,7 @@ public class I18n {
         translations = new HashMap<>();
 
 
-        Optional<Path> optional = FabricLoader.getInstance().getModContainer("mcbot").orElseThrow(null)
-                .findPath("/lang/" + ModConfig.get().getCommon().getLanguageSelect() + ".json");
+        Optional<Path> optional = Services.PLATFORM.getResourcePath("lang/" + ModConfig.get().getCommon().getLanguageSelect() + ".json");
 
         if (optional.isEmpty()) {
             Constants.LOGGER.warn("-----------------------------------------");
@@ -41,8 +40,7 @@ public class I18n {
             Constants.LOGGER.warn("Contributing: https://github.com/cnlimiter/McBot#Contributing");
             Constants.LOGGER.warn("-----------------------------------------");
 
-            optional = FabricLoader.getInstance().getModContainer("mcbot").orElseThrow(null)
-                    .findPath("/lang/en_us.json");
+            optional = Services.PLATFORM.getResourcePath("/lang/en_us.json");
         }
 
         if (optional.isPresent()) {

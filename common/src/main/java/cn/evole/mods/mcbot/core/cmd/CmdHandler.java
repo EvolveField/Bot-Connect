@@ -8,14 +8,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import lombok.val;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,7 +28,7 @@ public class CmdHandler {
 
     private static final Gson GSON = GsonUtils.getNullGson();
 
-    private static Map<String, Cmd> cmds = new LinkedHashMap<>();
+    private static Map<String, Cmd> cmds = new ConcurrentHashMap<>();
 
     public static void load() {
         val stopwatch = Stopwatch.createStarted();
@@ -90,8 +89,6 @@ public class CmdHandler {
                 Constants.LOGGER.error("解析 JSON 文件 {} 出错", file.getName(), e);
             } catch (Exception e) {
                 Constants.LOGGER.error("加载自定义命令出错，请检查文件 {}", file.getName(), e);
-            } finally {
-                IOUtils.closeQuietly();
             }
         }
     }

@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static cn.evole.mods.mcbot.Constants.CONFIG_FOLDER;
+
 /**
  * @Project: McBot
  * @Author: cnlimiter

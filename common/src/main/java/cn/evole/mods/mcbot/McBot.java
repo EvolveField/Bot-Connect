@@ -48,8 +48,7 @@ public class McBot {
                     .registerEvents(new IBotEvent());
             connected = true;
         }
-        //自定义命令加载
-        cmdExecutor.submit(CmdHandler::load);
+        cmdExecutor.submit(CmdHandler::load);//自定义命令加载
 
         //keepAlive = new KeepAlive();
         //Const.messageThread.register(keepAlive::register);

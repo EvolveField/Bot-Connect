@@ -12,10 +12,6 @@ import cn.evole.onebot.sdk.event.notice.group.GroupDecreaseNoticeEvent;
 import cn.evole.onebot.sdk.event.notice.group.GroupIncreaseNoticeEvent;
 import cn.evole.onebot.sdk.util.MsgUtils;
 import lombok.val;
-//#if MC <11900
-
-//#endif
-
 
 /**
  * Description:
@@ -49,6 +45,7 @@ public class IBotEvent implements Listener {
                 send = split[1];
             else return;
         }
+
         val nick = event.getSender().getNickname();
         String groupNick = ModConfig.get().getCmd().isGroupNickOn() // 是否使用群昵称
                 ? nick == null ? event.getSender().getCard() : nick // 防止api返回为空
@@ -95,7 +92,7 @@ public class IBotEvent implements Listener {
         if (!event.getSubType().equals("connect")) return;
         if (!ModConfig.get().getCommon().getGroupIdList().isEmpty()
         ) {
-            val msg = MsgUtils.builder().text("▌ 群服互联已连接 ┈━═☆").build();
+            val msg = "▌ 群服互联已连接 ┈━═☆";
             BotApi.sendAllGroupMsg(msg);
         }
     }

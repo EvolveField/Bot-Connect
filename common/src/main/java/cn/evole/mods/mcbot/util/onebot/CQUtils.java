@@ -2,11 +2,14 @@ package cn.evole.mods.mcbot.util.onebot;
 
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.platform.Services;
+import cn.evole.onebot.sdk.entity.ArrayMsg;
+import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import lombok.val;
 import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -15,8 +18,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static cn.evole.mods.mcbot.Constants.LOGGER;
-import static cn.evole.mods.mcbot.Constants.cqExecutor;
+import static cn.evole.mods.mcbot.Constants.*;
 
 /**
  * Project: Bot-Connect-fabric-1.18
@@ -26,24 +28,12 @@ import static cn.evole.mods.mcbot.Constants.cqExecutor;
  */
 public class CQUtils {
 
-    private final static String CQ_CODE_SPLIT = "(?<=\\[CQ:[^]]{1,99999}])|(?=\\[CQ:[^]]{1,99999}])";
-
-    private final static String CQ_CODE_REGEX = "\\[CQ:(.*?),(.*?)]";
-
-
-    public static boolean hasImg(String msg) {
-        String regex = "\\[CQ:image,[(\\s\\S)]*]";
-        val p = Pattern.compile(regex);
-        val m = p.matcher(msg);
-        return m.find();
-    }
-
     /**
      * @param timeout 超时时间（毫秒），超时后返回空字符串。
      */
     public static @NotNull String replace(@NotNull MessageEvent event, long timeout) {
         String back = "";
-        val task = new FutureTask<>(() -> replace(event));
+        val task = new FutureTask<>(() -> doReplace(event));
         try {
             cqExecutor.execute(task);
             back = task.get(timeout, TimeUnit.MILLISECONDS);
@@ -54,89 +44,44 @@ public class CQUtils {
         return back;
     }
 
-    public static String replace(@NotNull MessageEvent event) {
-        return replace(event.getRawMessage());
-    }
-
-    public static String replace(String msg) {
-        String back;
-        StringBuffer message = new StringBuffer();
-        Pattern pattern = Pattern.compile(CQ_CODE_REGEX);
-        Matcher matcher = pattern.matcher(msg);
-        try {
-            back = doReplace(matcher, message);
-        } catch (Exception e) {
-            back = msg;
-            LOGGER.error(e.getLocalizedMessage());
-        }
-        return back;
-    }
-
-    private static @NotNull String doReplace(@NotNull Matcher matcher, StringBuffer message) {
-        while (matcher.find()) {//全局匹配
-            val type = matcher.group(1);
-            val data = matcher.group(2);
-            switch (type) {
-                case "image":
-                    if (ModConfig.get().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {
-                        val url = Arrays.stream(
-                                        data
-                                                .replaceAll("&amp;", "&")//转义字符转义
-                                                .split(",")//具体数据分割
-                                )
-                                .filter(it -> it.startsWith("url"))//非空判断
-                                .map(it -> it.substring(it.indexOf('=') + 1))
-                                .findFirst();
-                        if (url.isPresent()) {
-                            matcher.appendReplacement(message, String.format("[[CICode,url=%s,name=来自QQ的图片]]", url.get()));
+    private static @NotNull String doReplace(MessageEvent event) {
+        val stringMsg = event.getMessage();
+        val message = new StringBuilder();
+        ArrayList<ArrayMsg> msg = GSON.fromJson(stringMsg, ArrayList.class);
+        for (ArrayMsg arrayMsg : msg){
+            try {
+                switch (arrayMsg.getType()){
+                    case image -> {
+                        val url = arrayMsg.getData().get("file");
+                        if (ModConfig.get().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {
+                            message.append(String.format("[[CICode,url=%s,name=来自QQ的图片]]",
+                                    url.replaceAll("&amp;", "&")//转义字符转义
+                            ));
                         } else {
-                            matcher.appendReplacement(message, "[图片]");
+                            message.append("[图片]");
                         }
-                    } else {
-                        matcher.appendReplacement(message, "[图片]");
                     }
-                    break;
-                case "at":
-                    val id = data.split("=");
-                    if (id.length == 2) {
-                        if (id[0].equals("qq"))
-                            try {
-                                //matcher.appendReplacement(message, String.format("[@%s]", BotUtils.getNickname(Long.parseLong(id[1]))));
-                                break;
-                            } catch (NumberFormatException ignored) {
-                            }
+                    case at -> {
+                        val qq = arrayMsg.getData().get("qq");
+                        if (!qq.equalsIgnoreCase("@")) {
+                            if (event instanceof GroupMessageEvent groupMessageEvent)
+                                message.append(String.format("[@%s]", groupMessageEvent.getSender().getNickname()));
+                            else message.append("[@]");
+                        } else {
+                            message.append("[@全体]");
+                        }
                     }
-                    matcher.appendReplacement(message, "[@]");
-                    break;
-                case "record":
-                    matcher.appendReplacement(message, "[语音]");
-                    break;
-                case "forward":
-                    matcher.appendReplacement(message, "[合并转发]");
-                    break;
-                case "video":
-                    matcher.appendReplacement(message, "[视频]");
-                    break;
-                case "music":
-                    matcher.appendReplacement(message, "[音乐]");
-                    break;
-                case "redbag":
-                    matcher.appendReplacement(message, "[红包]");
-                    break;
-                case "face":
-                    matcher.appendReplacement(message, "[表情]");
-                    break;
-                case "reply":
-                    matcher.appendReplacement(message, "[回复]");
-                    break;
-                default:
-                    matcher.appendReplacement(message, "[?]");
-                    break;
+                    case reply -> {
+
+                    }
+                    default -> message.append("[?]");
+                }
+            } catch (Exception e) {
+                LOGGER.error(e.getLocalizedMessage());
+                return stringMsg;
             }
         }
-        matcher.appendTail(message);
         return message.toString();
-
     }
 
     public static void shutdown() {
