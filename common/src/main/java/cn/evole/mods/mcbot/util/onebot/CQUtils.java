@@ -6,17 +6,13 @@ import cn.evole.onebot.sdk.entity.ArrayMsg;
 import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import lombok.val;
-import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static cn.evole.mods.mcbot.Constants.*;
 
@@ -51,6 +47,9 @@ public class CQUtils {
         for (ArrayMsg arrayMsg : msg){
             try {
                 switch (arrayMsg.getType()){
+                    case text -> {
+                        message.append(arrayMsg.getData().get("text"));
+                    }
                     case image -> {
                         val url = arrayMsg.getData().get("file");
                         if (ModConfig.get().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {

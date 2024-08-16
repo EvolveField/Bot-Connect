@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.core.event;
+package cn.evole.mods.mcbot.common.event;
 
 import cn.evole.mods.mcbot.api.bot.BotApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;

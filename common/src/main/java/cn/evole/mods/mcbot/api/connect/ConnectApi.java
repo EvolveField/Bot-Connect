@@ -2,7 +2,7 @@ package cn.evole.mods.mcbot.api.connect;
 
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.core.event.IBotEvent;
+import cn.evole.mods.mcbot.common.event.IBotEvent;
 import cn.evole.onebot.client.OneBotClient;
 
 /**

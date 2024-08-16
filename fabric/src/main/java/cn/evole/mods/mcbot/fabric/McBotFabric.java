@@ -2,8 +2,8 @@ package cn.evole.mods.mcbot.fabric;
 
 import cn.evole.mods.mcbot.McBot;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
-import cn.evole.mods.mcbot.core.event.ICmdEvent;
-import cn.evole.mods.mcbot.core.event.ITickEvent;
+import cn.evole.mods.mcbot.common.event.ICmdEvent;
+import cn.evole.mods.mcbot.common.event.ITickEvent;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;

@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.api.bot;
 
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.core.event.ITickEvent;
+import cn.evole.mods.mcbot.common.event.ITickEvent;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
 import cn.evole.onebot.sdk.action.ActionPath;
 import com.google.gson.JsonObject;

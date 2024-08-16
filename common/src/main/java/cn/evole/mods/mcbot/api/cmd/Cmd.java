@@ -19,5 +19,6 @@ public class Cmd {
     @Expose private List<String> allow_members;
     @Expose private String permission;
     @Expose private List<String> after_cmds;
+    @Expose private String answer;
     @Expose private boolean enable;
 }

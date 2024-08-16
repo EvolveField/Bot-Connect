@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.core.event;
+package cn.evole.mods.mcbot.common.event;
 
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;

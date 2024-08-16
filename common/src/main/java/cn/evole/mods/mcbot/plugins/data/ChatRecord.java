@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.core.data;
+package cn.evole.mods.mcbot.plugins.data;
 
 import com.github.houbb.csv.annotation.Csv;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * @Project: McBot-fabric
  * @Author: cnlimiter
- * @CreateTime: 2024/2/20 14:56
+ * @CreateTime: 2024/2/21 13:59
  * @Description:
  */
 
@@ -17,13 +17,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserBind {
+public class ChatRecord {
+    @Csv(label = "消息ID")
+    private String messageId = "";
     @Csv(label = "添加日期")
     private long createTime = 0L;
     @Csv(label = "qq")
     private String qqId = "";
     @Csv(label = "群号")
     private String groupId = "";
-    @Csv(label = "游戏名")
-    private String gameName = "";
+    @Csv(label = "消息")
+    private String message = "";
 }
