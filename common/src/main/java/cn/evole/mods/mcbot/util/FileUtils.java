@@ -22,4 +22,16 @@ public class FileUtils {
             return folder;
         }
     }
+
+    public static Path checkFile(Path file) {
+        if (!file.toFile().isFile()) {
+            try {
+                return Files.createFile(file);
+            } catch (IOException ignored) {
+                return file;
+            }
+        } else {
+            return file;
+        }
+    }
 }

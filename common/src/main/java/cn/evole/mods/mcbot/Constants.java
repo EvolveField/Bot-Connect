@@ -20,9 +20,10 @@ public class Constants {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final ExecutorService msgExecutor = Executors.newCachedThreadPool();
     public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();
-    public static final ExecutorService cmdExecutor = Executors.newSingleThreadExecutor();
+    public static final ExecutorService commonExecutor = Executors.newSingleThreadExecutor();
     public static final Gson GSON = GsonUtils.getNullGson();
     public static final Path CONFIG_FOLDER = Services.PLATFORM.getGamePath().resolve("mcbot");
+    public static Path dataFolder = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
 
     public static boolean isShutdown = false;
     public static boolean connected = false;

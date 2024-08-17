@@ -8,6 +8,7 @@ import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
 import cn.evole.mods.mcbot.common.event.IBotEvent;
 import cn.evole.mods.mcbot.common.event.IChatEvent;
 import cn.evole.mods.mcbot.common.event.IPlayerEvent;
+import cn.evole.mods.mcbot.plugins.data.DataHandler;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
@@ -38,6 +39,9 @@ public class McBot {
     public static void onServerStarting(MinecraftServer server) {
         SERVER = server;//获取服务器实例
         I18n.init();
+        commonExecutor.submit(CmdHandler::load);//自定义命令加载
+        commonExecutor.submit(DataHandler::load);//数据加载
+
     }
 
     public static void onServerStarted(MinecraftServer server) {
@@ -48,7 +52,6 @@ public class McBot {
                     .registerEvents(new IBotEvent());
             connected = true;
         }
-        cmdExecutor.submit(CmdHandler::load);//自定义命令加载
 
         //keepAlive = new KeepAlive();
         //Const.messageThread.register(keepAlive::register);
@@ -57,8 +60,9 @@ public class McBot {
     public static void onServerStopping(MinecraftServer server) {
         isShutdown = true;
         LOGGER.info("▌ §c正在关闭群服互联");
-        cmdExecutor.submit(CmdHandler::clear);//自定义命令持久层清空
-        //UserBindApi.save(CONFIG_FOLDER);
+        commonExecutor.submit(CmdHandler::clear);//自定义命令持久层清空
+        commonExecutor.submit(DataHandler::save);//数据储存
+//UserBindApi.save(CONFIG_FOLDER);
         //ChatRecordApi.save(CONFIG_FOLDER);
     }
 
@@ -66,7 +70,7 @@ public class McBot {
         ConfigManager.getInstance().saveAllConfig();
         CQUtils.shutdown();
         MsgThreadUtils.shutdown();
-        cmdExecutor.shutdownNow();
+        commonExecutor.shutdownNow();
         if (onebot != null) onebot.close();
     }
 }
