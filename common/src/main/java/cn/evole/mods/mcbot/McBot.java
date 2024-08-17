@@ -52,9 +52,6 @@ public class McBot {
                     .registerEvents(new IBotEvent());
             connected = true;
         }
-
-        //keepAlive = new KeepAlive();
-        //Const.messageThread.register(keepAlive::register);
     }
 
     public static void onServerStopping(MinecraftServer server) {
@@ -62,8 +59,6 @@ public class McBot {
         LOGGER.info("▌ §c正在关闭群服互联");
         commonExecutor.submit(CmdHandler::clear);//自定义命令持久层清空
         commonExecutor.submit(DataHandler::save);//数据储存
-//UserBindApi.save(CONFIG_FOLDER);
-        //ChatRecordApi.save(CONFIG_FOLDER);
     }
 
     public static void onServerStopped(MinecraftServer server) {

@@ -8,7 +8,6 @@ import com.google.common.collect.Maps;
 
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * @Project: McBot
@@ -19,7 +18,6 @@ import java.util.Map;
 public class DataHandler {
     public static void load(){
         ChatRecordApi.chatRecords = Maps.newConcurrentMap();
-        UserBindApi.groupUserBinds = Maps.newConcurrentMap();
         UserBindApi.userBinds = new ArrayList<>();
 
         if (ChatRecordApi.chatRecordFile.toFile().exists()) {
@@ -27,10 +25,7 @@ public class DataHandler {
         }
 
         if (UserBindApi.userBindFile.toFile().exists()){
-            CsvHelper.read(Constants.dataFolder.toFile(), UserBind.class).forEach(userBind -> {
-                UserBindApi.userBinds.add(userBind);
-                UserBindApi.groupUserBinds.putIfAbsent(userBind.getGroupId(), Map.of(userBind.getQqId(), userBind));
-            });
+            UserBindApi.userBinds.addAll(CsvHelper.read(Constants.dataFolder.toFile(), UserBind.class));
         }
     }
 
@@ -43,7 +38,6 @@ public class DataHandler {
 
     public static void clear(){
         ChatRecordApi.chatRecords.clear();
-        UserBindApi.groupUserBinds.clear();
         UserBindApi.userBinds.clear();
     }
 
