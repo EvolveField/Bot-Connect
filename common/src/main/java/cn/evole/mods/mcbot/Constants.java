@@ -23,7 +23,7 @@ public class Constants {
     public static final ExecutorService commonExecutor = Executors.newSingleThreadExecutor();
     public static final Gson GSON = GsonUtils.getNullGson();
     public static final Path CONFIG_FOLDER = Services.PLATFORM.getGamePath().resolve("mcbot");
-    public static Path dataFolder = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
+    public static Path DATA_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
 
     public static boolean isShutdown = false;
     public static boolean connected = false;

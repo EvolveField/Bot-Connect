@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @Project: McBot-fabric
  * @Author: cnlimiter
@@ -17,7 +20,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserBind {
+public class UserInfo {
     @Csv(label = "添加日期")
     private long createTime = 0L;
     @Csv(label = "qq")
@@ -26,4 +29,12 @@ public class UserBind {
     private String groupId = "";
     @Csv(label = "游戏名")
     private String gameName = "";
+    @Csv(label = "金币")
+    private long coin = 0L;
+    @Csv(label = "权限")
+    private List<String> permissions = Arrays
+            .asList(
+                    "mcbot.cmd.tps",
+                    "mcbot.cmd.list"
+            );
 }

@@ -38,12 +38,14 @@ public class CmdUtils {
      * @param cmd   q群中指令
      * @return 处理完的指令
      */
-    public static String varParse(GroupMessageEvent event, String cmd) {
+    public static Cmd varParse(GroupMessageEvent event, String cmd) {
         VARS.putIfAbsent("user_id", event.getSender().getUserId());//初始化变量列表
 
-        val cmdStart = cmd.split(" ")[0];//部分指令头
+        String cmdStart = cmd.split(" ")[0];//部分指令头
+        Cmd selectCmd = null;
         String parseCmd = "";//定义最终命令用以返回
         boolean useCmd = false;
+        StringBuilder endCmd = new StringBuilder();
 
         for (Cmd cmd2 : CmdHandler.cmds.values()){//将含有昵称的指令替换为源命令
             if (cmd2.getCmd().contains(cmdStart)) useCmd = true;//如果源命令包含部分指令头，则可以视为使用该源命令
@@ -55,6 +57,7 @@ public class CmdUtils {
                 }
             }
             if (useCmd) {
+                selectCmd = cmd2;
                 parseCmd = cmd2.getCmd();
                 break;//跳出循环
             }
@@ -72,23 +75,22 @@ public class CmdUtils {
             }
         }
 
-        val cmdEndSplits = parseCmd.split(" ");//拆分命令
-        val cmdSplits = cmd.split(" ");
+        if (!parseCmd.isEmpty() && selectCmd != null){
+            val cmdEndSplits = parseCmd.split(" ");//拆分命令
+            val cmdSplits = cmd.split(" ");
 
-        for (int i = 0; i < cmdEndSplits.length; i++){
-            if (cmdEndSplits[i].equals("%")){//如果存在变量标志
-                cmdEndSplits[i] = cmdSplits[i];//则将指令中的变量对应内容传递到最终命令
+            for (int i = 0; i < cmdEndSplits.length; i++){
+                if (cmdEndSplits[i].equals("%")){//如果存在变量标志
+                    cmdEndSplits[i] = cmdSplits[i];//则将指令中的变量对应内容传递到最终命令
+                }
             }
+
+            for (String key : cmdEndSplits) {
+                endCmd.append(key).append(" ");
+            }//拼接回命令
+            return new Cmd(selectCmd.getId(), endCmd.toString(), selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
+        } else {
+            return null;//如果最终命令为空则返回null
         }
-
-        val endCmd = new StringBuilder();
-        for (String key : cmdEndSplits) {
-            endCmd.append(key).append(" ");
-        }//拼接回命令
-
-        return endCmd.toString();
-
-
-
     }
 }

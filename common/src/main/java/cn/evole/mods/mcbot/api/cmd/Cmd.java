@@ -1,7 +1,9 @@
 package cn.evole.mods.mcbot.api.cmd;
 
 import com.google.gson.annotations.Expose;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * @Description:
  */
 @Getter
+@Setter
+@AllArgsConstructor
 public class Cmd {
     @Expose private String id;
     @Expose private String cmd;

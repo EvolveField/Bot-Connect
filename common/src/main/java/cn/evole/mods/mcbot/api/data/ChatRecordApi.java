@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class ChatRecordApi {
     public static Map<String, ChatRecord> chatRecords;
-    public static Path chatRecordFile = FileUtils.checkFile(Constants.dataFolder.resolve("chatRecord.csv"));
+    public static Path chatRecordFile = FileUtils.checkFile(Constants.DATA_FOLDER.resolve("chatRecord.csv"));
 
     public static boolean has(String message_id){
         return chatRecords.containsKey(message_id);
