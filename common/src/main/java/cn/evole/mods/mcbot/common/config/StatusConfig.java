@@ -16,6 +16,9 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Setter
 @ConfigSerializable
 public class StatusConfig {
+    //连接的消息开关
+    @Comment("连接提醒")
+    private boolean connectInfoEnable = true;
     //接收来自q群的消息开关
     @Comment("全局接收")
     private boolean rEnable = true;

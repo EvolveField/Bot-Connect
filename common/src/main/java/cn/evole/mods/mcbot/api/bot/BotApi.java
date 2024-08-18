@@ -18,12 +18,12 @@ import java.util.concurrent.Callable;
  * @Description:
  */
 public class BotApi {
-    public static void sendGroupMsg(long id, String message) {
-        MsgThreadUtils.INSTANCE.submit(id, message, false);
+    public static void sendGroupMsg(long group_id, String message) {
+        MsgThreadUtils.INSTANCE.submit(group_id, message, false);
     }
 
-    public static void sendGroupMsg(long id, Callable<String> message) {
-        MsgThreadUtils.INSTANCE.submit(id, message, false);
+    public static void sendGroupMsg(long group_id, Callable<String> message) {
+        MsgThreadUtils.INSTANCE.submit(group_id, message, false);
     }
 
     public static void sendAllGroupMsg(String message) {

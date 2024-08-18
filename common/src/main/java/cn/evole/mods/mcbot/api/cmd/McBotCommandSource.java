@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
  * @Description:
  */
 public class McBotCommandSource implements CommandSource {
-    private static final Component RCON_COMPONENT = Component.literal("McBot");
+    private static final Component MCBOT_COMPONENT = Component.literal("McBot");
     private final StringBuffer buffer = new StringBuffer();
     private final MinecraftServer server;
 
@@ -33,7 +33,7 @@ public class McBotCommandSource implements CommandSource {
 
     public CommandSourceStack createCommandSourceStack() {
         ServerLevel overworld = this.server.overworld();
-        return new CommandSourceStack(this, Vec3.atLowerCornerOf(overworld.getSharedSpawnPos()), Vec2.ZERO, overworld, 4, "McBot", RCON_COMPONENT, this.server, null);
+        return new CommandSourceStack(this, Vec3.atLowerCornerOf(overworld.getSharedSpawnPos()), Vec2.ZERO, overworld, 4, "McBot", MCBOT_COMPONENT, this.server, null);
     }
 
     @Override

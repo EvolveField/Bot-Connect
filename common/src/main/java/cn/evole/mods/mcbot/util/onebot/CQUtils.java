@@ -3,12 +3,19 @@ package cn.evole.mods.mcbot.util.onebot;
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.onebot.sdk.entity.ArrayMsg;
+import cn.evole.onebot.sdk.enums.MsgType;
 import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
+import cn.evole.onebot.sdk.util.GsonUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +50,7 @@ public class CQUtils {
     private static @NotNull String doReplace(MessageEvent event) {
         val stringMsg = event.getMessage();
         val message = new StringBuilder();
-        ArrayList<ArrayMsg> msg = GSON.fromJson(stringMsg, ArrayList.class);
+        List<ArrayMsg> msg = msgToArray(stringMsg);
         for (ArrayMsg arrayMsg : msg){
             try {
                 switch (arrayMsg.getType()){
@@ -81,6 +88,22 @@ public class CQUtils {
             }
         }
         return message.toString();
+    }
+
+    private static List<ArrayMsg> msgToArray(String msg){
+        JsonArray array = GsonUtils.parseArray(msg);
+        List<ArrayMsg> arrayMsgList = new ArrayList<>();
+        for (JsonElement e : array) {
+            JsonObject object = (JsonObject) e;
+            ArrayMsg arrayMsg = new ArrayMsg();
+            String type = object.get("type").getAsString();
+            JsonObject data = object.get("data").getAsJsonObject();
+            arrayMsg.setType(MsgType.valueOf(type));
+            arrayMsg.setData(new HashMap<>());
+            data.asMap().forEach((k, v) -> arrayMsg.getData().put(k, v.getAsString()));
+            arrayMsgList.add(arrayMsg);
+        }
+        return arrayMsgList;
     }
 
     public static void shutdown() {

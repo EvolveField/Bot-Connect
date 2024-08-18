@@ -45,9 +45,9 @@ public class CmdHandler {
 
     private static void writeDefault() {
         if (!dir.exists() && dir.mkdirs()) {
-            JsonObject json1 = GSON.fromJson("{'id': 'list', 'cmd': 'list', 'alies': ['服务器在线'], 'allow_members': [], permission: 'ALL', 'answer': 'NO', 'enable': true}", JsonObject.class);
-            JsonObject json2 = GSON.fromJson("{'id': 'say', 'cmd': 'say %', 'alies': ['转发'], 'allow_members': [], permission: 'OP', 'answer': '转发成功！', 'enable': true}", JsonObject.class);
-            JsonObject json3 = GSON.fromJson("{'id': 'bind', 'cmd': 'mcbot addBind %', 'alies': ['绑定'], 'allow_members': [], permission: 'ALL', 'answer': '绑定 % 成功！', 'enable': true}", JsonObject.class);
+            JsonObject json1 = GSON.fromJson("{'id': 'list', 'cmd': 'list', 'alies': ['服务器在线'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': 'NO', 'enable': true}", JsonObject.class);
+            JsonObject json2 = GSON.fromJson("{'id': 'say', 'cmd': 'say %', 'alies': ['转发'], 'allow_members': [], permission: 'OP', 'after_cmds': [], 'answer': '转发成功！', 'enable': true}", JsonObject.class);
+            JsonObject json3 = GSON.fromJson("{'id': 'bind', 'cmd': 'mcbot addBind %', 'alies': ['绑定'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': '绑定 % 成功！', 'enable': true}", JsonObject.class);
 
             // 尝试创建和写入文件
             try (FileWriter writerList = new FileWriter(new File(dir, "list.json"));

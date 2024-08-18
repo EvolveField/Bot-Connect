@@ -1,6 +1,7 @@
 package cn.evole.mods.mcbot;
 
 
+import cn.evole.mods.mcbot.api.cmd.McBotCommandSource;
 import cn.evole.mods.mcbot.api.config.ConfigManager;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.common.config.*;
@@ -45,6 +46,7 @@ public class McBot {
     }
 
     public static void onServerStarted(MinecraftServer server) {
+        mcBotCommand = new McBotCommandSource(server);
         if (ModConfig.get().getCommon().isAutoOpen()) {
             onebot = OneBotClient
                     .create(ModConfig.get().getBotConfig().build())

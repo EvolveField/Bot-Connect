@@ -1,6 +1,8 @@
 package cn.evole.mods.mcbot.common.event;
 
 import cn.evole.mods.mcbot.api.bot.BotApi;
+import cn.evole.mods.mcbot.api.cmd.CmdApi;
+import cn.evole.mods.mcbot.api.data.ChatRecordApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.annotations.SubscribeEvent;
@@ -57,14 +59,14 @@ public class IBotEvent implements Listener {
                 : String.format("§b[§l%s§b]§a<%s>§f %s", ModConfig.get().getCmd().getQqGamePrefix(), groupNick, send)
                 : String.format("§a<%s>§f %s", groupNick, send);
 
-        //ChatRecordApi.add(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
+        ChatRecordApi.add(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
 
         BotApi.sendAllPlayerMsg(finalMsg);
     }
 
 
     private void onGroupCmd(GroupMessageEvent event, String rawMsg) {
-        //CmdApi.invokeCommandGroup(rawMsg, event);
+        CmdApi.invokeGroupCommand(event, rawMsg);
     }
 
     @SubscribeEvent
@@ -90,7 +92,8 @@ public class IBotEvent implements Listener {
     @SubscribeEvent
     public void onLifeCycle(LifecycleMetaEvent event) {
         if (!event.getSubType().equals("connect")) return;
-        if (!ModConfig.get().getCommon().getGroupIdList().isEmpty()
+        if (!ModConfig.get().getStatus().isConnectInfoEnable()
+                &&!ModConfig.get().getCommon().getGroupIdList().isEmpty()
         ) {
             val msg = "▌ 群服互联已连接 ┈━═☆";
             BotApi.sendAllGroupMsg(msg);

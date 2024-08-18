@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot;
 
+import cn.evole.mods.mcbot.api.cmd.McBotCommandSource;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.mods.mcbot.util.FileUtils;
 import cn.evole.onebot.client.OneBotClient;
@@ -30,4 +31,5 @@ public class Constants {
 
     public static OneBotClient onebot;
     public static MinecraftServer SERVER = null;
+    public static McBotCommandSource mcBotCommand = null;
 }

@@ -1,10 +1,12 @@
 package cn.evole.mods.mcbot.api.data;
 
 import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.plugins.data.UserInfo;
 import cn.evole.mods.mcbot.util.FileUtils;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,10 @@ public class UserInfoApi {
         return false;
     }
 
+    public static UserInfo get(String group_id, String user_id){
+        return userInfos.stream().filter(userInfo -> userInfo.getGroupId().equals(group_id) && userInfo.getQqId().equals(user_id)).findFirst().orElse(null);
+    }
+
     public static void add(String group_id, String qq_id, String game_name){
         if (!groupHas(group_id, qq_id)) {
             UserInfo userInfo = new UserInfo();
@@ -43,6 +49,12 @@ public class UserInfoApi {
             userInfo.setGroupId(group_id);
             userInfo.setGameName(game_name);
             userInfo.setCoin(5);
+
+            List<String> permissions = new ArrayList<>();
+            for (String permission : userInfo.getPermissions()){
+                permissions.add(ModConfig.get().getBotConfig().getTag() + "." + permission);//添加权限tag，区分群组服
+            }
+            userInfo.setPermissions(permissions);
             userInfos.add(userInfo);
         }
     }
