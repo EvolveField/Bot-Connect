@@ -93,7 +93,7 @@ public class IBotEvent implements Listener {
     @SubscribeEvent
     public void onLifeCycle(LifecycleMetaEvent event) {
         if (!event.getSubType().equals("connect")) return;
-        if (!ModConfig.get().getStatus().isConnectInfoEnable()
+        if (ModConfig.get().getStatus().isConnectInfoEnable()
                 &&!ModConfig.get().getCommon().getGroupIdList().isEmpty()
         ) {
             val msg = "▌ 群服互联已连接 ┈━═☆";

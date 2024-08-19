@@ -10,9 +10,7 @@ import cn.evole.mods.mcbot.common.event.IBotEvent;
 import cn.evole.mods.mcbot.common.event.IChatEvent;
 import cn.evole.mods.mcbot.common.event.IPlayerEvent;
 import cn.evole.mods.mcbot.plugins.data.DataHandler;
-import cn.evole.mods.mcbot.util.MsgThreadUtils;
 import cn.evole.mods.mcbot.util.locale.I18n;
-import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.OneBotClient;
 import net.minecraft.server.MinecraftServer;
 
