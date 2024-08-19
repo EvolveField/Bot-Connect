@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.common.event;
 
+import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.bot.BotApi;
 import cn.evole.mods.mcbot.api.cmd.CmdApi;
 import cn.evole.mods.mcbot.api.data.ChatRecordApi;
@@ -28,7 +29,7 @@ public class IBotEvent implements Listener {
                 && ModConfig.get().getStatus().isREnable()//总接受开关
                 && event.getUserId() != ModConfig.get().getBotConfig().getBotId()//过滤机器人
         ) {
-            String send = CQUtils.replace(event, 3000);//暂时匹配仅符合字符串聊天内容与图片
+            String send = CQUtils.replace(event, 2000);//暂时匹配仅符合字符串聊天内容与图片
             if (!send.startsWith(ModConfig.get().getCmd().getCmdStart())//过滤命令前缀
             ) {
                 if (ModConfig.get().getStatus().isRChatEnable())/*接受聊天开关*/ onGroupMessage(event, send);
@@ -59,7 +60,7 @@ public class IBotEvent implements Listener {
                 : String.format("§b[§l%s§b]§a<%s>§f %s", ModConfig.get().getCmd().getQqGamePrefix(), groupNick, send)
                 : String.format("§a<%s>§f %s", groupNick, send);
 
-        ChatRecordApi.add(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
+        ChatRecordApi.syncAdd(String.valueOf(event.getMessageId()), String.valueOf(event.getGroupId()), String.valueOf(event.getSelfId()), finalMsg);
 
         BotApi.sendAllPlayerMsg(finalMsg);
     }

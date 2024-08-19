@@ -2,7 +2,6 @@ package cn.evole.mods.mcbot.api.cmd;
 
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.bot.BotApi;
-import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
 import cn.evole.mods.mcbot.util.CmdUtils;
 import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
@@ -28,7 +27,7 @@ public class CmdApi {
         if (cmd == null) return;
 
         if (CmdUtils.groupAdminParse(event)) {
-            Constants.LOGGER.info(cmd.getCmd());
+            //Constants.LOGGER.info(cmd.getCmd());
             BotApi.sendGroupMsg(event.getGroupId(), Constants.mcBotCommand.runCommand(cmd.getCmd()));//执行指令
             if (!cmd.getAfter_cmds().isEmpty())
                 cmd.getAfter_cmds().forEach(s -> BotApi.sendGroupMsg(event.getGroupId(), Constants.mcBotCommand.runCommand(s)));

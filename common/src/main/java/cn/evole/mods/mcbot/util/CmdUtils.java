@@ -115,9 +115,11 @@ public class CmdUtils {
         if (!parseCmd.isEmpty() && selectCmd != null){
             val cmdSplits = new ArrayList<>(Arrays.stream(cmd.split(" ")).toList());//拆分命令
 
-            for (String key : cmdSplits){
-                if (key.equals(selectCmd.getId())){
-                    cmdSplits.remove(key);
+            if (cmdSplits.size() > 1) {
+                for (String key : cmdSplits){
+                    if (key.equals(selectCmd.getId())){
+                        cmdSplits.remove(key);
+                    }
                 }
             }
 

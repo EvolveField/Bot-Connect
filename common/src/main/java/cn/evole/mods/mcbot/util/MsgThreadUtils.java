@@ -19,10 +19,6 @@ import static cn.evole.mods.mcbot.Constants.*;
 public class MsgThreadUtils {
     public static final MsgThreadUtils INSTANCE = new MsgThreadUtils();
 
-    public static void shutdown() {
-        msgExecutor.shutdownNow();
-    }
-
     public void submit(long groupId, String msg, boolean autoEscape) {
         LOGGER.debug("转发游戏消息: {}", msg);
         msgExecutor.submit(() -> onebot.getBot().sendGroupMsg(groupId, msg, autoEscape));

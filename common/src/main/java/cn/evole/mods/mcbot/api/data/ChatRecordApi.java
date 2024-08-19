@@ -27,4 +27,12 @@ public class ChatRecordApi {
     public static void del(String message_id){
         if (has(message_id)) chatRecords.remove(message_id);
     }
+
+    public static void syncAdd(String message_id, String group_name, String qq_id, String message){
+        Constants.commonExecutor.submit(() -> add(message_id, group_name, qq_id, message));
+    }
+
+    public static void syncDel(String message_id){
+        Constants.commonExecutor.submit(() -> del(message_id));
+    }
 }

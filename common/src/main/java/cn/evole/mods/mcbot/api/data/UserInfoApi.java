@@ -64,4 +64,12 @@ public class UserInfoApi {
             userInfos.removeIf(userInfo -> userInfo.getGroupId().equals(group_id) && userInfo.getQqId().equals(qq_id));
         }
     }
+
+    public static void syncAdd(String group_id, String qq_id, String game_name){
+        Constants.commonExecutor.submit(() -> add(group_id, qq_id, game_name));
+    }
+
+    public static void syncDel(String group_id, String qq_id){
+        Constants.commonExecutor.submit(() -> del(group_id, qq_id));
+    }
 }

@@ -3,6 +3,8 @@ package cn.evole.mods.mcbot;
 import cn.evole.mods.mcbot.api.cmd.McBotCommandSource;
 import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.mods.mcbot.util.FileUtils;
+import cn.evole.mods.mcbot.util.MsgThreadUtils;
+import cn.evole.mods.mcbot.util.onebot.CQUtils;
 import cn.evole.onebot.client.OneBotClient;
 import cn.evole.onebot.sdk.util.GsonUtils;
 import com.google.gson.Gson;
@@ -21,7 +23,7 @@ public class Constants {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final ExecutorService msgExecutor = Executors.newCachedThreadPool();
     public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();
-    public static final ExecutorService commonExecutor = Executors.newSingleThreadExecutor();
+    public static final ExecutorService commonExecutor = Executors.newFixedThreadPool(4);
     public static final Gson GSON = GsonUtils.getNullGson();
     public static final Path CONFIG_FOLDER = Services.PLATFORM.getGamePath().resolve("mcbot");
     public static Path DATA_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
@@ -32,4 +34,11 @@ public class Constants {
     public static OneBotClient onebot;
     public static MinecraftServer SERVER = null;
     public static McBotCommandSource mcBotCommand = null;
+
+
+    public static void shutdown(){
+        cqExecutor.shutdownNow();
+        msgExecutor.shutdownNow();
+        commonExecutor.shutdownNow();
+    }
 }

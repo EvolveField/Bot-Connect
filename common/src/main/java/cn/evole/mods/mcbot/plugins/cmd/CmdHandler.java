@@ -47,16 +47,20 @@ public class CmdHandler {
         if (!dir.exists() && dir.mkdirs()) {
             JsonObject json1 = GSON.fromJson("{'id': 'list', 'cmd': 'list', 'alies': ['服务器在线'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': 'NO', 'enable': true}", JsonObject.class);
             JsonObject json2 = GSON.fromJson("{'id': 'say', 'cmd': 'say %', 'alies': ['转发'], 'allow_members': [], permission: 'OP', 'after_cmds': [], 'answer': '转发成功！', 'enable': true}", JsonObject.class);
-            JsonObject json3 = GSON.fromJson("{'id': 'bind', 'cmd': 'mcbot addBind %', 'alies': ['绑定'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': '绑定 % 成功！', 'enable': true}", JsonObject.class);
+            JsonObject json3 = GSON.fromJson("{'id': 'bind', 'cmd': 'mcbot addBind %group_id% %user_id% %', 'alies': ['绑定'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': '绑定 % 成功！', 'enable': true}", JsonObject.class);
+            JsonObject json4 = GSON.fromJson("{'id': 'unbind', 'cmd': 'mcbot deBind %group_id% %user_id%', 'alies': ['取消绑定'], 'allow_members': [], permission: 'ALL', 'after_cmds': [], 'answer': '取消绑定 % 成功！', 'enable': true}", JsonObject.class);
 
             // 尝试创建和写入文件
             try (FileWriter writerList = new FileWriter(new File(dir, "list.json"));
                  FileWriter writerSay = new FileWriter(new File(dir, "say.json"));
-                 FileWriter writerBind = new FileWriter(new File(dir, "bind.json"))) {
+                 FileWriter writerBind = new FileWriter(new File(dir, "bind.json"));
+                 FileWriter writerUnbind = new FileWriter(new File(dir, "unbind.json"))
+                 ) {
 
                 GSON.toJson(json1, writerList);
                 GSON.toJson(json2, writerSay);
                 GSON.toJson(json3, writerBind);
+                GSON.toJson(json4, writerUnbind);
 
             } catch (IOException e) {
                 Constants.LOGGER.error("生成默认自定义命令时出错", e);
