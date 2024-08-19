@@ -1,6 +1,7 @@
 package cn.evole.mods.mcbot.common.event;
 
 import cn.evole.mods.mcbot.api.bot.BotApi;
+import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import lombok.val;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.Level;
 public class IPlayerEvent {
     public static void loggedIn(Level world, ServerPlayer player) {
         if (ModConfig.get().getCommon().isBindOn()
-            //&& !UserBindApi.isIn(player.getGameProfile().getName())
+            //&& !UserInfoApi.isInGame(player.getGameProfile().getName())
         ) {
             val toSend = Component.literal("请先完成绑定(爱来自群服互联~)");
             player.connection.disconnect(toSend);

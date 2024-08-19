@@ -63,7 +63,7 @@ public class McBotForge {
     }
     @SubscribeEvent
     public static void onPlayerLeave(@NotNull PlayerEvent.PlayerLoggedOutEvent event) {
-        ServerGameEvents.PLAYER_LOGGED_IN.invoker().onPlayerLoggedIn(event.getEntity().getServer(), (ServerPlayer) event.getEntity());
+        ServerGameEvents.PLAYER_LOGGED_OUT.invoker().onPlayerLoggedOut(event.getEntity().getServer(), (ServerPlayer) event.getEntity());
     }
 
     @SubscribeEvent

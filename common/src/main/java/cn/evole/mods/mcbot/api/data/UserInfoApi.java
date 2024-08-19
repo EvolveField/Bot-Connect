@@ -28,10 +28,10 @@ public class UserInfoApi {
         return false;
     }
 
-    public static boolean isInGame(String group_id, String user_id){
+    public static boolean isInGame(String group_id, String game_name){
         for (UserInfo userInfo : userInfos){
             if (userInfo.getGroupId().equals(group_id)){
-                return userInfo.getGameName().equals(user_id);
+                return userInfo.getGameName().equals(game_name);
             }
         }
         return false;
