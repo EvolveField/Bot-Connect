@@ -1,6 +1,7 @@
 package cn.evole.mods.mcbot.api.event;
 
 import com.google.common.collect.Maps;
+import lombok.Getter;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -11,6 +12,7 @@ import java.util.function.Function;
  * @CreateTime: 2024/8/11 20:31
  * @Description: from <a href="https://github.com/AHilyard/Iceberg/blob/1.21-multi/common/src/main/java/com/anthonyhilyard/iceberg/events/TypeTrackedEvent.java">...</a>
  */
+@Getter
 public class TypeTrackedEvent<S, T> extends Event<T> {
     private final Map<Class<? extends S>, T> listenerTypes = Maps.newHashMap();
 
@@ -28,7 +30,4 @@ public class TypeTrackedEvent<S, T> extends Event<T> {
         listenerTypes.put(type, listener);
     }
 
-    public Map<Class<? extends S>, T> getListenerTypes() {
-        return listenerTypes;
-    }
 }

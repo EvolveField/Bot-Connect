@@ -65,11 +65,12 @@ public class I18n {
             if (translation1 != null) {
                 return String.format(translation1, args);
             } else {
-                String translation2 = Language.getInstance().getOrDefault(key);
-                if (!translation2.equals(key)) {
+                String key2 = key.replaceAll("mcbot.", "");
+                String translation2 = Language.getInstance().getOrDefault(key2);
+                if (!translation2.equals(key2)) {
                     return String.format(translation2, args);
                 } else {
-                    return "TranslateError{\"key\":\"" + key + "\",\"args\":" + Arrays.toString(args) + "}";
+                    return "TranslateError{\"key\":\"" + key2 + "\",\"args\":" + Arrays.toString(args) + "}";
                 }
             }
         } catch (Exception e) {

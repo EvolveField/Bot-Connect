@@ -59,7 +59,9 @@ public class CQUtils {
                     }
                     case image -> {
                         val url = arrayMsg.getData().get("file");
-                        if (ModConfig.get().getCommon().isImageOn() && Services.PLATFORM.isModLoaded("chatimage")) {
+                        if (ModConfig.get().getCommon().isImageOn()
+                                && Services.PLATFORM.isModLoaded("chatimage")
+                        ) {
                             message.append(String.format("[[CICode,url=%s,name=来自QQ的图片]]",
                                     url.replaceAll("&amp;", "&")//转义字符转义
                             ));
@@ -69,9 +71,9 @@ public class CQUtils {
                     }
                     case at -> {
                         val qq = arrayMsg.getData().get("qq");
-                        if (!qq.equalsIgnoreCase("@")) {
+                        if (!qq.equalsIgnoreCase("all")) {
                             if (event instanceof GroupMessageEvent groupMessageEvent)
-                                message.append(String.format("[@%s]", groupMessageEvent.getSender().getNickname()));
+                                message.append(String.format("[@%s]", arrayMsg.getData().get("name")));
                             else message.append("[@]");
                         } else {
                             message.append("[@全体]");

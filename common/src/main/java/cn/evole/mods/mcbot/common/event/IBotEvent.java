@@ -1,6 +1,5 @@
 package cn.evole.mods.mcbot.common.event;
 
-import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.bot.BotApi;
 import cn.evole.mods.mcbot.api.cmd.CmdApi;
 import cn.evole.mods.mcbot.api.data.ChatRecordApi;
@@ -56,7 +55,7 @@ public class IBotEvent implements Listener {
 
         String finalMsg = ModConfig.get().getCmd().isGamePrefixOn()
                 ? ModConfig.get().getCmd().isIdGamePrefixOn()
-                ? String.format("§b[§l%s§r(§5%s§b)]§a<%s>§f %s", ModConfig.get().getCmd().getQqGamePrefix(), event.getGroupId(), groupNick, send)
+                ? String.format("§b[§l%s§r(§5%s§r)§b]§a<%s>§f %s", ModConfig.get().getCmd().getQqGamePrefix(), event.getGroupId(), groupNick, send)
                 : String.format("§b[§l%s§b]§a<%s>§f %s", ModConfig.get().getCmd().getQqGamePrefix(), groupNick, send)
                 : String.format("§a<%s>§f %s", groupNick, send);
 
