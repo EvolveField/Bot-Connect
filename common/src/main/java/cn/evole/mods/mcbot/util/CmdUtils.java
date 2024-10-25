@@ -132,11 +132,8 @@ public class CmdUtils {
                 parseCmd = parseCmd.split(" ")[0].strip() + " " + args;//则将指令中的变量对应内容传递到最终命令
             }
 
-            Cmd cmd1 = new Cmd(selectCmd.getId(), parseCmd, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
-            Constants.LOGGER.info("最终命令：{}", parseCmd);
-            Constants.LOGGER.info("最终   ：{}", cmd1);
             //拼接回命令
-            return cmd1;
+            return new Cmd(selectCmd.getId(), parseCmd, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
         } else {
             return null;//如果最终命令为空则返回null
         }
