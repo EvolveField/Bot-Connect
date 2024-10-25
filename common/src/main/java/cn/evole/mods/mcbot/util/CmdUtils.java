@@ -41,7 +41,8 @@ public class CmdUtils {
     }
 
     public static boolean hasPermission(String group_id, String user_id, Cmd cmd){
-       return  (UserInfoApi.get(group_id, user_id) != null &&
+        if (cmd.getId().equals("bind")) return true;
+        else return  (UserInfoApi.get(group_id, user_id) != null &&
                 UserInfoApi.get(group_id, user_id).getPermissions().contains(ModConfig.get().getBotConfig().getTag() + ".mcbot.cmd." + cmd.getId())
                 || cmd.getAllow_members().contains(user_id)
         );

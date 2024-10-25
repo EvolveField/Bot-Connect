@@ -12,5 +12,4 @@ import java.io.File;
  */
 public class ActionHandler {
     private static final File dir = Constants.CONFIG_FOLDER.resolve("actions").toFile();
-
 }

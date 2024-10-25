@@ -22,8 +22,6 @@ public class BotConfig {
     private String url = "ws://127.0.0.1:8080";
     @Comment("鉴权")
     private String token = "";
-    @Comment("mirai鉴权方式不一样")
-    private boolean mirai = false;
     @Comment("机器人qq")
     private long botId = 0L;//机器人qq
     @Comment("自动重连")
@@ -34,7 +32,7 @@ public class BotConfig {
     private long timeoutCompensation = 1000;
 
     public cn.evole.onebot.client.core.BotConfig build() {
-        return new cn.evole.onebot.client.core.BotConfig(url, token, botId, mirai, reconnect, maxReconnectAttempts);
+        return new cn.evole.onebot.client.core.BotConfig(url, token, botId, token.startsWith("mirai_"), reconnect, maxReconnectAttempts);
     }
 
 }

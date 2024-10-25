@@ -3,8 +3,8 @@ package cn.evole.mods.mcbot.api.action;
 /**
  * @Project: McBot
  * @Author: cnlimiter
- * @CreateTime: 2024/9/11 23:34
- * @Description: 用于自定义服务器事件行为
+ * @CreateTime: 2024/9/15 13:51
+ * @Description:
  */
 public enum ActionPath {
     PLAYER_ADVANCEMENT,
