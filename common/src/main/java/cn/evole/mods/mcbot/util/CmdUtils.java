@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.util;
 
+import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.cmd.Cmd;
 import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
@@ -10,11 +11,12 @@ import lombok.val;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @Project: McBot
@@ -28,8 +30,6 @@ public class CmdUtils {
 
     private final static String VAR_REGEX = "(%(\\w+)+%)+";
     public static String findSimpleCmd(String command) {
-
-
         // 找到最后一个空格的位置
         int lastSpaceIndex = command.lastIndexOf(" ");
         // 如果没有空格，则整个命令就是关键词
@@ -114,7 +114,7 @@ public class CmdUtils {
         }
 
         if (!parseCmd.isEmpty() && selectCmd != null){
-            val cmdSplits = new ArrayList<>(Arrays.stream(cmd.split(" ")).toList());//拆分命令
+            val cmdSplits = new ConcurrentLinkedQueue<>(Arrays.stream(cmd.split(" ")).toList());//拆分命令
 
             if (cmdSplits.size() > 1) {
                 for (String key : cmdSplits){
@@ -126,12 +126,17 @@ public class CmdUtils {
 
             String args = String.join(" ", cmdSplits);
 
-            if (parseCmd.contains("%")){//如果存在变量标志
-                parseCmd = parseCmd.replaceAll("%", args).strip();//则将指令中的变量对应内容传递到最终命令
+            if (parseCmd.contains("%")
+                    && (parseCmd.split(Pattern.quote("%"), -1).length - 1) == cmdSplits.size()
+            ){//如果存在变量标志 且变量标志的个数与参数个数相等
+                parseCmd = parseCmd.split(" ")[0].strip() + " " + args;//则将指令中的变量对应内容传递到最终命令
             }
 
+            Cmd cmd1 = new Cmd(selectCmd.getId(), parseCmd, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
+            Constants.LOGGER.info("最终命令：{}", parseCmd);
+            Constants.LOGGER.info("最终   ：{}", cmd1);
             //拼接回命令
-            return new Cmd(selectCmd.getId(), parseCmd, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
+            return cmd1;
         } else {
             return null;//如果最终命令为空则返回null
         }
