@@ -31,7 +31,7 @@ public class StatusCommand {
         boolean connected = Constants.onebot.getWs().isOpen();
         boolean white = Constants.SERVER.getPlayerList().isUsingWhitelist();
         String host = ModConfig.get().getBotConfig().getUrl().getStringValue();
-        long QQid = ModConfig.get().getBotConfig().getBotId().getIntegerValue();
+        String QQid = ModConfig.get().getBotConfig().getBotId().getStringValue();
         String toSend =
                 "\n姬妻人服务状态:\n"
                         + "姬妻人QQId:" + QQid + " \n"

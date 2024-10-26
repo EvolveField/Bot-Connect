@@ -26,7 +26,7 @@ public class IBotEvent implements Listener {
     public void onGroup(GroupMessageEvent event) {
         if (ModConfig.get().getCommon().getGroupIdList().getStrings().contains(String.valueOf(event.getGroupId()))//判断是否是配置中的群
                 && ModConfig.get().getStatus().getREnable().getBooleanValue()//总接受开关
-                && event.getUserId() != ModConfig.get().getBotConfig().getBotId().getIntegerValue()//过滤机器人
+                && !String.valueOf(event.getUserId()).equals(ModConfig.get().getBotConfig().getBotId().getStringValue())//过滤机器人
         ) {
             String send = CQUtils.replace(event, 2000);//暂时匹配仅符合字符串聊天内容与图片
             if (!send.startsWith(ModConfig.get().getCmd().getCmdStart().getStringValue())//过滤命令前缀

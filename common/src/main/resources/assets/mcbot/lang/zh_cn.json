@@ -40,13 +40,13 @@
   "config.mcbot.status.sChatEnable" : "发送服务器聊天",
   "config.mcbot.status.sAdvanceEnable" : "发送成就消息",
 
-  "config.mcbot.status.groupOn" : "开启q群功能",
-  "config.mcbot.status.groupIdList" : "支持多个q群",
-  "config.mcbot.status.enable" : "是否启用",
-  "config.mcbot.status.debug" : "是否开发模式，将显示事件信息操作",
-  "config.mcbot.status.languageSelect" : "选择语言系统，zh_cn为简体中文，en_us为英文",
-  "config.mcbot.status.autoOpen" : "自动连接",
-  "config.mcbot.status.imageOn" : "是否开启聊天栏图片功能",
-  "config.mcbot.status.bindOn" : "是否开启绑定校验"
+  "config.mcbot.common.groupOn" : "开启q群功能",
+  "config.mcbot.common.groupIdList" : "支持多个q群",
+  "config.mcbot.common.enable" : "是否启用",
+  "config.mcbot.common.debug" : "是否开发模式，将显示事件信息操作",
+  "config.mcbot.common.languageSelect" : "选择语言系统，zh_cn为简体中文，en_us为英文",
+  "config.mcbot.common.autoOpen" : "自动连接",
+  "config.mcbot.common.imageOn" : "是否开启聊天栏图片功能",
+  "config.mcbot.common.bindOn" : "是否开启绑定校验"
 
 }
