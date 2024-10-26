@@ -1,6 +1,8 @@
 package cn.evole.mods.mcbot.common.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -15,6 +17,8 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class StatusConfig {
     //连接的消息开关
     @Comment("连接提醒")

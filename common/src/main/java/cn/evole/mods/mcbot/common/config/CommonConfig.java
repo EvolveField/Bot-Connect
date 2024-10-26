@@ -1,6 +1,8 @@
 package cn.evole.mods.mcbot.common.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -17,6 +19,8 @@ import java.util.List;
 @Getter
 @Setter
 @ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommonConfig {
 
     @Comment("开启q群功能")

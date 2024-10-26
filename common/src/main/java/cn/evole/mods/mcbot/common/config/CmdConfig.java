@@ -1,6 +1,8 @@
 package cn.evole.mods.mcbot.common.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -15,6 +17,8 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class CmdConfig {
     @Comment("自定义q群加入事件消息")
     private String welcomeNotice = "欢迎加群~";//自定义q群加入事件消息

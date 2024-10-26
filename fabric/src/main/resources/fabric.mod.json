@@ -16,6 +16,9 @@
     "entrypoints": {
         "main": [
             "cn.evole.mods.mcbot.fabric.McBotFabric"
+        ],
+        "modmenu": [
+            "cn.evole.mods.mcbot.fabric.ModMenuApiImpl"
         ]
     },
     "mixins": [

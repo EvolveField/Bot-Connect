@@ -1,6 +1,8 @@
 package cn.evole.mods.mcbot.common.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -15,6 +17,8 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @Getter
 @Setter
 @ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class BotConfig {
     @Comment("跨服支持,权限支持")
     private String tag = "main";

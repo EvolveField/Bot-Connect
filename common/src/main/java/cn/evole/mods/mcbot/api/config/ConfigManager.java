@@ -1,17 +1,14 @@
 package cn.evole.mods.mcbot.api.config;
 
 import cn.evole.mods.mcbot.Constants;
-import cn.evole.mods.mcbot.platform.Services;
-import cn.evole.mods.mcbot.util.FileUtils;
 import lombok.Getter;
-import net.fabricmc.loader.api.FabricLoader;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.reference.ValueReference;
 
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static cn.evole.mods.mcbot.Constants.CONFIG_FOLDER;
 
 /**
  * @Project: McBot
@@ -79,6 +76,11 @@ public class ConfigManager implements AutoCloseable {
     @SuppressWarnings("unchecked")
     public <T> T getConfig(final Class<T> config) {
         return (T) configs.get(config).getConfig();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> ValueReference<T, CommentedConfigurationNode> getBaseConfig(final Class<T> config) {
+        return (ValueReference<T, CommentedConfigurationNode>) configs.get(config).getBaseConfig();
     }
 
 }
