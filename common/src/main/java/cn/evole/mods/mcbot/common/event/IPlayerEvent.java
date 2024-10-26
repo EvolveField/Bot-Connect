@@ -1,7 +1,6 @@
 package cn.evole.mods.mcbot.common.event;
 
 import cn.evole.mods.mcbot.api.bot.BotApi;
-import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import lombok.val;
@@ -24,7 +23,7 @@ import net.minecraft.world.level.Level;
  */
 public class IPlayerEvent {
     public static void loggedIn(Level world, ServerPlayer player) {
-        if (ModConfig.get().getCommon().isBindOn()
+        if (ModConfig.get().getCommon().getBindOn().getBooleanValue()
             //&& !UserInfoApi.isInGame(player.getGameProfile().getName())
         ) {
             val toSend = Component.literal("请先完成绑定(爱来自群服互联~)");
@@ -32,8 +31,8 @@ public class IPlayerEvent {
             return;//防止冗余消息
         }
 
-        if (ModConfig.get().getStatus().isSJoinEnable()
-            && ModConfig.get().getStatus().isSEnable()
+        if (ModConfig.get().getStatus().getSJoinEnable().getBooleanValue()
+            && ModConfig.get().getStatus().getSEnable().getBooleanValue()
         ) {
             val msg = player.getDisplayName().getString() + " 加入了服务器";
             BotApi.sendAllGroupMsg(msg);
@@ -41,13 +40,13 @@ public class IPlayerEvent {
     }
 
     public static void loggedOut(Level world, ServerPlayer player) {
-        if (ModConfig.get().getCommon().isBindOn()
+        if (ModConfig.get().getCommon().getBindOn().getBooleanValue()
             //&& !UserBindApi.isIn(player.getGameProfile().getName())
         ) {
             return;//防止冗余消息
         }
-        if (ModConfig.get().getStatus().isSLeaveEnable()
-            && ModConfig.get().getStatus().isSEnable()
+        if (ModConfig.get().getStatus().getSLeaveEnable().getBooleanValue()
+            && ModConfig.get().getStatus().getSEnable().getBooleanValue()
         ) {
             val msg = player.getDisplayName().getString() + " 离开了服务器";
             BotApi.sendAllGroupMsg(msg);
@@ -55,7 +54,7 @@ public class IPlayerEvent {
     }
 
     public static void death(DamageSource source, ServerPlayer player) {
-        if (player != null && ModConfig.get().getStatus().isSDeathEnable() && ModConfig.get().getStatus().isSEnable()) {
+        if (player != null && ModConfig.get().getStatus().getSDeathEnable().getBooleanValue() && ModConfig.get().getStatus().getSEnable().getBooleanValue()) {
             LivingEntity livingEntity2 = player.getKillCredit();
             String message = "";
 
@@ -84,7 +83,7 @@ public class IPlayerEvent {
     public static void advancement(Player player, Advancement advancement) {
         boolean displayExist = advancement.getDisplay() != null;
 
-        if (ModConfig.get().getStatus().isSAdvanceEnable() && displayExist && ModConfig.get().getStatus().isSEnable()) {
+        if (ModConfig.get().getStatus().getSAdvanceEnable().getBooleanValue() && displayExist && ModConfig.get().getStatus().getSEnable().getBooleanValue()) {
             DisplayInfo display = advancement.getDisplay();
             String message = I18n.get("mcbot.chat.type.advancement." + display.getFrame().getName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
             val msg = String.format(message, player.getDisplayName().getString());

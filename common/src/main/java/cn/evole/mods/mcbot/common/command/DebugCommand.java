@@ -14,13 +14,13 @@ public class DebugCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.get().getCommon().setDebug(isEnabled);
+        ModConfig.get().getCommon().getDebug().setBooleanValue(isEnabled);
         if (isEnabled) {
             context.getSource().sendSuccess(() -> Component.literal("已开启开发者模式"), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("已关闭开发者模式"), true);
         }
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 }

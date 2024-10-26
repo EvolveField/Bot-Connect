@@ -30,11 +30,11 @@ public class I18n {
         translations = new HashMap<>();
 
 
-        Optional<Path> optional = Services.PLATFORM.getResourcePath("lang/" + ModConfig.get().getCommon().getLanguageSelect() + ".json");
+        Optional<Path> optional = Services.PLATFORM.getResourcePath("lang/" + ModConfig.get().getCommon().getLanguageSelect().getStringValue() + ".json");
 
         if (optional.isEmpty()) {
             Constants.LOGGER.warn("-----------------------------------------");
-            Constants.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.get().getCommon().getLanguageSelect() + "\" and uses \"en_us\" by default!");
+            Constants.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.get().getCommon().getLanguageSelect().getStringValue() + "\" and uses \"en_us\" by default!");
             Constants.LOGGER.warn("");
             Constants.LOGGER.warn("You are welcome to contribute translations!");
             Constants.LOGGER.warn("Contributing: https://github.com/cnlimiter/McBot#Contributing");

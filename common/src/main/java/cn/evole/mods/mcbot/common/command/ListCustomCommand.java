@@ -15,7 +15,7 @@ public class ListCustomCommand {
             out.append(s).append("\n");
         }
         context.getSource().sendSuccess(() -> Component.literal(out.toString()), true);
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 }

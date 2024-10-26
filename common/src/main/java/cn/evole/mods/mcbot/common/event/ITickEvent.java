@@ -5,7 +5,6 @@ import net.minecraft.server.MinecraftServer;
 
 import java.util.LinkedList;
 import java.util.Queue;
-//#endif
 
 
 /**
@@ -20,7 +19,6 @@ public class ITickEvent {
     public static Queue<MutableComponent> sendQueue() {
         return SEND_QUEUE;
     }
-
 
     public static void register(MinecraftServer server) {
         MutableComponent toSend = SEND_QUEUE.poll();

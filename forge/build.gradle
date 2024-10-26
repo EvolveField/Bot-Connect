@@ -37,8 +37,8 @@ dependencies {
     shadowBundle(project(path: ':common', configuration: 'transformProductionForge'))
 
     forgeRuntimeLibrary(implementation(shadowBundle("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}))
-    forgeRuntimeLibrary(implementation(shadowBundle("org.spongepowered:configurate-yaml:$yaml_version")))
     forgeRuntimeLibrary(implementation(shadowBundle("com.github.houbb:csv:0.2.0")))
+    modImplementation include("curse.maven:jupiter-1072905:$jupiter_forge_version")
 
 }
 

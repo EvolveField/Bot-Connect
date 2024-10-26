@@ -12,14 +12,14 @@ public class AddGroupIDCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("GroupId", Long.class);
-        if (ModConfig.get().getCommon().getGroupIdList().contains(id)) {
+        if (ModConfig.get().getCommon().getGroupIdList().getStrings().contains(String.valueOf(id))) {
             context.getSource().sendSuccess(() -> Component.literal("QQ群号:" + id + "已经出现了！"), true);
 
         } else {
             ModConfig.get().getCommon().addGroupId(id);
             context.getSource().sendSuccess(() -> Component.literal("已成功添加QQ群号:" + id + "！"), true);
         }
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 

@@ -22,7 +22,7 @@ public class ConnectCommand {
         val parameter = context.getArgument("parameter", String.class);
 
         if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()) {
-            ModConfig.get().getBotConfig().setUrl(String.format("ws://%s", parameter));
+            ModConfig.get().getBotConfig().getUrl().setValueFromString(String.format("ws://%s", parameter));
             doConnect(context);
             return 1;
         } else {
@@ -41,7 +41,7 @@ public class ConnectCommand {
         if (!Constants.onebot.getWs().isOpen()) {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "尝试链接框架"), true);
             ConnectApi.wsConnect();
-            ModConfig.save();
+            ModConfig.get().save();
         } else {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "已存在WS连接"), true);
         }

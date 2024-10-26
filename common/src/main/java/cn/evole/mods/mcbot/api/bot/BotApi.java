@@ -27,14 +27,14 @@ public class BotApi {
     }
 
     public static void sendAllGroupMsg(String message) {
-        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
-            sendGroupMsg(id, message);
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+            sendGroupMsg(Long.parseLong(id), message);
         }
     }
 
     public static void sendAllGroupMsg(Callable<String> message) {
-        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
-            sendGroupMsg(id, message);
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+            sendGroupMsg(Long.parseLong(id), message);
         }
     }
 
@@ -45,8 +45,8 @@ public class BotApi {
      * @param player  玩家
      */
     public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player) {
-        for (long id : ModConfig.get().getCommon().getGroupIdList()) {
-            MsgThreadUtils.INSTANCE.submit(id, message, false, player);
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+            MsgThreadUtils.INSTANCE.submit(Long.parseLong(id), message, false, player);
         }
     }
 

@@ -1,12 +1,19 @@
 package cn.evole.mods.mcbot.common.config;
 
-import cn.evole.mods.mcbot.api.config.ConfigManager;
-import lombok.AllArgsConstructor;
+import cn.evole.mods.mcbot.Constants;
+import com.google.gson.JsonObject;
+import com.iafenvoy.jupiter.config.AutoInitConfigContainer;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.objectmapping.meta.Comment;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static cn.evole.mods.mcbot.Constants.CONFIG_FOLDER;
 
 /**
  * Description:
@@ -17,25 +24,47 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 
 @Getter
 @Setter
-@ConfigSerializable
-@AllArgsConstructor
-@NoArgsConstructor
-public class ModConfig {
-    public static final ModConfig DEFAULT = new ModConfig();
-    @Comment("通用")
-    private CommonConfig common = new CommonConfig();
-    @Comment("状态")
-    private StatusConfig status = new StatusConfig();
-    @Comment("命令")
-    private CmdConfig cmd = new CmdConfig();
-    @Comment("机器人")
-    private BotConfig botConfig = new BotConfig();
+public class ModConfig extends AutoInitConfigContainer {
+    public static final ModConfig INSTANCE = new ModConfig();
+    public static final int CURRENT_VERSION = 1;
+
+    public CommonConfig common = new CommonConfig();
+    public StatusConfig status = new StatusConfig();
+    public CmdConfig cmd = new CmdConfig();
+    public BotConfig botConfig = new BotConfig();
+
+    public ModConfig() {
+        super(new ResourceLocation("config.mcbot"), "config.mcbot.title", "./mcbot/config.json");
+    }
+
+    @Override
+    public void init() {
+        super.init();
+    }
+
+    @Override
+    protected boolean shouldLoad(JsonObject obj) {
+        int version = obj.get("version").getAsInt();
+        if (version != CURRENT_VERSION && new File(this.path).exists()) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                FileUtils.copyFile(new File(this.path), new File(CONFIG_FOLDER + File.separator + "config_" + sdf.format(new Date()) + ".json"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Constants.LOGGER.info("Wrong config version {} for mod {}! Automatically use version {} and backup old one.", version, Constants.MOD_NAME, CURRENT_VERSION);
+            return false;
+        } else Constants.LOGGER.info("{} config version match.", Constants.MOD_NAME);
+        return true;
+    }
+
+    @Override
+    protected void writeCustomData(JsonObject obj) {
+        obj.addProperty("version", CURRENT_VERSION);
+    }
 
     public static ModConfig get() {
-        return ConfigManager.getInstance().getConfig(ModConfig.class);
-    }
-    public static void save() {
-        ConfigManager.getInstance().saveConfig(ModConfig.class);
+        return INSTANCE;
     }
 
 }

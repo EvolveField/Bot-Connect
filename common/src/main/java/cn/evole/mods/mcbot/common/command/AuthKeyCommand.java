@@ -12,9 +12,9 @@ public class AuthKeyCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("AuthKey", String.class);
-        ModConfig.get().getBotConfig().setToken(id);
+        ModConfig.get().getBotConfig().getToken().setValueFromString(id);
         context.getSource().sendSuccess(() -> Component.literal("已设置框架的AuthKey为:" + id), true);
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 

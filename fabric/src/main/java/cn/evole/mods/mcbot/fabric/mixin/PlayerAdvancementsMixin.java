@@ -1,12 +1,5 @@
 package cn.evole.mods.mcbot.fabric.mixin;
 
-/**
- * @Project: McBot
- * @Author: cnlimiter
- * @CreateTime: 2024/8/12 13:47
- * @Description:
- */
-
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.server.PlayerAdvancements;
@@ -17,6 +10,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * @Project: McBot
+ * @Author: cnlimiter
+ * @CreateTime: 2024/8/12 13:47
+ * @Description:
+ */
 @Mixin(PlayerAdvancements.class)
 public abstract class PlayerAdvancementsMixin {
     @Shadow

@@ -21,7 +21,8 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static cn.evole.mods.mcbot.Constants.*;
+import static cn.evole.mods.mcbot.Constants.LOGGER;
+import static cn.evole.mods.mcbot.Constants.cqExecutor;
 
 /**
  * Project: Bot-Connect-fabric-1.18
@@ -59,7 +60,7 @@ public class CQUtils {
                     }
                     case image -> {
                         val url = arrayMsg.getData().get("file");
-                        if (ModConfig.get().getCommon().isImageOn()
+                        if (ModConfig.get().getCommon().getImageOn().getBooleanValue()
                                 && Services.PLATFORM.isModLoaded("chatimage")
                         ) {
                             message.append(String.format("[[CICode,url=%s,name=来自QQ的图片]]",

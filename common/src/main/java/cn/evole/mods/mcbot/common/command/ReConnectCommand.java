@@ -10,13 +10,13 @@ public class ReConnectCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.get().getBotConfig().setReconnect(isEnabled);
+        ModConfig.get().getBotConfig().getReconnect().setBooleanValue(isEnabled);
         if (isEnabled) {
             context.getSource().sendSuccess(() -> Component.literal("已设置自动重连"), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("已关闭自动重连"), true);
         }
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 }

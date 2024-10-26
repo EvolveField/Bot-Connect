@@ -2,27 +2,26 @@ package cn.evole.mods.mcbot;
 
 
 import cn.evole.mods.mcbot.api.cmd.McBotCommandSource;
-import cn.evole.mods.mcbot.api.config.ConfigManager;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
-import cn.evole.mods.mcbot.common.config.*;
-import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
+import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.common.event.IBotEvent;
 import cn.evole.mods.mcbot.common.event.IChatEvent;
 import cn.evole.mods.mcbot.common.event.IPlayerEvent;
+import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
 import cn.evole.mods.mcbot.plugins.data.DataHandler;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import cn.evole.onebot.client.OneBotClient;
+import com.iafenvoy.jupiter.ServerConfigManager;
+import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import net.minecraft.server.MinecraftServer;
 
 import static cn.evole.mods.mcbot.Constants.*;
 
 public class McBot {
-
     public static void init() {
-        try (final ConfigManager manager = new ConfigManager(CONFIG_FOLDER)) {
-            manager.initConfigs(
-                    ModConfig.class
-            );
+        try {
+            ConfigManager.getInstance().registerConfigHandler(ModConfig.INSTANCE);
+            ServerConfigManager.registerServerConfig(ModConfig.INSTANCE, ServerConfigManager.PermissionChecker.IS_OPERATOR);
         } catch (Exception e) {
             LOGGER.error("配置加载错误...");
         }
@@ -45,7 +44,7 @@ public class McBot {
 
     public static void onServerStarted(MinecraftServer server) {
         mcBotCommand = new McBotCommandSource(server);
-        if (ModConfig.get().getCommon().isAutoOpen()) {
+        if (ModConfig.get().getCommon().getAutoOpen().getBooleanValue()) {
             onebot = OneBotClient
                     .create(ModConfig.get().getBotConfig().build())
                     .open()
@@ -62,7 +61,7 @@ public class McBot {
     }
 
     public static void onServerStopped(MinecraftServer server) {
-        ConfigManager.getInstance().saveAllConfig();
+        ModConfig.get().save();
         Constants.shutdown();
         if (onebot != null) onebot.close();
     }

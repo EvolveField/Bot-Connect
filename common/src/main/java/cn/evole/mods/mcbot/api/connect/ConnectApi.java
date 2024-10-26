@@ -19,8 +19,8 @@ public class ConnectApi {
                 .create(ModConfig.get().getBotConfig().build())
                 .open()
                 .registerEvents(new IBotEvent());//重新实例化
-        ModConfig.get().getStatus().setREnable(true);
-        ModConfig.get().getCommon().setEnable(true);
+        ModConfig.get().getStatus().getSEnable().setBooleanValue(true);
+        ModConfig.get().getCommon().getEnable().setBooleanValue(true);
         Constants.connected = true;
     }
 

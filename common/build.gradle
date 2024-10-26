@@ -8,9 +8,8 @@ dependencies {
     modImplementation ("net.fabricmc:fabric-loader:$rootProject.fabric_loader_version")
 
     implementation ("cn.evole.onebot:OneBot-Client:$onebot_client_version"){transitive = false}
-    implementation ("org.spongepowered:configurate-yaml:$yaml_version")
     implementation ("com.github.houbb:csv:0.2.0")
-    modImplementation ("me.shedaniel.cloth:cloth-config:$cloth_config_version")
+    modImplementation ("curse.maven:jupiter-1072905:$jupiter_fabric_version")
     compileOnly ("org.projectlombok:lombok:$lombok_version")
     annotationProcessor ("org.projectlombok:lombok:$lombok_version")
 }

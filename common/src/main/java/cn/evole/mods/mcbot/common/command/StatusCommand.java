@@ -12,26 +12,26 @@ import net.minecraft.network.chat.Component;
 public class StatusCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        boolean clientEnabled = ModConfig.get().getCommon().isEnable();
+        boolean clientEnabled = ModConfig.get().getCommon().getEnable().getBooleanValue();
 
-        boolean receiveEnabled = ModConfig.get().getStatus().isREnable();
-        boolean rChatEnabled = ModConfig.get().getStatus().isRChatEnable();
-        boolean rCmdEnabled = ModConfig.get().getStatus().isRCmdEnable();
+        boolean receiveEnabled = ModConfig.get().getStatus().getREnable().getBooleanValue();
+        boolean rChatEnabled = ModConfig.get().getStatus().getRChatEnable().getBooleanValue();
+        boolean rCmdEnabled = ModConfig.get().getStatus().getRCmdEnable().getBooleanValue();
 
-        boolean sendEnabled = ModConfig.get().getStatus().isSEnable();
-        boolean sJoinEnabled = ModConfig.get().getStatus().isSJoinEnable();
-        boolean sLeaveEnabled = ModConfig.get().getStatus().isSLeaveEnable();
-        boolean sDeathEnabled = ModConfig.get().getStatus().isSDeathEnable();
-        boolean sAchievementsEnabled = ModConfig.get().getStatus().isSAdvanceEnable();
-        boolean sQqWelcomeEnabled = ModConfig.get().getStatus().isSQqWelcomeEnable();
-        boolean sQqLeaveEnabled = ModConfig.get().getStatus().isSQqLeaveEnable();
+        boolean sendEnabled = ModConfig.get().getStatus().getSEnable().getBooleanValue();
+        boolean sJoinEnabled = ModConfig.get().getStatus().getSJoinEnable().getBooleanValue();
+        boolean sLeaveEnabled = ModConfig.get().getStatus().getSLeaveEnable().getBooleanValue();
+        boolean sDeathEnabled = ModConfig.get().getStatus().getSDeathEnable().getBooleanValue();
+        boolean sAchievementsEnabled = ModConfig.get().getStatus().getSAdvanceEnable().getBooleanValue();
+        boolean sQqWelcomeEnabled = ModConfig.get().getStatus().getSQqWelcomeEnable().getBooleanValue();
+        boolean sQqLeaveEnabled = ModConfig.get().getStatus().getSQqLeaveEnable().getBooleanValue();
 
-        val groupId = ModConfig.get().getCommon().getGroupIdList().toString();
-        boolean debuggable = ModConfig.get().getCommon().isDebug();
+        val groupId = ModConfig.get().getCommon().getGroupIdList().getStrings().toString();
+        boolean debuggable = ModConfig.get().getCommon().getDebug().getBooleanValue();
         boolean connected = Constants.onebot.getWs().isOpen();
         boolean white = Constants.SERVER.getPlayerList().isUsingWhitelist();
-        String host = ModConfig.get().getBotConfig().getUrl();
-        long QQid = ModConfig.get().getBotConfig().getBotId();
+        String host = ModConfig.get().getBotConfig().getUrl().getStringValue();
+        long QQid = ModConfig.get().getBotConfig().getBotId().getIntegerValue();
         String toSend =
                 "\n姬妻人服务状态:\n"
                         + "姬妻人QQId:" + QQid + " \n"
@@ -54,7 +54,7 @@ public class StatusCommand {
                         + "发送群成员进群消息状态:" + sQqWelcomeEnabled + "\n"
                         + "发送群成员退群消息状态:" + sQqLeaveEnabled + "\n";
         context.getSource().sendSuccess(() -> Component.literal(toSend), true);
-        ModConfig.save();
+        ModConfig.get().save();
         return 1;
     }
 }

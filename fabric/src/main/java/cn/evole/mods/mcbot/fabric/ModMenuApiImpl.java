@@ -1,10 +1,10 @@
 package cn.evole.mods.mcbot.fabric;
 
-import cn.evole.mods.mcbot.api.config.ConfigManager;
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.common.config.ModConfigScreenFactory;
+import com.iafenvoy.jupiter.screen.ConfigSelectScreen;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
+import net.minecraft.network.chat.Component;
 
 /**
  * @Project: McBot
@@ -15,6 +15,6 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 public class ModMenuApiImpl implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> ModConfigScreenFactory.createConfigScreen(parent, ModConfig.get(), ConfigManager.getInstance().getBaseConfig(ModConfig.class)::setAndSaveAsync);
+        return parent -> new ConfigSelectScreen<>(Component.translatable("config.mcbot.title"), parent, ModConfig.INSTANCE, null);
     }
 }

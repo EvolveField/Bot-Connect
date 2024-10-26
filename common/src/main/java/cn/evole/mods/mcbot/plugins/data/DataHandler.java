@@ -6,7 +6,6 @@ import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import com.github.houbb.csv.util.CsvHelper;
 import com.google.common.collect.Maps;
 
-
 import java.util.ArrayList;
 
 /**

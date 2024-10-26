@@ -1,6 +1,5 @@
 package cn.evole.mods.mcbot.util;
 
-import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.cmd.Cmd;
 import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
@@ -9,12 +8,9 @@ import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import com.google.common.collect.Maps;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +39,7 @@ public class CmdUtils {
     public static boolean hasPermission(String group_id, String user_id, Cmd cmd){
         if (cmd.getId().equals("bind")) return true;
         else return  (UserInfoApi.get(group_id, user_id) != null &&
-                UserInfoApi.get(group_id, user_id).getPermissions().contains(ModConfig.get().getBotConfig().getTag() + ".mcbot.cmd." + cmd.getId())
+                UserInfoApi.get(group_id, user_id).getPermissions().contains(ModConfig.get().getBotConfig().getTag().getStringValue() + ".mcbot.cmd." + cmd.getId())
                 || cmd.getAllow_members().contains(user_id)
         );
     }

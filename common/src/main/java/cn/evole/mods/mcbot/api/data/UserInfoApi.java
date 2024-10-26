@@ -52,7 +52,7 @@ public class UserInfoApi {
 
             List<String> permissions = new ArrayList<>();
             for (String permission : userInfo.getPermissions()){
-                permissions.add(ModConfig.get().getBotConfig().getTag() + "." + permission);//添加权限tag，区分群组服
+                permissions.add(ModConfig.get().getBotConfig().getTag().getStringValue() + "." + permission);//添加权限tag，区分群组服
             }
             userInfo.setPermissions(permissions);
             userInfos.add(userInfo);
