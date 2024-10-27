@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Date: 2023/4/19 20:45
  * Description:
  */
-public class ImgUtil {
+public class ImgUtils {
     /**
      * 图片URL转Base64编码
      *

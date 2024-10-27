@@ -20,7 +20,7 @@ public class DisconnectCommand {
                 context.getSource().sendSuccess(() -> Component.literal("WebSocket目前未连接"), true);
             }
             ModConfig.get().getCommon().getEnable().setBooleanValue(false);
-            ModConfig.get().save();
+            
         }
         return 1;
     }

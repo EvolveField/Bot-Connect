@@ -1,8 +1,11 @@
 package cn.evole.mods.mcbot.util;
 
+import cn.evole.mods.mcbot.Constants;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @Project: McBot
@@ -34,4 +37,28 @@ public class FileUtils {
             return file;
         }
     }
+
+
+    private static Path resourcePackDirPath;
+
+    public static void setResDirPath(Path path) {
+        safeCreateDir(path);
+        resourcePackDirPath = path;
+    }
+
+
+    private static void safeCreateDir(Path path) {
+        try {
+            if (!Files.isDirectory(path)) {
+                Files.createDirectories(path);
+            }
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Cannot create dir: {}", String.valueOf(e));
+        }
+    }
+
+    public static Path getResPackPath(String filename) {
+        return resourcePackDirPath.resolve(filename);
+    }
+
 }

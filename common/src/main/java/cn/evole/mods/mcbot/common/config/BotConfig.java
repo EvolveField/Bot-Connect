@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 public class BotConfig extends AutoInitConfigContainer.AutoInitConfigCategoryBase {
     public ConfigString tag = new ConfigString("config.mcbot.bot.tag", "main", "跨服支持,权限支持");
-    public ConfigString url = new ConfigString("config.mcbot.bot.url", "127.0.0.1", "地址（支持域名和ipv6）");
+    public ConfigString url = new ConfigString("config.mcbot.bot.url", "127.0.0.1:18082", "地址（支持域名和ipv6）");
     public ConfigString token = new ConfigString("config.mcbot.bot.token", "", "鉴权");
     public ConfigString botId = new ConfigString("config.mcbot.bot.botId", "0", "机器人qq");
     public ConfigBoolean reconnect = new ConfigBoolean("config.mcbot.bot.reconnect", true, "自动重连");
@@ -30,7 +30,10 @@ public class BotConfig extends AutoInitConfigContainer.AutoInitConfigCategoryBas
     }
 
     public cn.evole.onebot.client.core.BotConfig build() {
-        return new cn.evole.onebot.client.core.BotConfig(url.getStringValue(), token.getStringValue(), Long.parseLong(botId.getStringValue()), token.getStringValue().startsWith("mirai_"), reconnect.getBooleanValue(), maxReconnectAttempts.getIntegerValue());
+        return new cn.evole.onebot.client.core.BotConfig(
+                url.getStringValue().startsWith("ws://") ? url.getStringValue() : "ws://" + url.getStringValue()
+                , token.getStringValue(), Long.parseLong(botId.getStringValue()), token.getStringValue().startsWith("mirai_"),
+                reconnect.getBooleanValue(), maxReconnectAttempts.getIntegerValue());
     }
 
 }

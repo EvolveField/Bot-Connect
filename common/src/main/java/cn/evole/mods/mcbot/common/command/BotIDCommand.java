@@ -13,7 +13,7 @@ public class BotIDCommand {
         int id = context.getArgument("BotId", Integer.class);
         ModConfig.get().getBotConfig().getBotId().setValueFromString(String.valueOf(id));
         context.getSource().sendSuccess(() -> Component.literal("已设置机器人QQ号为:" + id + "！"), true);
-        ModConfig.get().save();
+        
         return 1;
     }
 

@@ -17,7 +17,7 @@ public class DelGroupIDCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("QQ群号:" + id + "并未出现！"), true);
         }
-        ModConfig.get().save();
+        
         return 1;
     }
 

@@ -19,7 +19,7 @@ public class AddGroupIDCommand {
             ModConfig.get().getCommon().addGroupId(id);
             context.getSource().sendSuccess(() -> Component.literal("已成功添加QQ群号:" + id + "！"), true);
         }
-        ModConfig.get().save();
+        
         return 1;
     }
 

@@ -30,6 +30,7 @@ public class ICmdEvent {
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.literal("connect")
                                 .executes(ConnectCommand::commonExecute)
+                                .then(Commands.literal("local").executes(ConnectCommand::localExecute))
                                 .then(Commands.argument("parameter", StringArgumentType.greedyString())
                                         .executes(ConnectCommand::execute)
                                 )

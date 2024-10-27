@@ -20,7 +20,7 @@ public class DebugCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.literal("已关闭开发者模式"), true);
         }
-        ModConfig.get().save();
+        
         return 1;
     }
 }

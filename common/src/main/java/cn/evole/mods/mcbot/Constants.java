@@ -23,7 +23,8 @@ public class Constants {
     public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();
     public static final ExecutorService commonExecutor = Executors.newFixedThreadPool(4);
     public static final Gson GSON = GsonUtils.getNullGson();
-    public static final Path CONFIG_FOLDER = FileUtils.checkFolder(Services.PLATFORM.getGamePath().resolve("mcbot"));
+    public static Path CONFIG_FOLDER = FileUtils.checkFolder(Services.PLATFORM.getGamePath().resolve("mcbot"));
+    public static Path APP_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("app"));
     public static Path DATA_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
 
     public static boolean isShutdown = false;
@@ -33,6 +34,7 @@ public class Constants {
     public static MinecraftServer SERVER = null;
     public static McBotCommandSource mcBotCommand = null;
 
+    public static final String LAGRANGE_URL = "https://github.com/LagrangeDev/Lagrange.Core/releases/download/nightly/";
 
     public static void shutdown(){
         cqExecutor.shutdownNow();

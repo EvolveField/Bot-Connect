@@ -4,6 +4,7 @@ package cn.evole.mods.mcbot.common.command;
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.connect.ConnectApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
+import cn.evole.mods.mcbot.util.onebot.AppHandler;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
@@ -37,11 +38,18 @@ public class ConnectCommand {
         return 1;
     }
 
+    public static int localExecute(CommandContext<CommandSourceStack> context) {
+        AppHandler.init();
+        ModConfig.get().getBotConfig().getUrl().getDefaultStringValue();
+        doConnect(context);
+        return 1;
+    }
+
     public static void doConnect(CommandContext<CommandSourceStack> context) {
         if (!Constants.onebot.getWs().isOpen()) {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "尝试链接框架"), true);
             ConnectApi.wsConnect();
-            ModConfig.get().save();
+            
         } else {
             context.getSource().sendSuccess(() -> Component.literal("▌ " + ChatFormatting.LIGHT_PURPLE + "已存在WS连接"), true);
         }

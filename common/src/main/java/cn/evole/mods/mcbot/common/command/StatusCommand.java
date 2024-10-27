@@ -54,7 +54,7 @@ public class StatusCommand {
                         + "发送群成员进群消息状态:" + sQqWelcomeEnabled + "\n"
                         + "发送群成员退群消息状态:" + sQqLeaveEnabled + "\n";
         context.getSource().sendSuccess(() -> Component.literal(toSend), true);
-        ModConfig.get().save();
+        
         return 1;
     }
 }

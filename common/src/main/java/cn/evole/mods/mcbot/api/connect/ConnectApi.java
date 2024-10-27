@@ -13,7 +13,7 @@ import cn.evole.onebot.client.OneBotClient;
  */
 public class ConnectApi {
     public static void wsConnect() {
-        Constants.onebot.close();//关闭线程
+        if (Constants.onebot != null) Constants.onebot.close();//关闭线程
         Constants.onebot = null;//强制为null
         Constants.onebot = OneBotClient
                 .create(ModConfig.get().getBotConfig().build())
