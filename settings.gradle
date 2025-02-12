@@ -27,5 +27,5 @@ rootProject.name = 'McBot'
 include (
         "common",
         "fabric",
-        "forge"
+        "neoforge"
 )

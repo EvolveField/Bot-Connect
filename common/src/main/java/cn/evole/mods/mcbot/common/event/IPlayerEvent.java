@@ -73,7 +73,7 @@ public class IPlayerEvent {
                 } else {
                     itemStack = ItemStack.EMPTY;
                 }
-                message = !itemStack.isEmpty() && itemStack.hasCustomHoverName() ? I18n.get(string + ".item", player.getDisplayName().getString(), component.getString(), itemStack.getDisplayName().getString()) : I18n.get(string,player.getDisplayName().getString(), component.getString());
+                message = !itemStack.isEmpty() ? I18n.get(string + ".item", player.getDisplayName().getString(), component.getString(), itemStack.getDisplayName().getString()) : I18n.get(string,player.getDisplayName().getString(), component.getString());
             }
             val msg = String.format(message, player.getDisplayName().getString());
             BotApi.sendAllGroupMsg(msg);
@@ -81,11 +81,10 @@ public class IPlayerEvent {
     }
 
     public static void advancement(Player player, Advancement advancement) {
-        boolean displayExist = advancement.getDisplay() != null;
 
-        if (ModConfig.get().getStatus().getSAdvanceEnable().getValue() && displayExist && ModConfig.get().getStatus().getSEnable().getValue()) {
-            DisplayInfo display = advancement.getDisplay();
-            String message = I18n.get("mcbot.chat.type.advancement." + display.getFrame().getName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
+        if (ModConfig.get().getStatus().getSAdvanceEnable().getValue() && ModConfig.get().getStatus().getSEnable().getValue()) {
+            DisplayInfo display = advancement.display().get();
+            String message = I18n.get("mcbot.chat.type.advancement." + display.getIcon().getFrame().getName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
             val msg = String.format(message, player.getDisplayName().getString());
             BotApi.sendAllGroupMsg(msg);
         }

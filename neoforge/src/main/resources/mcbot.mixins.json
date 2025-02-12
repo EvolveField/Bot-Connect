@@ -1,11 +1,9 @@
 {
+    "required": true,
     "minVersion": "0.8",
-    "package": "cn.evole.mods.mcbot.fabric.mixin",
+    "package": "cn.evole.mods.mcbot.forge.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "ServerPlayerMixin",
-        "PlayerAdvancementsMixin",
-        "ServerGamePktImplMixin"
     ],
     "client": [
     ],
@@ -14,5 +12,4 @@
     "injectors": {
         "defaultRequire": 1
     }
-  }
-  
+}

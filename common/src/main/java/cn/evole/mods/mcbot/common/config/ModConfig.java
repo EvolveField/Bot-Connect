@@ -34,7 +34,7 @@ public class ModConfig extends AutoInitConfigContainer {
     public BotConfig botConfig = new BotConfig();
 
     public ModConfig() {
-        super(new ResourceLocation("config.mcbot"), "config.mcbot.title", "./mcbot/config.json");
+        super(ResourceLocation.parse("config.mcbot"), "config.mcbot.title", "./mcbot/config.json");
     }
 
     @Override
