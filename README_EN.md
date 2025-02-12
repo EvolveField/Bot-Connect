@@ -113,9 +113,8 @@ source product.
 
 # Thanks
 
-Thanks [JetBrains](https://www.jetbrains.com/?from=McBot) Provide Free License Support OpenSource Project
-
-[<img src="https://mikuac.com/images/jetbrains-variant-3.png" width="200"/>](https://www.jetbrains.com/?from=McBot)
+Thanks to [JetBrains](https://www.jetbrains.com/?from=mcbot) for allocating free open-source licences for IDEs such as [IntelliJ IDEA](https://www.jetbrains.com/idea/?from=mcbot)
+[<img src=".github/jetbrains-variant-3.png" width="200"/>](https://www.jetbrains.com/?from=mcbot)  
 
 ## Stargazers over time
 

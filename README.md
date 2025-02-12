@@ -129,9 +129,8 @@ source product.
 
 # 致谢
 
-感谢 [JetBrains](https://www.jetbrains.com/?from=McBot) 提供了这么好用的软件~
-
-[<img src="https://mikuac.com/images/jetbrains-variant-3.png" width="200"/>](https://www.jetbrains.com/?from=McBot)
+Thanks to [JetBrains](https://www.jetbrains.com/?from=mcbot) for allocating free open-source licences for IDEs such as [IntelliJ IDEA](https://www.jetbrains.com/idea/?from=mcbot)
+[<img src=".github/jetbrains-variant-3.png" width="200"/>](https://www.jetbrains.com/?from=mcbot)
 
 ## 星星（要要）~⭐
 
