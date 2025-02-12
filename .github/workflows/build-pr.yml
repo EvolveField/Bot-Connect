@@ -20,7 +20,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        loader: [ 'forge', 'fabric' ]
+        loader: [ 'neoforge', 'fabric' ]
 
     steps:
       - name: 'Checkout repository'
