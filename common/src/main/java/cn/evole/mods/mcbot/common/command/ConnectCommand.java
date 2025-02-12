@@ -18,11 +18,12 @@ import java.util.regex.Pattern;
 public class ConnectCommand {
     private static final Pattern ipv4Pattern = Pattern.compile("(\\d+\\.\\d+\\.\\d+\\.\\d+):(\\d+)");
     private static final Pattern ipv6Pattern = Pattern.compile("\\[([0-9a-fA-F:]+)]:(\\d+)");
+    private static final Pattern domainPattern = Pattern.compile("([a-zA-Z0-9.-]+):(\\d+)");
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val parameter = context.getArgument("parameter", String.class);
 
-        if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()) {
+        if (ipv4Pattern.matcher(parameter).find() || ipv6Pattern.matcher(parameter).find()|| domainPattern.matcher(parameter).find()) {
             ModConfig.get().getBotConfig().getUrl().setValueFromString(String.format("ws://%s", parameter));
             doConnect(context);
             return 1;
