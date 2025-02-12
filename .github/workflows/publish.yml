@@ -22,7 +22,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        loader: [ 'Forge', 'Fabric' ]
+        loader: [ 'neoforge', 'fabric' ]
 
     steps:
       - name: 'Checkout repository'
@@ -31,10 +31,10 @@ jobs:
           fetch-depth: 100
           fetch-tags: true
 
-      - name: 'Set up JDK 17'
+      - name: 'Set up JDK 21'
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: 'Build ${{ matrix.loader }} with Gradle'
@@ -65,10 +65,10 @@ jobs:
           fetch-depth: 100
           fetch-tags: true
 
-      - name: 'Set up JDK 17'
+      - name: 'Set up JDK 21'
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: 'Publish with Gradle'
@@ -101,7 +101,7 @@ jobs:
         with:
           fallback: '0.0.0.0'
 
-      - name: 'Download ${{ matrix.loader }} artifacts'
+      - name: 'Download artifacts'
         uses: actions/download-artifact@v4
         with:
           pattern: 'Artifacts-*'
