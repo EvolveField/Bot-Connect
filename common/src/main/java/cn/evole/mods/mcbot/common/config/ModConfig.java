@@ -2,7 +2,7 @@ package cn.evole.mods.mcbot.common.config;
 
 import cn.evole.mods.mcbot.Constants;
 import com.google.gson.JsonObject;
-import com.iafenvoy.jupiter.config.AutoInitConfigContainer;
+import com.iafenvoy.jupiter.config.container.AutoInitConfigContainer;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.resources.ResourceLocation;

@@ -12,7 +12,7 @@ public class DelGroupIDCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         val id = context.getArgument("GroupID", Long.class);
-        if (ModConfig.get().getCommon().getGroupIdList().getStrings().contains(String.valueOf(id))) {
+        if (ModConfig.get().getCommon().getGroupIdList().getValue().contains(String.valueOf(id))) {
             ModConfig.get().getCommon().removeGroupId(id);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("QQ群号:" + id + "并未出现！"), true);

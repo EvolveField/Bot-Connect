@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.fabric;
 
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import com.iafenvoy.jupiter.screen.ConfigSelectScreen;
+import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.minecraft.network.chat.Component;

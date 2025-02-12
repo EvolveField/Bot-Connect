@@ -1,5 +1,6 @@
 package cn.evole.mods.mcbot.util;
 
+import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.cmd.Cmd;
 import cn.evole.mods.mcbot.api.data.UserInfoApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
@@ -8,7 +9,9 @@ import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import com.google.common.collect.Maps;
 import lombok.val;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Matcher;
@@ -39,7 +42,7 @@ public class CmdUtils {
     public static boolean hasPermission(String group_id, String user_id, Cmd cmd){
         if (cmd.getId().equals("bind")) return true;
         else return  (UserInfoApi.get(group_id, user_id) != null &&
-                UserInfoApi.get(group_id, user_id).getPermissions().contains(ModConfig.get().getBotConfig().getTag().getStringValue() + ".mcbot.cmd." + cmd.getId())
+                UserInfoApi.get(group_id, user_id).getPermissions().contains(ModConfig.get().getBotConfig().getTag().getValue() + ".mcbot.cmd." + cmd.getId())
                 || cmd.getAllow_members().contains(user_id)
         );
     }
@@ -71,47 +74,28 @@ public class CmdUtils {
         if (cmdStart.isEmpty()) return null;
 
         Cmd selectCmd = null;
-        String parseCmd = "";//定义最终命令用以返回
         boolean useCmd = false;
 
         for (Cmd cmd2 : CmdHandler.cmds.values()){//将含有昵称的指令替换为源命令
-            if (cmd2.getId().equals(cmdStart)) {
-                useCmd = true;//如果部分指令头等于id，则可以视为使用该源命令
-            }
-
-            if (cmd2.getCmd().contains(cmdStart)) {
-                useCmd = true;//如果源命令包含部分指令头，则可以视为使用该源命令
-            }
-
-            for (String alies : cmd2.getAlies()){
-                if (cmd.contains(alies)) {
-                    useCmd = true;//如果指令包含该Cmd中的任意一个alie，则可以视为使用该源命令
-                    break;//跳出循环
+            if (cmd2.getId().equals(cmdStart) || cmd2.getCmd().contains(cmdStart)) {
+                useCmd = true;//如果部分指令头等于id / 源命令包含部分指令头，则可以视为使用该源命令
+            } else {
+                for (String alies : cmd2.getAlies()){
+                    if (cmd.contains(alies)) {
+                        useCmd = true;//如果指令包含该Cmd中的任意一个alie，则可以视为使用该源命令
+                        break;//跳出循环
+                    }
                 }
             }
-
             if (useCmd) {
                 selectCmd = cmd2;
-                parseCmd = cmd2.getCmd();
                 break;//跳出循环
             }
         }
 
-        //正则查找变量
-        Pattern pattern = Pattern.compile(VAR_REGEX);
-        Matcher matcher = pattern.matcher(parseCmd);
-
-        while (matcher.find()) {//将 %变量% 替换为变量值
-            for (int i = 0; i < matcher.groupCount(); i++){
-                if (VARS.containsKey(matcher.group(i).replaceAll("%", ""))){
-                    parseCmd = parseCmd.replace(matcher.group(i), VARS.get(matcher.group(i).replaceAll("%", "")));
-                }
-            }
-        }
-
-        if (!parseCmd.isEmpty() && selectCmd != null){
-            val cmdSplits = new ConcurrentLinkedQueue<>(Arrays.stream(cmd.split(" ")).toList());//拆分命令
-
+        if (selectCmd != null) {
+            String innerParse = innerVarParse(selectCmd.getCmd(), VARS);
+            List<String> cmdSplits = new ArrayList<>(Arrays.asList(cmd.split(" ")));//拆分命令
             if (cmdSplits.size() > 1) {
                 for (String key : cmdSplits){
                     if (key.equals(selectCmd.getId())){
@@ -119,19 +103,40 @@ public class CmdUtils {
                     }
                 }
             }
-
-            String args = String.join(" ", cmdSplits);
-
-            if (parseCmd.contains("%")
-                    && (parseCmd.split(Pattern.quote("%"), -1).length - 1) == cmdSplits.size()
-            ){//如果存在变量标志 且变量标志的个数与参数个数相等
-                parseCmd = parseCmd.split(" ")[0].strip() + " " + args;//则将指令中的变量对应内容传递到最终命令
-            }
-
+            String outerParse = outerVarParse(innerParse, cmdSplits);
             //拼接回命令
-            return new Cmd(selectCmd.getId(), parseCmd, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
+            return new Cmd(selectCmd.getId(), outerParse, selectCmd.getAlies(), selectCmd.getAllow_members(), selectCmd.getPermission(), selectCmd.getAfter_cmds(), selectCmd.getAnswer(), selectCmd.isEnable());
         } else {
             return null;//如果最终命令为空则返回null
         }
+    }
+
+    public static String innerVarParse(String command, Map<String, String> variables) {
+        for (Map.Entry<String, String> entry : variables.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            command = command.replace("%" + key + "%", value);
+        }
+        return command;
+    }
+
+    public static String outerVarParse(String command, List<String> values) {
+        StringBuilder result = new StringBuilder();
+        int valueIndex = 0;
+
+        for (int i = 0; i < command.length(); i++) {
+            char currentChar = command.charAt(i);
+
+            if (currentChar == '%') {
+                    // 如果已经在一个占位符中，替换为指定的值
+                    if (valueIndex < values.size()) {
+                        result.append(values.get(valueIndex));
+                        valueIndex++;
+                    }
+            } else {
+                    result.append(currentChar);
+            }
+        }
+        return result.toString();
     }
 }

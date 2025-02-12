@@ -1,6 +1,6 @@
 package cn.evole.mods.mcbot.common.config;
 
-import com.iafenvoy.jupiter.config.AutoInitConfigContainer;
+import com.iafenvoy.jupiter.config.container.AutoInitConfigContainer.AutoInitConfigCategoryBase;
 
 /**
  * @Project: McBot
@@ -8,7 +8,7 @@ import com.iafenvoy.jupiter.config.AutoInitConfigContainer;
  * @CreateTime: 2024/10/28 00:12
  * @Description:
  */
-public class LgrConfig extends AutoInitConfigContainer.AutoInitConfigCategoryBase{
+public class LgrConfig extends AutoInitConfigCategoryBase{
     public LgrConfig() {
         super("lgr", "config.mcbot.category.lgr");
     }

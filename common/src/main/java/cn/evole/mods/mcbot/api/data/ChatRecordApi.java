@@ -3,6 +3,7 @@ package cn.evole.mods.mcbot.api.data;
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.plugins.data.ChatRecord;
 import cn.evole.mods.mcbot.util.FileUtils;
+import com.google.common.collect.Maps;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @Description:
  */
 public class ChatRecordApi {
-    public static Map<String, ChatRecord> chatRecords;
+    public static Map<String, ChatRecord> chatRecords = Maps.newConcurrentMap();
     public static Path chatRecordFile = FileUtils.checkFile(Constants.DATA_FOLDER.resolve("chatRecord.csv"));
 
     public static boolean has(String message_id){

@@ -40,7 +40,7 @@ public class ConnectCommand {
 
     public static int localExecute(CommandContext<CommandSourceStack> context) {
         AppHandler.init();
-        ModConfig.get().getBotConfig().getUrl().getDefaultStringValue();
+        ModConfig.get().getBotConfig().getUrl().getDefaultValue();
         doConnect(context);
         return 1;
     }

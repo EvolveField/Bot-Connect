@@ -1,7 +1,6 @@
 package cn.evole.mods.mcbot;
 
 import cn.evole.mods.mcbot.api.cmd.McBotCommandSource;
-import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.mods.mcbot.util.FileUtils;
 import cn.evole.onebot.client.OneBotClient;
 import cn.evole.onebot.sdk.util.GsonUtils;
@@ -23,7 +22,7 @@ public class Constants {
     public static final ExecutorService cqExecutor = Executors.newSingleThreadExecutor();
     public static final ExecutorService commonExecutor = Executors.newFixedThreadPool(4);
     public static final Gson GSON = GsonUtils.getNullGson();
-    public static Path CONFIG_FOLDER = FileUtils.checkFolder(Services.PLATFORM.getGamePath().resolve("mcbot"));
+    public static Path CONFIG_FOLDER = FileUtils.checkFolder(PlatformHelper.getGamePath().resolve("mcbot"));
     public static Path APP_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("app"));
     public static Path DATA_FOLDER = FileUtils.checkFolder(CONFIG_FOLDER.resolve("data"));
 

@@ -1,16 +1,13 @@
 package cn.evole.mods.mcbot.util;
 
 import cn.evole.mods.mcbot.Constants;
-import cn.evole.mods.mcbot.platform.Services;
+import cn.evole.mods.mcbot.PlatformHelper;
 import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -31,7 +28,7 @@ public class ResourceUtils {
         boolean isDir = resourceName.endsWith("/");
 
         // 获取资源文件
-        Optional<Path> resourceStream = Services.PLATFORM.getResourcePath(resourceName);
+        Optional<Path> resourceStream = PlatformHelper.getResourcePath(resourceName);
 
         if (resourceStream.isEmpty()) {
             Constants.LOGGER.warn("资源: {} 未找到", resourceName);

@@ -5,7 +5,6 @@ import cn.evole.mods.mcbot.util.DownloadUtils;
 import cn.evole.mods.mcbot.util.FileUtils;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 /**

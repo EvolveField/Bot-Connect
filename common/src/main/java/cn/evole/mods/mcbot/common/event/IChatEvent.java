@@ -16,17 +16,17 @@ public class IChatEvent {
     public static void register(ServerPlayer player, String message) {
         val split = message.split(" ");
         if (
-                ModConfig.get().getStatus().getSChatEnable().getBooleanValue()
-                        && ModConfig.get().getStatus().getSEnable().getBooleanValue()
+                ModConfig.get().getStatus().getSChatEnable().getValue()
+                        && ModConfig.get().getStatus().getSEnable().getValue()
                         && !message.contains("CICode")
                         && !player.getCommandSenderWorld().isClientSide
         ) {
-            String msg = String.format(ModConfig.get().getCmd().getMcPrefixOn().getBooleanValue()
-                            ? "[" + ModConfig.get().getCmd().getMcPrefix().getStringValue() + "]<%s> %s"
+            String msg = String.format(ModConfig.get().getCmd().getMcPrefixOn().getValue()
+                            ? "[" + ModConfig.get().getCmd().getMcPrefix().getValue() + "]<%s> %s"
                             : "<%s> %s",
                     player.getDisplayName().getString(),
-                    ModConfig.get().getCmd().getMcChatPrefixOn().getBooleanValue()
-                            && ModConfig.get().getCmd().getMcChatPrefix().getStringValue().equals(split[0]) ? split[1] : message);
+                    ModConfig.get().getCmd().getMcChatPrefixOn().getValue()
+                            && ModConfig.get().getCmd().getMcChatPrefix().getValue().equals(split[0]) ? split[1] : message);
 
             BotApi.sendAllGroupMsg(() -> MsgUtils.builder().text(msg).build(), player);
         }

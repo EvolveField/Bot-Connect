@@ -10,7 +10,7 @@ public class ReceiveCommand {
 
     public static int allExecute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.get().getStatus().getREnable().setBooleanValue(isEnabled);
+        ModConfig.get().getStatus().getREnable().setValue(isEnabled);
         if (isEnabled) {
             context.getSource().sendSuccess(() -> Component.literal("全局接收群消息开关已被设置为打开"), true);
         } else {
@@ -22,9 +22,9 @@ public class ReceiveCommand {
 
     public static int chatExecute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.get().getStatus().getRChatEnable().setBooleanValue(isEnabled);
+        ModConfig.get().getStatus().getRChatEnable().setValue(isEnabled);
         if (isEnabled) {
-            ModConfig.get().getStatus().getREnable().setBooleanValue(isEnabled);
+            ModConfig.get().getStatus().getREnable().setValue(isEnabled);
             context.getSource().sendSuccess(() -> Component.literal("接收群内聊天消息开关已被设置为打开"), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("接收群内聊天消息开关已被设置为关闭"), true);
@@ -36,9 +36,9 @@ public class ReceiveCommand {
 
     public static int cmdExecute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         boolean isEnabled = context.getArgument("enabled", Boolean.class);
-        ModConfig.get().getStatus().getRCmdEnable().setBooleanValue(isEnabled);
+        ModConfig.get().getStatus().getRCmdEnable().setValue(isEnabled);
         if (isEnabled) {
-            ModConfig.get().getStatus().getREnable().setBooleanValue(isEnabled);
+            ModConfig.get().getStatus().getREnable().setValue(isEnabled);
             context.getSource().sendSuccess(() -> Component.literal("接收群内命令消息开关已被设置为打开"), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("接收群内命令消息开关已被设置为关闭"), true);

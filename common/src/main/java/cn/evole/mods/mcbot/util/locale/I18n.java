@@ -1,8 +1,8 @@
 package cn.evole.mods.mcbot.util.locale;
 
 import cn.evole.mods.mcbot.Constants;
+import cn.evole.mods.mcbot.PlatformHelper;
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.platform.Services;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.locale.Language;
@@ -30,17 +30,17 @@ public class I18n {
         translations = new HashMap<>();
 
 
-        Optional<Path> optional = Services.PLATFORM.getResourcePath("lang/" + ModConfig.get().getCommon().getLanguageSelect().getStringValue() + ".json");
+        Optional<Path> optional = PlatformHelper.getResourcePath("lang/" + ModConfig.get().getCommon().getLanguageSelect().getValue() + ".json");
 
         if (optional.isEmpty()) {
             Constants.LOGGER.warn("-----------------------------------------");
-            Constants.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.get().getCommon().getLanguageSelect().getStringValue() + "\" and uses \"en_us\" by default!");
+            Constants.LOGGER.warn("McBot cannot find translations for \"" + ModConfig.get().getCommon().getLanguageSelect().getValue() + "\" and uses \"en_us\" by default!");
             Constants.LOGGER.warn("");
             Constants.LOGGER.warn("You are welcome to contribute translations!");
-            Constants.LOGGER.warn("Contributing: https://github.com/cnlimiter/McBot#Contributing");
+            Constants.LOGGER.warn("Contributing: https://github.com/Nova-Committee/McBot#Contributing");
             Constants.LOGGER.warn("-----------------------------------------");
 
-            optional = Services.PLATFORM.getResourcePath("/lang/en_us.json");
+            optional = PlatformHelper.getResourcePath("lang/en_us.json");
         }
 
         if (optional.isPresent()) {

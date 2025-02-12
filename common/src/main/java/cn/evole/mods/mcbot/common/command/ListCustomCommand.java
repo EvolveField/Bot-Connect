@@ -1,6 +1,5 @@
 package cn.evole.mods.mcbot.common.command;
 
-import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

@@ -1,20 +1,15 @@
 package cn.evole.mods.mcbot.util.onebot;
 
+import cn.evole.mods.mcbot.PlatformHelper;
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.platform.Services;
 import cn.evole.onebot.sdk.entity.ArrayMsg;
-import cn.evole.onebot.sdk.enums.MsgType;
 import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
+import cn.evole.onebot.sdk.util.BotUtils;
 import cn.evole.onebot.sdk.util.GsonUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -25,10 +20,10 @@ import static cn.evole.mods.mcbot.Constants.LOGGER;
 import static cn.evole.mods.mcbot.Constants.cqExecutor;
 
 /**
- * Project: Bot-Connect-fabric-1.18
- * Author: cnlimiter
- * Date: 2023/2/10 1:11
- * Description:
+ * @Project: McBot
+ * @Author: cnlimiter
+ * @CreateTime: 2024/10/27 19:57
+ * @Description:
  */
 public class CQUtils {
 
@@ -51,20 +46,21 @@ public class CQUtils {
     private static @NotNull String doReplace(MessageEvent event) {
         val stringMsg = event.getMessage();
         val message = new StringBuilder();
-        List<ArrayMsg> msg = msgToArray(stringMsg);
+        List<ArrayMsg> msg = BotUtils.rawToArrayMsg(event.getRawMessage());
+
+                //GsonUtils.convertToList(stringMsg, ArrayMsg.class);
         for (ArrayMsg arrayMsg : msg){
-            try {
+            //try {
                 switch (arrayMsg.getType()){
                     case text -> {
                         message.append(arrayMsg.getData().get("text"));
                     }
                     case image -> {
-                        val url = arrayMsg.getData().get("file");
-                        if (ModConfig.get().getCommon().getImageOn().getBooleanValue()
-                                && Services.PLATFORM.isModLoaded("chatimage")
+                        if (ModConfig.get().getCommon().getImageOn().getValue()
+                                && PlatformHelper.isModLoaded("chatimage")
                         ) {
                             message.append(String.format("[[CICode,url=%s,name=来自QQ的图片]]",
-                                    url.replaceAll("&amp;", "&")//转义字符转义
+                                    arrayMsg.getData().get("file").replaceAll("&amp;", "&")//转义字符转义
                             ));
                         } else {
                             message.append("[图片]");
@@ -85,31 +81,11 @@ public class CQUtils {
                     }
                     default -> message.append("[?]");
                 }
-            } catch (Exception e) {
-                LOGGER.error(e.getLocalizedMessage());
-                return stringMsg;
-            }
+//            } catch (Exception e) {
+//                LOGGER.error(e.getLocalizedMessage());
+//                return stringMsg;
+//            }
         }
         return message.toString();
-    }
-
-    private static List<ArrayMsg> msgToArray(String msg){
-        JsonArray array = GsonUtils.parseArray(msg);
-        List<ArrayMsg> arrayMsgList = new ArrayList<>();
-        for (JsonElement e : array) {
-            JsonObject object = (JsonObject) e;
-            ArrayMsg arrayMsg = new ArrayMsg();
-            String type = object.get("type").getAsString();
-            JsonObject data = object.get("data").getAsJsonObject();
-            arrayMsg.setType(MsgType.valueOf(type));
-            arrayMsg.setData(new HashMap<>());
-            data.asMap().forEach((k, v) -> arrayMsg.getData().put(k, v.getAsString()));
-            arrayMsgList.add(arrayMsg);
-        }
-        return arrayMsgList;
-    }
-
-    public static void shutdown() {
-        cqExecutor.shutdownNow();
     }
 }

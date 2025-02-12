@@ -16,7 +16,7 @@ import java.util.List;
  * @Description:
  */
 public class UserInfoApi {
-    public static List<UserInfo> userInfos;
+    public static List<UserInfo> userInfos = new ArrayList<>();
     public static Path userBindFile = FileUtils.checkFile(Constants.DATA_FOLDER.resolve("userBind.csv"));
 
     public static boolean groupHas(String group_id, String user_id){
@@ -52,7 +52,7 @@ public class UserInfoApi {
 
             List<String> permissions = new ArrayList<>();
             for (String permission : userInfo.getPermissions()){
-                permissions.add(ModConfig.get().getBotConfig().getTag().getStringValue() + "." + permission);//添加权限tag，区分群组服
+                permissions.add(ModConfig.get().getBotConfig().getTag().getValue() + "." + permission);//添加权限tag，区分群组服
             }
             userInfo.setPermissions(permissions);
             userInfos.add(userInfo);

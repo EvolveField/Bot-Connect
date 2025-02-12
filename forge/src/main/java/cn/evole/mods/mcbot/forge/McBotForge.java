@@ -5,17 +5,7 @@ import cn.evole.mods.mcbot.McBot;
 import cn.evole.mods.mcbot.api.event.server.ServerGameEvents;
 import cn.evole.mods.mcbot.common.event.ICmdEvent;
 import cn.evole.mods.mcbot.common.event.ITickEvent;
-import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.config.FileConfigContainer;
-import com.iafenvoy.jupiter.forge.ForgeEntryPointLoader;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
-import com.iafenvoy.jupiter.screen.ConfigSelectScreen;
-import com.iafenvoy.jupiter.test.TestConfig;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.TickEvent;
@@ -27,9 +17,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.jetbrains.annotations.NotNull;
 
 @Mod(Constants.MOD_ID)

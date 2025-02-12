@@ -1,9 +1,9 @@
 package cn.evole.mods.mcbot.common.config;
 
-import com.iafenvoy.jupiter.config.AutoInitConfigContainer;
-import com.iafenvoy.jupiter.malilib.config.options.ConfigBoolean;
-import com.iafenvoy.jupiter.malilib.config.options.ConfigInteger;
-import com.iafenvoy.jupiter.malilib.config.options.ConfigString;
+import com.iafenvoy.jupiter.config.container.AutoInitConfigContainer.AutoInitConfigCategoryBase;
+import com.iafenvoy.jupiter.config.entry.BooleanEntry;
+import com.iafenvoy.jupiter.config.entry.IntegerEntry;
+import com.iafenvoy.jupiter.config.entry.StringEntry;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,14 +16,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BotConfig extends AutoInitConfigContainer.AutoInitConfigCategoryBase {
-    public ConfigString tag = new ConfigString("config.mcbot.bot.tag", "main", "跨服支持,权限支持");
-    public ConfigString url = new ConfigString("config.mcbot.bot.url", "127.0.0.1:18082", "地址（支持域名和ipv6）");
-    public ConfigString token = new ConfigString("config.mcbot.bot.token", "", "鉴权");
-    public ConfigString botId = new ConfigString("config.mcbot.bot.botId", "0", "机器人qq");
-    public ConfigBoolean reconnect = new ConfigBoolean("config.mcbot.bot.reconnect", true, "自动重连");
-    public ConfigInteger maxReconnectAttempts = new ConfigInteger("config.mcbot.bot.maxReconnectAttempts", 3, 0, 10, "自动重连次数");
-    public ConfigInteger timeoutCompensation = new ConfigInteger("config.mcbot.bot.timeoutCompensation", 1000, 0, 10000, "超时宽容度（毫秒）");
+public class BotConfig extends AutoInitConfigCategoryBase {
+    public StringEntry tag = new StringEntry("config.mcbot.bot.tag", "main");//, "跨服支持,权限支持"
+    public StringEntry url = new StringEntry("config.mcbot.bot.url", "127.0.0.1:18082");//, "地址（支持域名和ipv6）"
+    public StringEntry token = new StringEntry("config.mcbot.bot.token", "");//, "鉴权"
+    public StringEntry botId = new StringEntry("config.mcbot.bot.botId", "0");//, "机器人qq"
+    public BooleanEntry reconnect = new BooleanEntry("config.mcbot.bot.reconnect", true);//, "自动重连"
+    public IntegerEntry reconnectMaxTimes = new IntegerEntry("config.mcbot.bot.reconnectMaxTimes", 3, 0, 10);//, "自动重连次数"
+    public IntegerEntry reconnectInterval = new IntegerEntry("config.mcbot.bot.reconnectInterval", 5, 0, 10000);//, "超时宽容度（秒）"
 
     public BotConfig() {
         super("bot", "config.mcbot.category.bot");
@@ -31,9 +31,9 @@ public class BotConfig extends AutoInitConfigContainer.AutoInitConfigCategoryBas
 
     public cn.evole.onebot.client.core.BotConfig build() {
         return new cn.evole.onebot.client.core.BotConfig(
-                url.getStringValue().startsWith("ws://") ? url.getStringValue() : "ws://" + url.getStringValue()
-                , token.getStringValue(), Long.parseLong(botId.getStringValue()), token.getStringValue().startsWith("mirai_"),
-                reconnect.getBooleanValue(), maxReconnectAttempts.getIntegerValue());
+                url.getValue().startsWith("ws://") ? url.getValue() : "ws://" + url.getValue()
+                , token.getValue(), Long.parseLong(botId.getValue()), token.getValue().startsWith("mirai_"),
+                reconnect.getValue(), reconnectInterval.getValue(), reconnectMaxTimes.getValue());
     }
 
 }

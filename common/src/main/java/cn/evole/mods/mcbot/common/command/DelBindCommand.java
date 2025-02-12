@@ -12,7 +12,7 @@ public class DelBindCommand {
         String group_id = String.valueOf(context.getArgument("GroupId", Long.class));
         String qq_id = String.valueOf(context.getArgument("QQId", Long.class));
         if (UserInfoApi.get(group_id, qq_id) != null) {
-            UserInfoApi.del(group_id, qq_id);
+            UserInfoApi.syncDel(group_id, qq_id);
             context.getSource().sendSuccess(() -> Component.literal("群: "+ group_id + " 的用户: " + qq_id + " 删除成功！"), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal("群: "+ group_id + " 的用户: " + qq_id + " 未找到！"), true);

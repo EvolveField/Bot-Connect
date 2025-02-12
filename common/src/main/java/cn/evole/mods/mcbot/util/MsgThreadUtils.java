@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.util;
 
 import cn.evole.mods.mcbot.api.event.mod.McBotEvents;
-import cn.evole.onebot.sdk.action.ActionPath;
+import cn.evole.onebot.sdk.action.misc.ActionPath;
 import com.google.gson.JsonObject;
 import lombok.val;
 import net.minecraft.server.level.ServerPlayer;

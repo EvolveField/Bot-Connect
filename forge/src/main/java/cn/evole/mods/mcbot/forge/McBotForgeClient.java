@@ -1,7 +1,7 @@
 package cn.evole.mods.mcbot.forge;
 
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import com.iafenvoy.jupiter.screen.ConfigSelectScreen;
+import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;

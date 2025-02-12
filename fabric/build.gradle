@@ -37,6 +37,13 @@ dependencies {
     modImplementation ("com.terraformersmc:modmenu:$modmenu_version")
 }
 
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand version: project.version
+    }
+}
 
 shadowJar {
     configurations = [project.configurations.shadowBundle]
@@ -52,6 +59,6 @@ shadowJar {
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     archiveClassifier = "fabric"
 }

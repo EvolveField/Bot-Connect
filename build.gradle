@@ -1,5 +1,5 @@
 plugins {
-    id 'dev.architectury.loom' version '1.6-SNAPSHOT' apply false
+    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
 }
@@ -23,6 +23,7 @@ subprojects {
     }
 
     repositories {
+        mavenLocal()
         mavenCentral() {
             content {
                 includeGroup 'org.projectlombok'
@@ -34,27 +35,24 @@ subprojects {
                 includeGroup "curse.maven"
             }
         }
-        maven { url 'https://maven.nova-committee.cn/releases' }
+        maven { url 'https://maven.nova-committee.cn/s3' }
         maven { url 'https://maven.minecraftforge.net/' }
         maven { url 'https://maven.parchmentmc.org' }
         maven { url "https://maven.shedaniel.me/" }
         maven { url "https://maven.terraformersmc.com/releases/" }
-        maven { url "https://api.modrinth.com/maven"
-        }
+        maven { url "https://api.modrinth.com/maven"}
+    }
+
+    loom {
+        silentMojangMappingsLicense()
     }
 
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-$minecraft_version:$mappings_version@zip")
-        }
+        mappings loom.officialMojangMappings()
     }
 
     java {
-        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-        // if it is present.
-        // If you remove this line, sources will not be generated.
         withSourcesJar()
 
         sourceCompatibility = JavaVersion.VERSION_17
@@ -93,16 +91,21 @@ subprojects {
         }
     }
 
-    tasks.withType(Jar).configureEach {
-        manifest {
-            attributes([
-                    'Specification-Title'   : mod_id,
-                    'Specification-Vendor'  : mod_author,
-                    'Specification-Version' : '1',
-                    'Implementation-Title'  : rootProject.name,
-                    'Implementation-Version': jar.archiveVersion,
-                    'Implementation-Vendor' : mod_author
-            ])
+    // Configure Maven publishing.
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = base.archivesName.get()
+                from components.java
+            }
+        }
+
+        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+        repositories {
+            // Add repositories to publish to here.
+            // Notice: This block does NOT have the same function as the block in the top level.
+            // The repositories here will be used for publishing your artifact, not for
+            // retrieving dependencies.
         }
     }
 }

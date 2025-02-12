@@ -9,8 +9,8 @@
   "config.mcbot.bot.token" : "鉴权",
   "config.mcbot.bot.botId" : "机器人qq",
   "config.mcbot.bot.reconnect" : "自动重连",
-  "config.mcbot.bot.maxReconnectAttempts" : "自动重连次数",
-  "config.mcbot.bot.timeoutCompensation" : "超时宽容度（毫秒）",
+  "config.mcbot.bot.reconnectMaxTimes" : "自动重连次数",
+  "config.mcbot.bot.reconnectInterval" : "超时宽容度（毫秒）",
 
   "config.mcbot.cmd.welcomeNotice" : "自定义q群加入事件消息",
   "config.mcbot.cmd.leaveNotice" : "自定义q群离开事件消息",

@@ -20,11 +20,11 @@ public class DataHandler {
         UserInfoApi.userInfos = new ArrayList<>();
 
         if (ChatRecordApi.chatRecordFile.toFile().exists()) {
-            CsvHelper.read(Constants.DATA_FOLDER.toFile(), ChatRecord.class).forEach(chatRecord -> ChatRecordApi.chatRecords.putIfAbsent(chatRecord.getMessageId(), chatRecord));
+            CsvHelper.read(ChatRecordApi.chatRecordFile.toFile(), ChatRecord.class).forEach(chatRecord -> ChatRecordApi.chatRecords.putIfAbsent(chatRecord.getMessageId(), chatRecord));
         }
 
         if (UserInfoApi.userBindFile.toFile().exists()){
-            UserInfoApi.userInfos.addAll(CsvHelper.read(Constants.DATA_FOLDER.toFile(), UserInfo.class));
+            UserInfoApi.userInfos.addAll(CsvHelper.read(UserInfoApi.userBindFile.toFile(), UserInfo.class));
         }
     }
 

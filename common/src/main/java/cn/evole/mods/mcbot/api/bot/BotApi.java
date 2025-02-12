@@ -3,7 +3,7 @@ package cn.evole.mods.mcbot.api.bot;
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import cn.evole.mods.mcbot.common.event.ITickEvent;
 import cn.evole.mods.mcbot.util.MsgThreadUtils;
-import cn.evole.onebot.sdk.action.ActionPath;
+import cn.evole.onebot.sdk.action.misc.ActionPath;
 import com.google.gson.JsonObject;
 import lombok.val;
 import net.minecraft.network.chat.Component;
@@ -27,13 +27,13 @@ public class BotApi {
     }
 
     public static void sendAllGroupMsg(String message) {
-        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getValue()) {
             sendGroupMsg(Long.parseLong(id), message);
         }
     }
 
     public static void sendAllGroupMsg(Callable<String> message) {
-        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getValue()) {
             sendGroupMsg(Long.parseLong(id), message);
         }
     }
@@ -45,7 +45,7 @@ public class BotApi {
      * @param player  玩家
      */
     public static void sendAllGroupMsg(Callable<String> message, ServerPlayer player) {
-        for (String id : ModConfig.get().getCommon().getGroupIdList().getStrings()) {
+        for (String id : ModConfig.get().getCommon().getGroupIdList().getValue()) {
             MsgThreadUtils.INSTANCE.submit(Long.parseLong(id), message, false, player);
         }
     }

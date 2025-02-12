@@ -11,8 +11,8 @@ import cn.evole.mods.mcbot.plugins.cmd.CmdHandler;
 import cn.evole.mods.mcbot.plugins.data.DataHandler;
 import cn.evole.mods.mcbot.util.locale.I18n;
 import cn.evole.onebot.client.OneBotClient;
+import com.iafenvoy.jupiter.ConfigManager;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import net.minecraft.server.MinecraftServer;
 
 import static cn.evole.mods.mcbot.Constants.*;
@@ -44,7 +44,7 @@ public class McBot {
 
     public static void onServerStarted(MinecraftServer server) {
         mcBotCommand = new McBotCommandSource(server);
-        if (ModConfig.get().getCommon().getAutoOpen().getBooleanValue()) {
+        if (ModConfig.get().getCommon().getAutoOpen().getValue()) {
             onebot = OneBotClient
                     .create(ModConfig.get().getBotConfig().build())
                     .open()
@@ -63,6 +63,8 @@ public class McBot {
     public static void onServerStopped(MinecraftServer server) {
         ModConfig.get().save();
         Constants.shutdown();
-        if (onebot != null) onebot.close();
+        if (onebot != null) {
+            onebot.close();
+        }
     }
 }
