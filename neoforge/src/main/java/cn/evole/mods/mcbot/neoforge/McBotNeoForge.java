@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.forge;
+package cn.evole.mods.mcbot.neoforge;
 
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.McBot;

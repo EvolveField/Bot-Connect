@@ -84,7 +84,7 @@ public class IPlayerEvent {
 
         if (ModConfig.get().getStatus().getSAdvanceEnable().getValue() && ModConfig.get().getStatus().getSEnable().getValue()) {
             DisplayInfo display = advancement.display().get();
-            String message = I18n.get("mcbot.chat.type.advancement." + display.getIcon().getFrame().getName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
+            String message = I18n.get("mcbot.chat.type.advancement." + display.getType().getSerializedName(), player.getDisplayName().getString(), I18n.get(display.getTitle().getString()));
             val msg = String.format(message, player.getDisplayName().getString());
             BotApi.sendAllGroupMsg(msg);
         }

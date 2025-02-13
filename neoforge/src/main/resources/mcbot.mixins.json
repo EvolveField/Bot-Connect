@@ -1,7 +1,7 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "cn.evole.mods.mcbot.forge.mixin",
+    "package": "cn.evole.mods.mcbot.neoforge.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
     ],

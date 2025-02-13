@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.forge;
+package cn.evole.mods.mcbot.neoforge;
 
 import cn.evole.mods.mcbot.common.config.ModConfig;
 import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
