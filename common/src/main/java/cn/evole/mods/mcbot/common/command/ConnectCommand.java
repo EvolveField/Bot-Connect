@@ -4,7 +4,6 @@ package cn.evole.mods.mcbot.common.command;
 import cn.evole.mods.mcbot.Constants;
 import cn.evole.mods.mcbot.api.connect.ConnectApi;
 import cn.evole.mods.mcbot.common.config.ModConfig;
-import cn.evole.mods.mcbot.util.onebot.AppHandler;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.val;
@@ -13,7 +12,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 
 import java.util.regex.Pattern;
-//#endif
 
 public class ConnectCommand {
     private static final Pattern ipv4Pattern = Pattern.compile("(\\d+\\.\\d+\\.\\d+\\.\\d+):(\\d+)");
@@ -40,7 +38,7 @@ public class ConnectCommand {
     }
 
     public static int localExecute(CommandContext<CommandSourceStack> context) {
-        AppHandler.init();
+        //AppHandler.init();
         ModConfig.get().getBotConfig().getUrl().getDefaultValue();
         doConnect(context);
         return 1;
