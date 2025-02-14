@@ -1,4 +1,4 @@
-package cn.evole.mods.mcbot.forge;
+package cn.evole.mods.mcbot.neoforge;
 
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
