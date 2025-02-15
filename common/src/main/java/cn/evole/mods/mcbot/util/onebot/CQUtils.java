@@ -7,6 +7,7 @@ import cn.evole.onebot.sdk.event.message.GroupMessageEvent;
 import cn.evole.onebot.sdk.event.message.MessageEvent;
 import cn.evole.onebot.sdk.util.BotUtils;
 import cn.evole.onebot.sdk.util.GsonUtils;
+import com.google.gson.reflect.TypeToken;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,9 +47,7 @@ public class CQUtils {
     private static @NotNull String doReplace(MessageEvent event) {
         val stringMsg = event.getMessage();
         val message = new StringBuilder();
-        List<ArrayMsg> msg = BotUtils.rawToArrayMsg(event.getRawMessage());
-
-                //GsonUtils.convertToList(stringMsg, ArrayMsg.class);
+        List<ArrayMsg> msg = GsonUtils.fromJson(stringMsg, new TypeToken<List<ArrayMsg>>() {}.getType());
         for (ArrayMsg arrayMsg : msg){
             //try {
                 switch (arrayMsg.getType()){
